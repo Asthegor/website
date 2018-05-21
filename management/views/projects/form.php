@@ -1,5 +1,5 @@
 <h1>Projets</h1>
-<form method="post" action="<?php $_SERVER['PHP_SELF']; ?>">
+<form enctype="multipart/form-data" method="post" action="<?php $_SERVER['PHP_SELF']; ?>">
     <?php if (isset($viewModel['id']))
     {
         ?>
@@ -42,13 +42,30 @@
         <label>Description anglaise</label>
         <input type="text" name="description_en" value="<?php echo isset($viewModel['description_en']) ? $viewModel['description_en'] : ''; ?>" required />
     </div>
+<!-- Gestion de la date à réaliser -->
     <div class="form-group">
         <label>Date de début</label>
-        <input type="text" name="dateproject" value="<?php echo isset($viewModel['first_date_project']) ? $viewModel['first_date_project'] : ''; ?>" />
+        <input type="date" name="dateproject" value="<?php echo isset($viewModel['first_date_project']) ? $viewModel['first_date_project'] : ''; ?>" />
     </div>
     <div class="form-group">
-        <label>Image</label>
-        <input type="text" name="image" value="<?php echo isset($viewModel['image']) ? $viewModel['image'] : ''; ?>" />
+        <?php
+        if (isset($viewModel['id']))
+        {
+            $project = new ProjectsModel();
+            $image = $project->getImage($viewModel['id']);
+            ?>
+            <img src="data:image/jpeg;base64,<?php echo $image['img_blob']; ?>" alt="<?php echo $image['name']; ?>">
+            <?php
+        }
+        else
+        {
+            ?>
+            <label>Image</label>
+            <?php
+        }
+        ?>
+        <input type="hidden" name="MAX_FILE_SIZE" value="55000" />
+        <input type="file" name="projectimage" />
     </div>
     <div class="form-group">
         <label>Visible</label>
