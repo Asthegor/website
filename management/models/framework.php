@@ -76,7 +76,10 @@ class FrameworksModel extends Model
             {
                 $this->returnToPage('frameworks');
             }
-            Messages::setMsg('Error(s) during update', 'error');
+            else
+            {
+                Messages::setMsg('Error(s) during update', 'error');
+            }
         }
         $this->query("SELECT id, name, bVisible, id_ProgLanguage
                       FROM frameworkengine
@@ -102,7 +105,7 @@ class FrameworksModel extends Model
             $res = $this->execute();
             if (!$res)
             {
-                Messages::setMsg('Record "'.$_GET['id'].'" not deleted', 'error');
+                Messages::setMsg('Record used by a project.', 'error');
             }
             $this->close();
             $this->returnToPage('frameworks');

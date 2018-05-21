@@ -156,7 +156,6 @@ class NavBarModel extends Model
             }
             else
             {
-                Messages::setMsg('Record "'.$_GET['id'].'" not deleted', 'error');
                 $this->rollBack();
             }
             $this->close();

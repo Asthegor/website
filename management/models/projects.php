@@ -25,20 +25,21 @@ class ProjectsModel extends Model
         $post = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
         if ($post['submit'])
         {
-            if ($post['title_fr'] == '' || $post['title_en'] == '' || $post['destination'] == '')
+            if ($post['title_fr'] == '' || $post['title_en'] == '' || $post['description_fr'] == '' || $post['description_en'] == '')
             {
                 Messages::setMsg('Please fill in all mandatory fields', 'error');
                 return;
             }
             // Insert into MySQL
+            date_default_timezone_set('Europe/Paris');
             $this->changeDatabase(self::curDB);
             $this->startTransaction();
             //Insertion des données générales
-            $this->query('INSERT INTO project (id_FrameworkEngine, first_date_project, image, bVisible)
-                          VALUES (:idframework, :dateproject, :image, :bVisible,)');
+            $this->query("INSERT INTO project (id_FrameworkEngine, first_date_project, image, bVisible)
+                          VALUES (:idframework, :dateproject, :image, :bVisible)");
             $this->bind(':idframework', $post['framework']);
-            $this->bind(':dateproject', $post['dateproject']);
-            $this->bind(':image', $post['image']);
+            $this->bind(':dateproject', isset($post['dateproject']) && strtotime($post['dateproject']) ? $post['dateproject'] : date("Y-m-d"));
+            $this->bind(':image', isset($post['image']) ? $post['image'] : 'null');
             $this->bind(':bVisible', isset($post['bVisible']) ? $post['bVisible'] : 0);
             $this->execute();
             $id = $this->lastIndexId();
@@ -62,7 +63,7 @@ class ProjectsModel extends Model
             {
                 $this->commit();
                 $this->close();
-                $this->returnToPage('content');
+                $this->returnToPage('projects');
             }
             $this->rollback();
             $this->close();
@@ -116,7 +117,7 @@ class ProjectsModel extends Model
             {
                 $this->commit();
                 $this->close();
-                $this->returnToPage('frameworks');
+                $this->returnToPage('projects');
             }
             $this->rollBack();
             $this->close();
@@ -160,7 +161,6 @@ class ProjectsModel extends Model
             }
             else
             {
-                Messages::setMsg('Record "'.$_GET['id'].'" not deleted', 'error');
                 $this->rollBack();
             }
             $this->close();

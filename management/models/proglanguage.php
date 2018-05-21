@@ -61,13 +61,16 @@ class ProgLanguageModel extends Model
                 $this->query('UPDATE proglanguage SET name = :name WHERE id = :id');
                 $this->bind(':name', $post['name']);
                 $this->bind(':id', $post['id']);
-                if($this->execute())
+                $res = $this->execute();
+                $this->close();
+                if(!$res)
                 {
-                    $this->close();
+                    Messages::setMsg('Error(s) during update', 'error');
+                }
+                else
+                {
                     $this->returnToPage('proglanguage');
                 }
-                $this->close();
-                Messages::setMsg('Error(s) during update', 'error');
             }
         }
         $this->query('SELECT id, name
@@ -93,7 +96,7 @@ class ProgLanguageModel extends Model
             $res = $this->execute();
             if (!$res)
             {
-                Messages::setMsg('Record "'.$_GET['id'].'" not deleted', 'error');
+                Messages::setMsg('Record used by a framework/engine.', 'error');
             }
             $this->close();
             $this->returnToPage('proglanguage');

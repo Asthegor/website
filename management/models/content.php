@@ -158,10 +158,9 @@ class ContentModel extends Model
             else
             {
                 $this->rollBack();
-                Messages::setMsg('Record "'.$_GET['id'].'" not deleted', 'error');
             }
             $this->close();
-            $this->returnToPage('navbar');
+            $this->returnToPage('content');
         }
         $this->query('SELECT itrfr.title title_fr, itren.title title_en
                       FROM indexitems AS i
