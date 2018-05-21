@@ -124,7 +124,7 @@ class ProjectsModel extends Model
             $img_type = '';
             $img_nom = '';
             $taillemax = 55000;
-            if (isset($_FILES['projectimage']))
+            if (isset($_FILES['projectimage']) && $_FILES['projectimage']['error'] != 4)
             {
                 $ret = is_uploaded_file($_FILES['projectimage']['tmp_name']);
                 if (!$ret)
@@ -170,6 +170,7 @@ class ProjectsModel extends Model
             $this->bind(':id', $post['id']);
             $resen = $this->execute();
             //Insertion de l'image
+            $respid = true;
             $respi = true;
             if ($img_blob != '')
             {
