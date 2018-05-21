@@ -267,6 +267,18 @@ class ProjectsModel extends Model
         $this->close();
         return $rows;
     }
+
+    public function getList()
+    {
+        $this->changeDatabase(self::curDB);
+        $this->query("SELECT p.id, CONCAT(ptrfr.title, ' (', ptren.title, ')') name
+                      FROM project AS p
+                        INNER JOIN project_tr AS ptrfr ON p.id = ptrfr.id AND ptrfr.id_Language = 1
+                        INNER JOIN project_tr AS ptren ON p.id = ptren.id AND ptren.id_Language = 2");
+        $rows = $this->resultSet();
+        $this->close();
+        return $rows;
+    }
 }
 
 ?>

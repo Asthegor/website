@@ -4,7 +4,7 @@
 <div class="navbar-index">
     <table style="width:95%; text-align: left;">
         <tr>
-            <th style="width:15%;">Id</th>
+            <th style="width:5%;">Id</th>
             <th style="width:15%;">Titre français</th>
             <th style="width:15%;">Titre anglais</th>
             <th style="width:15%;">Destination</th>
@@ -19,7 +19,7 @@
         <a href="<?php echo ROOT_MNGT.'content/update/'.$item['id']; ?>">
             <table style="width:95%;">
                 <tr>
-                    <td style="width:15%;"><?php echo $item['id']; ?></td>
+                    <td style="width:5%;"><?php echo $item['id']; ?></td>
                     <td style="width:15%;"><?php echo $item['title_fr']; ?></td>
                     <td style="width:15%;"><?php echo $item['title_en']; ?></td>
                     <td style="width:15%;"><?php echo $item['destination']; ?></td>

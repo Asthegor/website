@@ -6,7 +6,7 @@ require_once('views/projectnavbar/projectnavbar.php');
 <div class="navbar-index">
     <table style="width:100%; text-align: left;">
         <tr>
-            <th style="width:15%;">Id</th>
+            <th style="width:5%;">Id</th>
             <th style="width:15%;">Titre français</th>
             <th style="width:15%;">Titre anglais</th>
             <th style="width:15%;">Framework/Engin</th>
@@ -21,7 +21,7 @@ require_once('views/projectnavbar/projectnavbar.php');
         <a href="<?php echo ROOT_MNGT.'projects/update/'.$item['id']; ?>">
             <table style="width:100%;">
                 <tr>
-                    <td style="width:15%;"><?php echo $item['id']; ?></td>
+                    <td style="width:5%;"><?php echo $item['id']; ?></td>
                     <td style="width:15%;"><?php echo $item['title_fr']; ?></td>
                     <td style="width:15%;"><?php echo $item['title_en']; ?></td>
                     <td style="width:15%;"><?php echo $item['framework']; ?></td>

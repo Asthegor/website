@@ -17,9 +17,11 @@ require('controllers/content.php');
 require('controllers/projects.php');
 require('controllers/proglanguage.php');
 require('controllers/framework.php');
+require('controllers/devlog.php');
 
 require('controllers/resume.php');
 require('controllers/tutorials.php');
+
 
 require('models/users.php');
 require('models/home.php');
@@ -28,6 +30,8 @@ require('models/content.php');
 require('models/projects.php');
 require('models/proglanguage.php');
 require('models/framework.php');
+require('models/devlog.php');
+
 require('models/tutorials.php');
 require('models/resume.php');
 
