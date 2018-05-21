@@ -1,0 +1,173 @@
+/***************************
+ * Partie globale
+ ***************************/
+body {
+  background-color: #293831;
+  color: white;
+}
+a img {
+  border:none;
+  outline:none;
+}
+
+/***************************
+ * Partie HEADER
+ ***************************/
+#fixed-header {
+  background-color: #293831;
+}
+ div.header {
+  width: 100%;
+  text-align: center;
+  border-style: none;
+}
+div.header img {
+  max-height: 75px;
+  width: auto;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  border-style: none;
+}
+
+/***************************
+ * Partie NAVIGATION BAR
+ ***************************/
+ul.nav-bar {
+  background-color: orangered;
+  margin-left:auto;
+  margin-right: auto;
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  position: -webkit-sticky; /* Safari */
+  position: sticky;
+  top: 0;
+}
+li.nav-item {
+  float: left;
+  border: none;
+  border-style: none;
+}
+li.nav-item a, .prev-next-item {
+  display: block;
+  text-align: center;
+  font-size-adjust: initial;
+  text-decoration: none;
+  padding: 10px 20px;
+  color: white;
+  border:none;
+  outline:none;
+}
+li.nav-item a.active {
+  color: black;
+  background-color: orange;
+}
+li.nav-item a:hover, .prev-item:hover, .next-item:hover {
+  color: black;
+  background-color: orange;
+}
+#nav-item-last-child {
+  float: right;
+  margin: 0px 0px -2px 0px;
+}
+/* #nav-item-site {
+  color: black;
+  background-color: black;
+} */
+
+/***************************
+ * Partie PAGE ACCUEIL
+ ***************************/
+div.summary {
+  display: inline-block;
+  width: 31%;
+  padding: 0.5%;
+  margin: 0.5%;
+  background-color: grey;
+  text-align: center;
+}
+
+/***************************
+ * Partie LISTE DES PROJETS
+ ***************************/
+ div.framework-summary {
+  margin: 10px 0;
+}
+div.framework-summary > button {
+  /* margin: 10px auto 0px auto; */
+  width: 100%;
+}
+div.projects-summary {
+  padding: 5px 18px;
+  display: none;
+  overflow: hidden;
+}
+div.project-summary {
+  display: inline-block;
+  min-width: 200px;
+  min-height: 250px;
+  margin: 0 10px;
+  border: 2px solid black;
+}
+div.project-summary h4 {
+  text-align: center;
+}
+
+/***************************
+ * Partie PROJET
+ ***************************/
+#project-image {
+  float: left;
+  margin-right: 10px;
+}
+div.project-inline * {
+  display: inline-block;
+  color: orange;
+}
+.project-inline-label {
+  text-decoration: underline;
+  color: orangered;
+}
+div.project-inline > .project-inline-label {
+  text-decoration: underline;
+  color: orangered;
+}
+/***************************
+ * Partie PROJET NAVIGATION
+ ***************************/
+#prev-next-bar {
+  background-color: orangered;
+  margin-left:auto;
+  margin-right: auto;
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+}
+.prev-item {
+  float: left;
+}
+.prev-item-disable {
+  float: left;
+  background-color: grey;
+}
+.next-item {
+  float: right;
+}
+.next-item-disable {
+  float: right;
+  background-color: grey;
+}
+.proj-item-inline {
+  display: inline-block;
+  text-align: center;
+}
+
+/***************************
+ * Partie FOOTER
+ ***************************/
+#copyright {
+  text-align: center;
+}
