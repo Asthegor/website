@@ -43,6 +43,7 @@ ul.nav-bar {
   overflow: hidden;
   position: -webkit-sticky; /* Safari */
   position: sticky;
+  z-index: 5;
   top: 0;
 }
 li.nav-item {
@@ -93,27 +94,42 @@ div.summary {
 /***************************
  * Partie LISTE DES PROJETS
  ***************************/
-div.framework-summary {
+.framework-summary {
   margin: 10px 0;
 }
-div.framework-summary > button {
+.framework-summary > button {
   /* margin: 10px auto 0px auto; */
   width: 100%;
 }
-div.projects-summary {
+.projects-summary {
   padding: 5px 18px;
   display: none;
   overflow: hidden;
 }
-div.project-summary {
-  display: inline-block;
-  min-width: 200px;
-  min-height: 250px;
-  margin: 0 10px;
-  border: 2px solid black;
-}
-div.project-summary h4 {
+.project-btn
+{
+  float:left;
+  position: relative;
+  width: 200px;
+  max-width: 200px;
+  height: 250px;
+  max-height: 250px;
+  margin: 10px;
   text-align: center;
+  z-index: 1;
+}
+
+.project-btn img 
+{
+  width: 100%;
+  height: auto;
+  vertical-align: middle;
+}
+.project-btn h4
+{
+	display: inline-block;
+  width: 100%;
+  vertical-align: top;
 }
 
 /***************************
@@ -170,5 +186,6 @@ div.project-inline > .project-inline-label {
  * Partie FOOTER
  ***************************/
 #copyright {
+  clear: both;
   text-align: center;
 }
