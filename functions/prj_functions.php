@@ -2,9 +2,9 @@
 
 function get_AllFrameworks($bdd)
 {
-  $query = "SELECT f.name as framework, f.id as frameworkid, l.name as language 
+  $query = "SELECT f.name as framework, f.id as frameworkid, pl.name as proglanguage 
             FROM frameworkengine as f 
-              INNER JOIN language as l ON f.id_Language = l.id
+              INNER JOIN proglanguage as pl ON f.id_ProgLanguage = pl.id
             WHERE f.bVisible = 1";
   $stmt = $bdd->stmt_init();
   $stmt->prepare($query);
@@ -16,9 +16,12 @@ function get_AllFrameworks($bdd)
 
 function get_ProjectsByFrameworkId($bdd, $frameworkid)
 {
-  $query = "SELECT * 
-            FROM project
-            WHERE bVisible = 1 AND id_FrameworkEngine = ?";
+  $query = "SELECT p.*, ptrfr.title title_fr, ptren.title title_en, pri.img_blob image
+            FROM project as p
+              INNER JOIN project_tr AS ptrfr ON p.id = ptrfr.id AND ptrfr.id_Language = 1
+              INNER JOIN project_tr AS ptren ON p.id = ptren.id AND ptren.id_Language = 2
+              LEFT JOIN projectimage AS pri ON p.id = pri.id_Project
+            WHERE p.bVisible = 1 AND p.id_FrameworkEngine = ?";
   $stmt = $bdd->stmt_init();
   $stmt->prepare($query);
   $stmt->bind_param('i', $frameworkid);
@@ -30,10 +33,14 @@ function get_ProjectsByFrameworkId($bdd, $frameworkid)
 
 function get_ProjectInfos($bdd, $projectid)
 {
-  $query = "SELECT p.*, f.name AS framework, l.name AS language 
+  $query = "SELECT p.*, f.name AS framework, pl.name AS proglanguage, ptrfr.title title_fr, pri.img_blob image,
+                   ptren.title title_en, ptrfr.description description_fr, ptren.description description_en
             FROM project AS p 
+              INNER JOIN project_tr AS ptrfr ON p.id = ptrfr.id AND ptrfr.id_Language = 1
+              INNER JOIN project_tr AS ptren ON p.id = ptren.id AND ptren.id_Language = 2
+              LEFT JOIN projectimage AS pri ON p.id = pri.id_Project
               INNER JOIN frameworkengine AS f ON p.id_FrameworkEngine = f.id AND p.id = ?
-              INNER JOIN language AS l ON f.id_Language = l.id
+              INNER JOIN proglanguage AS pl ON f.id_ProgLanguage = pl.id
             WHERE p.bVisible = 1";
   $stmt = $bdd->stmt_init();
   $stmt->prepare($query);
@@ -90,9 +97,9 @@ function get_LastProjectVersion($bdd, $projectid)
 
 function get_FrameworksByLanguage($bdd, $language)
 {
-  $query = "SELECT f.name as framework, f.id as frameworkid, l.name as language 
+  $query = "SELECT f.name as framework, f.id as frameworkid, l.name as proglanguage 
             FROM frameworkengine as f 
-              INNER JOIN language as l ON f.id_Language = l.id AND l.name = ?";
+              INNER JOIN proglanguage as l ON f.id_ProgLanguage = l.id AND l.name = ?";
   $stmt = $bdd->stmt_init();
   $stmt->prepare($query);
   $stmt->bind_param('s', $language);

@@ -12,27 +12,28 @@ include('views/header.php');
       continue;
   ?>
     <div class="framework-summary">
-      <button type="button" class="framework-btn"><h2><?php echo $framework['language'].' / '.$framework['framework']; ?></h2></button>
+      <button type="button" class="framework-btn"><h2><?php echo $framework['proglanguage'].' / '.$framework['framework']; ?></h2></button>
       <div class="projects-summary">
         <?php
         while ($project = mysqli_fetch_assoc($projects))
         {
         ?>
           <div class="project-summary">
-            <?php $uniqueId = $project['id'].$project['name']; ?>
+            <?php $uniqueId = $project['id'].$project['title_fr']; ?>
             <form id="<?php echo $uniqueId; ?>" action="project.php" method="GET">
               <input type="hidden" name="projectid" value="<?php echo $project['id']; ?>" />
             </form>
             <button type="button" onclick="document.getElementById('<?php echo $uniqueId; ?>').submit()">
               <?php
+              $title = $_SESSION['language'] == 'FR' ? $project['title_fr'] : $project['title_en'];
               if ($project['image'] != null)
               {
               ?>
-                <image width="200" height="250" src="data:image/jpeg;base64,<?php echo base64_encode($project['image']); ?>" alt="<?php echo $project['name']; ?>"/>
+                <image width="200" height="250" src="data:image/jpeg;base64,<?php echo $project['image']; ?>" alt="<?php echo $title; ?>"/>
               <?php
               }
               ?>
-              <h4><?php echo $project['name']; ?></h4>
+              <h4><?php echo $title; ?></h4>
             </button>
           </div><!-- project-summary -->
         <?php

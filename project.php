@@ -39,14 +39,15 @@ $next = get_ProjectNextId($prj_bdd, $projectid);
 <div class="project">
   <?php
   $project = get_ProjectInfos($prj_bdd, $projectid);
+  $title = $_SESSION['language'] == 'FR' ? $project['title_fr'] : $project['title_en'];
   ?>
   <div id="project-image">
-    <image width="200" height="250" src="data:image/jpeg;base64,<?php echo base64_encode($project['image']); ?>" alt="<?php echo $project['name']; ?>"/>
+    <image width="200" height="250" src="data:image/jpeg;base64,<?php echo $project['image']; ?>" alt="<?php echo $title; ?>"/>
   </div>
-  <h1><?php echo $project['name']; ?></h1>
+  <h1><?php echo $title; ?></h1>
   <div class="project-inline">
     <h2 class="project-inline-label">Framework / Engin :</h2>
-    <h2><?php echo $project['framework'].'/'.$project['language']; ?></h2>
+    <h2><?php echo $project['framework'].'/'.$project['proglanguage']; ?></h2>
   </div>
   <?php $version = get_LastProjectVersion($prj_bdd, $projectid); ?>
   <div class="project-inline">
@@ -58,7 +59,7 @@ $next = get_ProjectNextId($prj_bdd, $projectid);
     <h3><?php echo $project['first_date_project'] ? $project['first_date_project'] : 'Indéterminé'; ?></h3>
   </div>
   <h2 class="project-inline-label">Description :</h2>
-  <p><?php echo $project['description']; ?></p>
+  <p><?php echo $_SESSION['language'] == 'FR' ? $project['description_fr'] : $project['description_en']; ?></p>
 </div>
 
 <?php
