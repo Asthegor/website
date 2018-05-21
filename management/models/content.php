@@ -69,6 +69,7 @@ class ContentModel extends Model
 
     public function Update()
     {
+        $this->changeDatabase(self::curDB);
         $post = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
         if (isset($post['submit']))
         {
@@ -80,7 +81,6 @@ class ContentModel extends Model
             else
             {
                 //Mise à jour de la base
-                $this->changeDatabase(self::curDB);
                 $this->startTransaction();
                 // Mise à jour du titre FR
                 $this->query('UPDATE indexitems_tr 
@@ -119,7 +119,6 @@ class ContentModel extends Model
                 Messages::setMsg('Error(s) during update', 'error');
             }
         }
-        $this->changeDatabase(self::curDB);
         $this->query('SELECT i.id, i.bVisible, i.destination, i.sortOrder, 
                              itrfr.title title_fr, itren.title title_en
                       FROM indexitems AS i

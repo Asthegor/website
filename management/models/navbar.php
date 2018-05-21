@@ -69,10 +69,10 @@ class NavBarModel extends Model
 
     public function Update()
     {
+        $this->changeDatabase(self::curDB);
         $post = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
-        if ($post['submit'])
+        if (isset($post['submit']))
         {
-            $this->changeDatabase(self::curDB);
             // Contrôle des données
             if ($post['title_fr'] == '' || $post['title_en'] == '' || $post['destination'] == '')
             {
@@ -120,11 +120,10 @@ class NavBarModel extends Model
             }
         }
         $this->query('SELECT i.id, i.bVisible, i.destination, i.sortOrder, 
-                             itrfr.title title_fr, itren.title title_en, c.name category
+                             itrfr.title title_fr, itren.title title_en
                       FROM indexitems AS i
                         INNER JOIN indexitems_tr AS itrfr ON i.id = itrfr.id AND itrfr.id_Language = 1
                         INNER JOIN indexitems_tr AS itren ON i.id = itren.id AND itren.id_Language = 2
-                        INNER JOIN category AS c ON i.id_Category = c.id
                       WHERE i.id_Category = 1 AND i.id = '.$_GET['id']);
         $rows = $this->single();
         $this->close();

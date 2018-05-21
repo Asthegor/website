@@ -7,10 +7,6 @@
             <label>ID</label>
             <input type="text" name="id" value="<?php echo $viewModel['id']; ?>" readonly />
         </div>
-        <div class="form-group">
-            <label>Catégorie</label>
-            <input type="text" name="category" value="<?php echo isset($viewModel['category']) ? $viewModel['category'] : ''; ?>" readonly />
-        </div>
         <?php
     }
     ?>
