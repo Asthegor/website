@@ -1,20 +1,32 @@
 <?php
-include('views/header.php');
-$items = get_ItemsByCategory($web_bdd, 'CONTENT', $_SESSION['language']);
-while ($row = mysqli_fetch_assoc($items))
+session_start();
+
+header('Content-Type: text/html; charset=utf-8');
+
+require('config.php');
+
+require('classes/Messages.php');
+require('classes/MainController.php');
+require('classes/Controller.php');
+require('classes/Model.php');
+
+require('controllers/home.php');
+require('controllers/projects.php');
+require('controllers/project.php');
+
+require('models/home.php');
+require('models/navbar.php');
+require('models/language.php');
+require('models/projects.php');
+require('models/project.php');
+
+
+$mainController = new MainController($_GET);
+
+$controller = $mainController->createController();
+
+if($controller)
 {
-?>
-  <div class="summary">
-    <a href="<?php echo $row['destination']; ?>">
-      <?php if (isset($row['image'])) : ?>
-        <img src="<?php echo 'data:image/jpeg;base64,'.base64_encode($row['image']); ?>" alt="<?php echo $row['title']; ?>"/>
-      <?php endif; ?>
-      <h1><?php echo $row['title']; ?></h1>
-    </a>
-  </div>
-<?php
+    $controller->executeAction();
 }
-?>
-<?php
-include('views/footer.php');
 ?>

@@ -7,14 +7,12 @@ class ProjectsModel extends Model
     public function Index()
     {
         $this->changeDatabase(self::curDB);
-        $this->query("SELECT  p.id, pfr.title title_fr, pen.title title_en, p.first_date_project,
-                              p.bVisible, CONCAT(fe.name, ' (', l.name, ')') framework 
+        $this->query("SELECT  p.id, p.title, p.first_date_project, p.bVisible, 
+                              CONCAT(fe.name, ' (', l.name, ')') framework 
                       FROM project AS p 
-                        INNER JOIN project_tr AS pfr ON p.id = pfr.id AND pfr.id_Language = 1
-                        INNER JOIN project_tr AS pen ON p.id = pen.id AND pen.id_Language = 2
                         INNER JOIN frameworkengine AS fe ON p.id_FrameworkEngine = fe.id 
                         INNER JOIN proglanguage AS l ON fe.id_ProgLanguage = l.id 
-                      ORDER BY p.bVisible DESC, p.first_date_project DESC, pfr.title, pen.title");
+                      ORDER BY p.bVisible DESC, p.first_date_project DESC, p.title");
         $rows = $this->resultSet();
         $this->close();
         return $rows;
@@ -25,7 +23,7 @@ class ProjectsModel extends Model
         $post = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
         if ($post['submit'])
         {
-            if ($post['title_fr'] == '' || $post['title_en'] == '' || $post['description_fr'] == '' || $post['description_en'] == '')
+            if ($post['title'] == '' || $post['description_fr'] == '' || $post['description_en'] == '')
             {
                 Messages::setMsg('Please fill in all mandatory fields', 'error');
                 return;
@@ -58,26 +56,25 @@ class ProjectsModel extends Model
             $this->changeDatabase(self::curDB);
             $this->startTransaction();
             //Insertion des données générales
-            $this->query("INSERT INTO project (id_FrameworkEngine, first_date_project, bVisible)
-                          VALUES (:idframework, :dateproject, :bVisible)");
+            $this->query("INSERT INTO project (id_FrameworkEngine, title, first_date_project, bVisible)
+                          VALUES (:idframework, :title, :dateproject, :bVisible)");
             $this->bind(':idframework', $post['framework']);
+            $this->bind(':title', $post['title']);
             $this->bind(':dateproject', isset($post['dateproject']) && strtotime($post['dateproject']) ? $post['dateproject'] : date("Y-m-d"));
             //$this->bind(':image', isset($post['image']) ? $post['image'] : 'null');
             $this->bind(':bVisible', isset($post['bVisible']) ? $post['bVisible'] : 0);
             $resp = $this->execute();
             $id = $this->lastIndexId();
             //Insertion du titre français
-            $this->query('INSERT INTO project_tr (id, id_Language, title, description)
-                          VALUES(:id, 1, :title, :description)');
+            $this->query('INSERT INTO project_tr (id, id_Language, description)
+                          VALUES(:id, 1, :description)');
             $this->bind(':id', $id);
-            $this->bind(':title', $post['title_fr']);
             $this->bind(':description', $post['description_fr']);
             $respfr = $this->execute();
             //Insertion du titre anglais
-            $this->query('INSERT INTO project_tr (id, id_Language, title, description)
-                          VALUES(:id, 2, :title, :description)');
+            $this->query('INSERT INTO project_tr (id, id_Language, description)
+                          VALUES(:id, 2, :description)');
             $this->bind(':id', $id);
-            $this->bind(':title', $post['title_en']);
             $this->bind(':description', $post['description_en']);
             $respen = $this->execute();
             //Insertion de l'image
@@ -114,7 +111,7 @@ class ProjectsModel extends Model
         $post = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
         if ($post['submit'])
         {
-            if($post['title_fr'] == '' || $post['description_fr'] == '' || $post['title_en'] == '' || $post['description_en'] == '')
+            if($post['title'] == '' || $post['description_fr'] == '' || $post['description_en'] == '')
             {
                 Messages::setMsg('Please fill in all mandatory fields', 'error');
                 return;
@@ -146,26 +143,25 @@ class ProjectsModel extends Model
             $this->startTransaction();
             $this->query('UPDATE project 
                           SET id_FrameworkEngine = :framework, first_date_project = :first_date_project,
-                              bVisible = :bVisible
+                              title = :title, bVisible = :bVisible
                           WHERE id = :id');
             $this->bind(':framework', $post['framework']);
             $this->bind(':first_date_project', isset($post['dateproject']) && strtotime($post['dateproject']) ? $post['dateproject'] : 'null');
+            $this->bind(':title', $post['title']);
             $this->bind(':bVisible', isset($post['bVisible']) ? $post['bVisible'] : 0);
             $this->bind(':id', $post['id']);
             $resp = $this->execute();
             // Mise à jour du titre FR
             $this->query('UPDATE project_tr 
-                            SET title = :title, description = :description 
+                            SET description = :description 
                             WHERE id = :id AND id_Language = 1');
-            $this->bind(':title', $post['title_fr']);
             $this->bind(':description', $post['description_fr']);
             $this->bind(':id', $post['id']);
             $resfr = $this->execute();
             // Mise à jour du titre EN
             $this->query('UPDATE project_tr 
-                            SET title = :title, description = :description 
+                            SET description = :description 
                             WHERE id = :id AND id_Language = 2');
-            $this->bind(':title', $post['title_en']);
             $this->bind(':description', $post['description_en']);
             $this->bind(':id', $post['id']);
             $resen = $this->execute();
@@ -198,9 +194,8 @@ class ProjectsModel extends Model
             $this->close();
             Messages::setMsg('Error(s) during update', 'error');
         }
-        $this->query("SELECT p.id, p.first_date_project, p.id_FrameworkEngine, p.bVisible,
-                             pfr.title title_fr, pfr.description description_fr,
-                             pen.title title_en, pen.description description_en,
+        $this->query("SELECT p.id, p.title, p.first_date_project, p.id_FrameworkEngine, p.bVisible,
+                             pfr.description description_fr, pen.description description_en,
                              pi.name, pi.img_size, pi.img_type, pi.img_blob
                       FROM project AS p 
                         INNER JOIN project_tr AS pfr ON p.id = pfr.id AND pfr.id_Language = 1
@@ -243,11 +238,7 @@ class ProjectsModel extends Model
             $this->close();
             $this->returnToPage('projects');
         }
-        $this->query("SELECT ptrfr.title title_fr, ptren.title title_en
-                      FROM project AS p
-                        INNER JOIN project_tr AS ptrfr ON p.id = ptrfr.id AND ptrfr.id_Language = 1
-                        INNER JOIN project_tr AS ptren ON p.id = ptren.id AND ptren.id_Language = 2
-                      WHERE p.id = ".$_GET['id']);
+        $this->query("SELECT title FROM project WHERE id = ".$_GET['id']);
         $rows = $this->single();
         $this->close();
         if (!$rows)
@@ -272,10 +263,7 @@ class ProjectsModel extends Model
     public function getList()
     {
         $this->changeDatabase(self::curDB);
-        $this->query("SELECT p.id, CONCAT(ptrfr.title, ' (', ptren.title, ')') name
-                      FROM project AS p
-                        INNER JOIN project_tr AS ptrfr ON p.id = ptrfr.id AND ptrfr.id_Language = 1
-                        INNER JOIN project_tr AS ptren ON p.id = ptren.id AND ptren.id_Language = 2");
+        $this->query("SELECT id, title name FROM project");
         $rows = $this->resultSet();
         $this->close();
         return $rows;

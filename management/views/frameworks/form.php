@@ -32,6 +32,10 @@
         <a href="<?php echo ROOT_MNGT; ?>proglanguage/add">Ajout</a>
     </div>
     <div class="form-group">
+        <label>Ordre d'affichage</label>
+        <input type="text" name="sortOrder" value="<?php echo isset($viewModel['sortOrder']) ? $viewModel['sortOrder'] : ''; ?>"/>
+    </div>
+    <div class="form-group">
         <label>Visible</label>
         <input type="checkbox" name="bVisible" value="1" <?php echo isset($viewModel['bVisible']) && $viewModel['bVisible'] ? 'checked' : ''; ?> />
     </div>

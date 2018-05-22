@@ -7,7 +7,7 @@ class FrameworksModel extends Model
     public function Index()
     {
         $this->changeDatabase(self::curDB);
-        $this->query('SELECT fe.id, fe.name, fe.bVisible, pl.name proglanguage
+        $this->query('SELECT fe.id, fe.name, fe.sortOrder, fe.bVisible, pl.name proglanguage
                       FROM frameworkengine AS fe
                         INNER JOIN proglanguage AS pl on fe.id_ProgLanguage = pl.id
                       ORDER BY fe.bVisible DESC, fe.name');
@@ -30,10 +30,11 @@ class FrameworksModel extends Model
             $this->changeDatabase(self::curDB);
             $this->startTransaction();
             //Insertion des données générales
-            $this->query('INSERT INTO frameworkengine (name, id_ProgLanguage, bVisible)
-                          VALUES (:name, :proglanguage, :bVisible)');
+            $this->query('INSERT INTO frameworkengine (name, id_ProgLanguage, sortOrder, bVisible)
+                          VALUES (:name, :proglanguage, :sortOrder :bVisible)');
             $this->bind(':name', $post['name']);
             $this->bind(':proglanguage', $post['proglanguage']);
+            $this->bind(':sortOrder', $post['sortOrder']);
             $this->bind(':bVisible', isset($post['bVisible']) ? $post['bVisible'] : 0);
             $this->execute();
             $id = $this->lastIndexId();
@@ -64,10 +65,11 @@ class FrameworksModel extends Model
                 return;
             }
             $this->query('UPDATE frameworkengine 
-                          SET name = :name, id_ProgLanguage = :proglanguage, bVisible = :bVisible
+                          SET name = :name, id_ProgLanguage = :proglanguage, sortOrder = :sortOrder, bVisible = :bVisible
                           WHERE id = :id');
             $this->bind(':name', $post['name']);
             $this->bind(':proglanguage', $post['proglanguage']);
+            $this->bind(':sortOrder', $post['sortOrder']);
             $this->bind(':bVisible', isset($post['bVisible']) ? $post['bVisible'] : 0);
             $this->bind(':id', $post['id']);
             $res = $this->execute();
@@ -81,7 +83,7 @@ class FrameworksModel extends Model
                 Messages::setMsg('Error(s) during update', 'error');
             }
         }
-        $this->query("SELECT id, name, bVisible, id_ProgLanguage
+        $this->query("SELECT id, name, sortOrder, bVisible, id_ProgLanguage
                       FROM frameworkengine
                       WHERE id = ".$_GET['id']);
         $rows = $this->single();

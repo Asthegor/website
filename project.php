@@ -7,44 +7,18 @@ if (!isset($_GET['projectid']) && !is_numeric($_GET['projectid']))
   header('Location: index.php');
 }
 $projectid = intval($_GET['projectid']);
-include('functions/prj_functions.php');
-$previous = get_ProjectPreviousId($prj_bdd, $projectid);
-$next = get_ProjectNextId($prj_bdd, $projectid);
+require('functions/prj_functions.php');
+
+include('views/projnavbar.php');
 ?>
-<div id="prev-next-bar">
-  <?php
-  if ($previous['id']) :
-  ?>
-    <a class="prev-next-item prev-item" href="?projectid=<?php echo $previous['id']; ?>">Précédent</a>
-  <?php
-  else :
-  ?>
-    <span class="prev-next-item prev-item-disable">Précédent</span>
-  <?php
-  endif;
-  ?>
-  <a class="prev-next-item proj-item-inline" href="projects.php">Projets</a>
-  <?php
-  if ($next['id']) :
-  ?>
-    <a class="prev-next-item next-item" href="?projectid=<?php echo $next['id']; ?>">Suivant</a>
-  <?php
-  else :
-  ?>
-    <span class="prev-next-item next-item-disable">Suivant</span>
-  <?php
-  endif;
-  ?>
-</div>
 <div class="project">
   <?php
   $project = get_ProjectInfos($prj_bdd, $projectid);
-  $title = $_SESSION['language'] == 'FR' ? $project['title_fr'] : $project['title_en'];
   ?>
   <div id="project-image">
-    <image width="200" height="250" src="data:image/jpeg;base64,<?php echo $project['image']; ?>" alt="<?php echo $title; ?>"/>
+    <image width="200" height="250" src="data:image/jpeg;base64,<?php echo $project['image']; ?>" alt="<?php echo $project['title']; ?>"/>
   </div>
-  <h1><?php echo $title; ?></h1>
+  <h1><?php echo $project['title']; ?></h1>
   <div class="project-inline">
     <h2 class="project-inline-label">Framework / Engin :</h2>
     <h2><?php echo $project['framework'].'/'.$project['proglanguage']; ?></h2>

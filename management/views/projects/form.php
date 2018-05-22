@@ -27,12 +27,8 @@
         </select>
     </div>
     <div class="form-group">
-        <label>Titre français</label>
-        <input type="text" name="title_fr" value="<?php echo isset($viewModel['title_fr']) ? $viewModel['title_fr'] : ''; ?>" required />
-    </div>
-    <div class="form-group">
-        <label>Titre anglais</label>
-        <input type="text" name="title_en" value="<?php echo isset($viewModel['title_en']) ? $viewModel['title_en'] : ''; ?>" required />
+        <label>Titre</label>
+        <input type="text" name="title" value="<?php echo isset($viewModel['title']) ? $viewModel['title'] : ''; ?>" required />
     </div>
     <div class="form-group">
         <label>Description française</label>

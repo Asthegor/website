@@ -9,6 +9,7 @@ require_once('views/projectnavbar/projectnavbar.php');
             <th style="width:5%;">Id</th>
             <th style="width:15%;">Nom</th>
             <th style="width:15%;">Langage de programmation</th>
+            <th style="width:15%;">Ordre d'affichage</th>
             <th style="width:15%;">Visible</td>
         </tr>
     </table>
@@ -22,6 +23,7 @@ require_once('views/projectnavbar/projectnavbar.php');
                     <td style="width:5%;"><?php echo $item['id']; ?></td>
                     <td style="width:15%;"><?php echo $item['name']; ?></td>
                     <td style="width:15%;"><?php echo $item['proglanguage']; ?></td>
+                    <td style="width:15%;"><?php echo $item['sortOrder']; ?></td>
                     <td style="width:15%;"><?php echo $item['bVisible'] ? 'Oui' : 'Non'; ?></td>
                 </tr>
             </table>

@@ -16,10 +16,8 @@ function get_AllFrameworks($bdd)
 
 function get_ProjectsByFrameworkId($bdd, $frameworkid)
 {
-  $query = "SELECT p.*, ptrfr.title title_fr, ptren.title title_en, pri.img_blob image
+  $query = "SELECT p.*, pri.img_blob image
             FROM project as p
-              INNER JOIN project_tr AS ptrfr ON p.id = ptrfr.id AND ptrfr.id_Language = 1
-              INNER JOIN project_tr AS ptren ON p.id = ptren.id AND ptren.id_Language = 2
               LEFT JOIN projectimage AS pri ON p.id = pri.id_Project
             WHERE p.bVisible = 1 AND p.id_FrameworkEngine = ?";
   $stmt = $bdd->stmt_init();
@@ -33,8 +31,8 @@ function get_ProjectsByFrameworkId($bdd, $frameworkid)
 
 function get_ProjectInfos($bdd, $projectid)
 {
-  $query = "SELECT p.*, f.name AS framework, pl.name AS proglanguage, ptrfr.title title_fr, pri.img_blob image,
-                   ptren.title title_en, ptrfr.description description_fr, ptren.description description_en
+  $query = "SELECT p.*, f.name AS framework, pl.name AS proglanguage, pri.img_blob image,
+                   ptrfr.description description_fr, ptren.description description_en
             FROM project AS p 
               INNER JOIN project_tr AS ptrfr ON p.id = ptrfr.id AND ptrfr.id_Language = 1
               INNER JOIN project_tr AS ptren ON p.id = ptren.id AND ptren.id_Language = 2
