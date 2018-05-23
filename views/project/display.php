@@ -24,5 +24,5 @@ require('views/projnavbar.php')
     <h3><?php echo !is_null($viewModel['first_date_project']) ? $viewModel['first_date_project'] : 'Indéterminé'; ?></h3>
   </div>
   <h2 class="project-inline-label">Description :</h2>
-  <p><?php echo $_SESSION['language'] == 'FR' ? $viewModel['description_fr'] : $viewModel['description_en']; ?></p>
+  <p><?php echo $_SESSION['language'] == 'EN' ? $viewModel['description_en'] : $viewModel['description_fr']; ?></p>
 </div>

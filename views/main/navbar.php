@@ -25,13 +25,14 @@ $fileName = basename($_SERVER['PHP_SELF']);
   }
   ?>
   <li id="nav-item-last-child" class="nav-item">
-    <a href="<?php echo ROOT_URL.substr($_SERVER['REQUEST_URI'], 1); ?>">
-      <img src="data:image/jpeg;base64,
-        <?php
-        $lm = new LanguageModel();
-        $lmres = $lm->getImage($_SESSION['language']);
-        echo base64_encode($lmres['image']);
-        ?>" alt="<?php echo $_SESSION['language'] == 'FR' ? 'EN' : 'FR'; ?>" width="24" height="16"/>
+    <a href="<?php echo ROOT_URL.'views/main/language.php'; ?>">
+      <?php
+      $lm = new LanguageModel();
+      $lmres = $lm->getImage($_SESSION['language']);
+      $imgsrc = 'data:image/jpeg;base64,'.base64_encode($lmres['image']);
+      $imgalt = $_SESSION['language'];
+      ?>
+      <img src="<?php echo $imgsrc; ?>" alt="<?php echo $imgalt; ?>" width="24" height="16"/>
     </a>
   </li>
 </ul>
