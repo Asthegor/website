@@ -38,10 +38,17 @@
         <label>Description anglaise</label>
         <input type="text" name="description_en" value="<?php echo isset($viewModel['description_en']) ? $viewModel['description_en'] : ''; ?>" required />
     </div>
-<!-- Gestion de la date à réaliser -->
     <div class="form-group">
         <label>Date de début</label>
         <input type="date" name="dateproject" value="<?php echo isset($viewModel['first_date_project']) ? $viewModel['first_date_project'] : ''; ?>" />
+    </div>
+    <div class="form-group">
+        <label>Numéro de version</label>
+        <input type="text" name="num_version" value="<?php echo isset($viewModel['num_version']) ? $viewModel['num_version'] : ''; ?>" />
+    </div>
+    <div class="form-group">
+        <label>Date de la version</label>
+        <input type="date" name="date_version" value="<?php echo isset($viewModel['date_version']) ? $viewModel['date_version'] : ''; ?>" />
     </div>
     <div class="form-group">
         <?php

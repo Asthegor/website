@@ -8,10 +8,13 @@ class ProjectsModel extends Model
     {
         $this->changeDatabase(self::curDB);
         $this->query("SELECT  p.id, p.title, p.first_date_project, p.bVisible, 
-                              CONCAT(fe.name, ' (', l.name, ')') framework 
+                              CONCAT(fe.name, ' (', l.name, ')') framework,
+                              CONCAT(v.num_version, ' (', v.date_version, ')') version
                       FROM project AS p 
                         INNER JOIN frameworkengine AS fe ON p.id_FrameworkEngine = fe.id 
                         INNER JOIN proglanguage AS l ON fe.id_ProgLanguage = l.id 
+                        LEFT JOIN version AS v ON v.id = 
+                            (SELECT vv.id FROM version AS vv WHERE vv.id_Project = p.id ORDER BY vv.date_version DESC LIMIT 1)
                       ORDER BY p.bVisible DESC, p.first_date_project DESC, p.title");
         $rows = $this->resultSet();
         $this->close();
@@ -26,6 +29,11 @@ class ProjectsModel extends Model
             if ($post['title'] == '' || $post['description_fr'] == '' || $post['description_en'] == '')
             {
                 Messages::setMsg('Please fill in all mandatory fields', 'error');
+                return;
+            }
+            if (($post['num_version'] != '' && $post['date_version'] == '') || ($post['num_version'] == '' && $post['date_version'] != ''))
+            {
+                Messages::setMsg('If "Version number" is filled, "Version date" must be filled too (or vice versa).', 'error');
                 return;
             }
             $img_blob = '';
@@ -53,6 +61,7 @@ class ProjectsModel extends Model
             }
             // Insert into MySQL
             date_default_timezone_set('Europe/Paris');
+            $dateproject = isset($post['dateproject']) && strtotime($post['dateproject']) ? $post['dateproject'] : date("Y-m-d");
             $this->changeDatabase(self::curDB);
             $this->startTransaction();
             //Insertion des données générales
@@ -60,7 +69,7 @@ class ProjectsModel extends Model
                           VALUES (:idframework, :title, :dateproject, :bVisible)");
             $this->bind(':idframework', $post['framework']);
             $this->bind(':title', $post['title']);
-            $this->bind(':dateproject', isset($post['dateproject']) && strtotime($post['dateproject']) ? $post['dateproject'] : date("Y-m-d"));
+            $this->bind(':dateproject', $dateproject);
             //$this->bind(':image', isset($post['image']) ? $post['image'] : 'null');
             $this->bind(':bVisible', isset($post['bVisible']) ? $post['bVisible'] : 0);
             $resp = $this->execute();
@@ -77,6 +86,13 @@ class ProjectsModel extends Model
             $this->bind(':id', $id);
             $this->bind(':description', $post['description_en']);
             $respen = $this->execute();
+            //Insertion de la version
+            $this->query('INSERT INTO version (id_Project, num_version, date_version)
+                          VALUES(:id, :num_version, :date_version)');
+            $this->bind(':id', $id);
+            $this->bind(':num_version', isset($post['num_version']) ? $post['num_version'] : '0.0.1' );
+            $this->bind(':date_version', isset($post['date_version']) ? $post['date_version'] : $dateproject );
+            $respv = $this->execute();
             //Insertion de l'image
             $respi = 1;
             if ($img_blob != '')
@@ -92,7 +108,7 @@ class ProjectsModel extends Model
             }
 
             //Verify
-            if($resp && $respen && $respfr && $respi)
+            if($resp && $respen && $respfr && $respi && $respv)
             {
                 $this->commit();
                 $this->close();
@@ -165,6 +181,13 @@ class ProjectsModel extends Model
             $this->bind(':description', $post['description_en']);
             $this->bind(':id', $post['id']);
             $resen = $this->execute();
+            //Insertion de la version
+            $this->query('INSERT INTO version (id_Project, num_version, date_version)
+                          VALUES(:id, :num_version, :date_version)');
+            $this->bind(':id', $id);
+            $this->bind(':num_version', $post['num_version']);
+            $this->bind(':date_version', $post['date_version']);
+            $respv = $this->execute();
             //Insertion de l'image
             $respid = true;
             $respi = true;
@@ -184,7 +207,7 @@ class ProjectsModel extends Model
             }
 
             //Verify
-            if($resp && $resfr && $resen && $respid && $respi)
+            if($resp && $resfr && $resen && $respid && $respi && $respv)
             {
                 $this->commit();
                 $this->close();
@@ -196,11 +219,14 @@ class ProjectsModel extends Model
         }
         $this->query("SELECT p.id, p.title, p.first_date_project, p.id_FrameworkEngine, p.bVisible,
                              pfr.description description_fr, pen.description description_en,
-                             pi.name, pi.img_size, pi.img_type, pi.img_blob
+                             pi.name, pi.img_size, pi.img_type, pi.img_blob,
+                             v.num_version, v.date_version
                       FROM project AS p 
                         INNER JOIN project_tr AS pfr ON p.id = pfr.id AND pfr.id_Language = 1
                         INNER JOIN project_tr AS pen ON p.id = pen.id AND pen.id_Language = 2
                         LEFT JOIN projectimage AS pi ON p.id = pi.id_Project
+                        LEFT JOIN version AS v ON v.id = 
+                            (SELECT vv.id FROM version AS vv WHERE vv.id_Project = p.id ORDER BY vv.date_version DESC LIMIT 1)
                       WHERE p.id = ".$_GET['id']);
         $rows = $this->single();
         $this->close();

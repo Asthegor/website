@@ -10,24 +10,30 @@ require_once('views/projectnavbar/projectnavbar.php');
             <th style="width:15%;">Titre</th>
             <th style="width:15%;">Framework/Engin</th>
             <th style="width:15%;">Date de création</th>
+            <th style="width:15%;">Version</th>
             <th style="width:15%;">Visible</td>
+            <th style="width:20%;"></td>
         </tr>
     </table>
     <?php
     foreach ($viewModel as $item)
     {
     ?>
-        <a href="<?php echo ROOT_MNGT.'projects/update/'.$item['id']; ?>">
-            <table style="width:100%;">
-                <tr>
-                    <td style="width:5%;"><?php echo $item['id']; ?></td>
-                    <td style="width:15%;"><?php echo $item['title']; ?></td>
-                    <td style="width:15%;"><?php echo $item['framework']; ?></td>
-                    <td style="width:15%;"><?php echo $item['first_date_project']; ?></td>
-                    <td style="width:15%;"><?php echo $item['bVisible'] ? 'Oui' : 'Non'; ?></td>
-                </tr>
-            </table>
-        </a>
+        <div style="display: inline-block; width:100%">
+            <a href="<?php echo ROOT_MNGT.'projects/update/'.$item['id']; ?>">
+                <table style="width:80%;">
+                    <tr>
+                        <td style="width:5%;"><?php echo $item['id']; ?></td>
+                        <td style="width:15%;"><?php echo $item['title']; ?></td>
+                        <td style="width:15%;"><?php echo $item['framework']; ?></td>
+                        <td style="width:15%;"><?php echo $item['first_date_project']; ?></td>
+                        <td style="width:15%;"><?php echo $item['version']; ?></td>
+                        <td style="width:15%;"><?php echo $item['bVisible'] ? 'Oui' : 'Non'; ?></td>
+                    </tr>
+                </table>
+            </a>
+            <a style="width:20%;" href="<?php echo ROOT_MNGT.'devlog/add/'.$item['id']; ?>">Nouveau DevLog</a>
+        </div>
     <?php
     }
     ?>
