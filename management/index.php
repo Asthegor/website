@@ -31,6 +31,7 @@ require('models/projects.php');
 require('models/proglanguage.php');
 require('models/framework.php');
 require('models/devlog.php');
+require('models/version.php');
 
 require('models/tutorials.php');
 require('models/resume.php');

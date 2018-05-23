@@ -1,6 +1,7 @@
 <h1>DevLog</h1>
 <form method="post" action="<?php $_SERVER['PHP_SELF']; ?>">
-    <?php if (isset($viewModel['id']))
+    <?php
+    if (isset($viewModel['id']))
     {
         ?>
         <div class="form-group">
@@ -8,23 +9,46 @@
             <input type="text" name="id" value="<?php echo $viewModel['id']; ?>" readonly />
         </div>
         <?php
+        $idProject = $viewModel['id_Project'];
+    }
+    else if (isset($_GET['id']))
+    {
+        $idProject = $_GET['id'];
+    }
+    else
+    {
+        $idProject = false;
     }
     ?>
     <div class="form-group">
         <label>Projet associé</label>
-        <select name="project" required>
-            <option value=""></option>
-            <?php
-            $pm = new ProjectsModel();
-            $pmlist = $pm->getList();
-            foreach ($pmlist as $item)
-            {
-                ?>
-                <option value="<?php echo $item['id']; ?>" <?php echo $viewModel['id_Project'] == $item['id'] ? 'selected' : ''; ?>><?php echo $item['name']; ?></option>
-                <?php
-            }
+        <?php
+        if($idProject)
+        {
             ?>
-        </select>
+            <input type="hidden" name="id_Project" value="<?php echo $viewModel['id_Project']; ?>" />
+            <input type="text" name="project" value="<?php echo $viewModel['project']; ?>" readonly />
+            <?php
+        }
+        else
+        {
+            ?>
+            <select name="id_Project" required>
+                <option value=""></option>
+                <?php
+                $pm = new ProjectsModel();
+                $pmlist = $pm->getList();
+                foreach ($pmlist as $item)
+                {
+                    ?>
+                    <option value="<?php echo $item['id']; ?>" <?php echo $idProject == $item['id'] ? 'selected' : ''; ?>><?php echo $item['name']; ?></option>
+                    <?php
+                }
+                ?>
+            </select>
+            <?php
+        }
+        ?>
     </div>
     <div class="form-group">
         <label>Titre français</label>
@@ -44,7 +68,7 @@
     </div>
     <div class="form-group">
         <label>Date de début</label>
-        <input type="date" name="date_creation" value="<?php echo isset($viewModel['date_creation']) ? $viewModel['first_date_project'] : ''; ?>" />
+        <input type="date" name="date_creation" value="<?php echo isset($viewModel['date_creation']) ? $viewModel['date_creation'] : ''; ?>" />
     </div>
     <div class="form-group">
         <label>Visible</label>

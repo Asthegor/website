@@ -36,6 +36,11 @@ class ProjectsModel extends Model
                 Messages::setMsg('If "Version number" is filled, "Version date" must be filled too (or vice versa).', 'error');
                 return;
             }
+            if ($post['date_version'] < $post['dateproject'])
+            {
+                Messages::setMsg("Date of version must be greater or equal than the project's date", 'error');
+                return;
+            }
             $img_blob = '';
             $img_taille = 0;
             $img_type = '';
@@ -181,10 +186,21 @@ class ProjectsModel extends Model
             $this->bind(':description', $post['description_en']);
             $this->bind(':id', $post['id']);
             $resen = $this->execute();
-            //Insertion de la version
-            $this->query('INSERT INTO version (id_Project, num_version, date_version)
-                          VALUES(:id, :num_version, :date_version)');
-            $this->bind(':id', $id);
+            //Insertion de la version si date plus récente
+            $vm = new VersionModel();
+            $version = $vm->getLastVersion($post['id']);
+            if ($version['num_version'] != $post['num_version'] || $version['date_version'] != $post['date_version'])
+            {
+                $this->query('INSERT INTO version (id_Project, num_version, date_version)
+                              VALUES(:id_project, :num_version, :date_version)');
+                $this->bind(':id_project', $post['id']);
+            }
+            else
+            {
+                $this->query("UPDATE version SET num_version = :num_version, date_version = :date_version
+                              WHERE id = :id");
+                $this->bind(':id', $version['id']);
+            }
             $this->bind(':num_version', $post['num_version']);
             $this->bind(':date_version', $post['date_version']);
             $respv = $this->execute();
