@@ -6,12 +6,6 @@ define("COPY_YEAR","2015");
 date_default_timezone_set("Europe/Paris");
 
 
-if(!isset($_SESSION['language']))
-{
-    $_SESSION['language'] = 'FR';
-}
-
-
 //Define DB Params
 //define("DB_PORT", "");
 define("DB_PORT", ":3399");
@@ -21,7 +15,7 @@ define("DB_NAME", "lacombed_web");
 //define("DB_USER_PREF", "lacombed_");
 define("DB_USER_PREF", "");
 define("DB_USER", DB_USER_PREF."user_ro");
-define("DB_PWD", "user_ro");
+define("DB_PWD", "1SlOn7AEmp@W");
 
 // Define URL
 //define("ROOT_URL", "http://php.lacombedominique.com/");
