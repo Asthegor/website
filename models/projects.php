@@ -13,7 +13,7 @@ class ProjectsModel extends Model
                         INNER JOIN proglanguage AS l ON fe.id_ProgLanguage = l.id 
                         LEFT JOIN projectimage AS pri ON pri.id_Project = p.id 
                       WHERE p.bVisible = 1
-                      ORDER BY fe.sortOrder, p.first_date_project DESC, p.title");
+                      ORDER BY fe.sortOrder, fe.name, p.first_date_project DESC, p.title");
         $rows = $this->resultSet();
         $this->close();
         return $rows;

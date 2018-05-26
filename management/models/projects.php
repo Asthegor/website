@@ -15,7 +15,7 @@ class ProjectsModel extends Model
                         INNER JOIN proglanguage AS l ON fe.id_ProgLanguage = l.id 
                         LEFT JOIN version AS v ON v.id = 
                             (SELECT vv.id FROM version AS vv WHERE vv.id_Project = p.id ORDER BY vv.date_version DESC LIMIT 1)
-                      ORDER BY p.bVisible DESC, p.first_date_project DESC, p.title");
+                      ORDER BY p.bVisible DESC, v.date_version DESC, p.first_date_project DESC");
         $rows = $this->resultSet();
         $this->close();
         return $rows;
@@ -31,12 +31,13 @@ class ProjectsModel extends Model
                 Messages::setMsg('Please fill in all mandatory fields', 'error');
                 return;
             }
+
             if (($post['num_version'] != '' && $post['date_version'] == '') || ($post['num_version'] == '' && $post['date_version'] != ''))
             {
                 Messages::setMsg('If "Version number" is filled, "Version date" must be filled too (or vice versa).', 'error');
                 return;
             }
-            if ($post['date_version'] < $post['dateproject'])
+            if ($post['date_version'] != '' && $post['date_version'] < $post['dateproject'])
             {
                 Messages::setMsg("Date of version must be greater or equal than the project's date", 'error');
                 return;
@@ -51,6 +52,7 @@ class ProjectsModel extends Model
                 $ret = is_uploaded_file($_FILES['projectimage']['tmp_name']);
                 if (!$ret)
                 {
+                    echo 'fichier manquant<br>';
                     Messages::setMsg('Error during file transfert', 'error');
                     return;
                 }
@@ -141,7 +143,7 @@ class ProjectsModel extends Model
             $img_taille = 0;
             $img_type = '';
             $img_nom = '';
-            $taillemax = 55000;
+            $taillemax = 255000;
             if (isset($_FILES['projectimage']) && $_FILES['projectimage']['error'] != 4)
             {
                 $ret = is_uploaded_file($_FILES['projectimage']['tmp_name']);
@@ -310,6 +312,30 @@ class ProjectsModel extends Model
         $this->close();
         return $rows;
     }
-}
 
+    public function getNbProjects($isActive = false)
+    {
+        $this->changeDatabase(self::curDB);
+        $query = "SELECT COUNT(id) nb FROM project ";
+        if($isActive)
+        {
+            $query .= " WHERE bVisible = 1";
+        }
+        $this->query($query);
+        $rows = $this->single();
+        $this->close();
+        return $rows['nb'];
+    }
+
+    public function getNbActiveProjects() { return $this->getNbProjects(true); }
+
+    public function getDateProject($id)
+    {
+        $this->changeDatabase(self::curDB);
+        $this->query("SELECT first_date_project FROM project WHERE id = ".$_GET['id']);
+        $rows = $this->single();
+        $this->close();
+        return $rows['first_date_project'];
+    }
+}
 ?>

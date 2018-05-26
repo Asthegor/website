@@ -89,7 +89,6 @@ class DevLogModel extends Model
             }
             // Insert into MySQL
             date_default_timezone_set('Europe/Paris');
-            var_dump($post);
             $this->changeDatabase(self::curDB);
             $this->startTransaction();
             //Insertion des données générales

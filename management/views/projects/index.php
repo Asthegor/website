@@ -2,7 +2,18 @@
 require_once('views/projectnavbar/projectnavbar.php');
 ?>
 <h1>Projets</h1>
-<h5><a href="<?php echo ROOT_MNGT.'projects/add'; ?>">Nouveau projet</a></h5>
+<p>Nombre de projets :
+<?php
+$prjm = new ProjectsModel();
+echo $prjm->getNbProjects();
+?>
+</p>
+<p>Nombre de projets affichés :
+<?php 
+echo $prjm->getNbActiveProjects();
+?>
+</p>
+<h2><a href="<?php echo ROOT_MNGT.'projects/add'; ?>">Nouveau projet</a></h2>
 <div class="navbar-index">
     <table style="width:100%; text-align: left;">
         <tr>

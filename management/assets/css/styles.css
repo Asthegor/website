@@ -10,6 +10,9 @@ a img {
   outline:none;
 }
 
+a:visited {
+  color: coral;
+}
 /***************************
  * Partie HEADER
  ***************************/

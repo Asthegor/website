@@ -31,7 +31,7 @@ class FrameworksModel extends Model
             $this->startTransaction();
             //Insertion des données générales
             $this->query('INSERT INTO frameworkengine (name, id_ProgLanguage, sortOrder, bVisible)
-                          VALUES (:name, :proglanguage, :sortOrder :bVisible)');
+                          VALUES (:name, :proglanguage, :sortOrder, :bVisible)');
             $this->bind(':name', $post['name']);
             $this->bind(':proglanguage', $post['proglanguage']);
             $this->bind(':sortOrder', $post['sortOrder']);

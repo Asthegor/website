@@ -18,6 +18,7 @@ require('controllers/projects.php');
 require('controllers/proglanguage.php');
 require('controllers/framework.php');
 require('controllers/devlog.php');
+require('controllers/version.php');
 
 require('controllers/resume.php');
 require('controllers/tutorials.php');

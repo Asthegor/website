@@ -32,11 +32,11 @@
     </div>
     <div class="form-group">
         <label>Description française</label>
-        <input type="text" name="description_fr" value="<?php echo isset($viewModel['description_fr']) ? $viewModel['description_fr'] : ''; ?>" required />
+        <textarea rows="6" cols="150" name="description_fr"  required><?php echo isset($viewModel['description_fr']) ? $viewModel['description_fr'] : ''; ?></textarea>
     </div>
     <div class="form-group">
         <label>Description anglaise</label>
-        <input type="text" name="description_en" value="<?php echo isset($viewModel['description_en']) ? $viewModel['description_en'] : ''; ?>" required />
+        <textarea rows="6" cols="150" name="description_en"  required><?php echo isset($viewModel['description_en']) ? $viewModel['description_en'] : ''; ?></textarea>
     </div>
     <div class="form-group">
         <label>Date de début</label>
@@ -67,7 +67,7 @@
             <?php
         }
         ?>
-        <input type="hidden" name="MAX_FILE_SIZE" value="55000" />
+        <input type="hidden" name="MAX_FILE_SIZE" value="255000" />
         <input type="file" name="projectimage" />
     </div>
     <div class="form-group">
