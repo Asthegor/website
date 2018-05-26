@@ -15,6 +15,13 @@ class Version extends Controller
         $viewmodel = new VersionModel();
         $this->returnView($viewmodel->Update());
     }
+
+    protected function delete()
+    {
+        $this->checkLogin();
+        $viewmodel = new VersionModel();
+        $this->returnView($viewmodel->Delete());
+    }
 }
 
 ?>

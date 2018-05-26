@@ -2,6 +2,29 @@
 require_once('views/projectnavbar/projectnavbar.php');
 ?>
 <h1>Versions</h1>
+<form method="post" action="<?php $_SERVER['PHP_SELF']; ?>">
+    <?php
+    $projectid = '';
+    if (isset($_POST['projectid']))
+    {
+        $projectid = $_POST['projectid'];
+    }
+    ?>
+    <select name="projectid">
+        <option value=""></option>
+        <?php
+        $vm = new VersionModel();
+        $vmlist = $vm->getProjectList();
+        foreach ($vmlist as $item)
+        {
+            ?>
+            <option value="<?php echo $item['id']; ?>" <?php echo $item['id'] == $projectid ? 'selected' : ''; ?>><?php echo $item['title']; ?></option>
+            <?php
+        }
+        ?>
+    </select>
+    <input name="filter" type="submit" value="Filtrer" />
+</form>
 <div class="navbar-index">
     <table style="width:100%; text-align: left;">
         <tr>

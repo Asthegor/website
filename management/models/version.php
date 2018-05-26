@@ -7,10 +7,13 @@ class VersionModel extends Model
     public function Index()
     {
         $this->changeDatabase(self::curDB);
-        $this->query("SELECT v.id, p.title project, v.num_version, v.date_version
-                      FROM version AS v
-                        INNER JOIN project AS p ON v.id_Project = p.id
-                      ORDER BY p.title, v.date_version DESC");
+        $query = "SELECT v.id, p.title project, v.num_version, v.date_version
+                  FROM version AS v INNER JOIN project AS p ON v.id_Project = p.id ".
+                  (isset($_POST['projectid']) && is_numeric($_POST['projectid'])
+                    ? " AND p.id = ".$_POST['projectid']
+                    : "")
+                ." ORDER BY p.title, v.date_version DESC";
+        $this->query($query);
         $rows = $this->resultSet();
         $this->close();
         return $rows;
@@ -113,6 +116,18 @@ class VersionModel extends Model
                       ORDER BY date_version DESC LIMIT 1");
         $this->bind(':idproject', $idproject);
         $rows = $this->single();
+        $this->close();
+        return $rows;
+    }
+    public function getProjectList()
+    {
+        $this->changeDatabase(self::curDB);
+        $this->query("SELECT DISTINCT p.id, p.title
+                      FROM project AS p
+                        INNER JOIN version AS v ON v.id_Project = p.id
+                      ORDER BY p.title");
+        $this->bind(':idproject', $idproject);
+        $rows = $this->resultSet();
         $this->close();
         return $rows;
     }
