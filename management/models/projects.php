@@ -143,7 +143,10 @@ class ProjectsModel extends Model
             $img_taille = 0;
             $img_type = '';
             $img_nom = '';
-            $taillemax = 255000;
+
+            // $cm = new ConfigModel();
+            $taillemax = intval(ConfigModel::getConfig("MAX_FILE_SIZE"));
+
             if (isset($_FILES['projectimage']) && $_FILES['projectimage']['error'] != 4)
             {
                 $ret = is_uploaded_file($_FILES['projectimage']['tmp_name']);

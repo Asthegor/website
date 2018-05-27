@@ -33,6 +33,7 @@ require('models/proglanguage.php');
 require('models/framework.php');
 require('models/devlog.php');
 require('models/version.php');
+require('models/config.php');
 
 require('models/tutorials.php');
 require('models/resume.php');
