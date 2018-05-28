@@ -23,3 +23,8 @@ http://www.lacombedominique.com/assets/images/schemas/web_Schema.png<br>
 <br>
 Une seconde base de données stocke les informations des projets.<br>
 http://www.lacombedominique.com/assets/images/schemas/projects_Schema.png<br>
+
+<h4>Design des pages</h4>
+Actuellement, il s'agit d'un design très sommaire.<br>
+Une attention toute particulière a été mise sur le développement au détriment de la partie présentation.<br>
+Cette dernière sera réalisée dès que les développements seront finalisés.<br>
