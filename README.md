@@ -9,17 +9,21 @@ Aucune librairie ou framework n'a été utilisé pour concevoir ce site.
 Une formation Udemy a servi de base pour la conception du site (https://www.udemy.com/learn-object-oriented-php-by-building-a-complete-website/learn/v4/overview).
 
 Il a été conçu grâce à :
-- SQLDesigner pour l'architecture de la base de données (représentation graphique)
-- USBWebServer pour le système de gestion du contenu (MySQL et serveur PHP inclus)
-- Visual Studio Code en tant qu'IDE
-- GitKraken pour la gestion du versionning
+<ul>
+  <li>SQLDesigner pour l'architecture de la base de données (représentation graphique)</li>
+  <li>USBWebServer pour le système de gestion du contenu (MySQL et serveur PHP inclus)</li>
+  <li>Visual Studio Code en tant qu'IDE</li>
+  <li>GitKraken pour la gestion du versionning</li>
+</ul>
 
 <h2>Design de l'application</h2>
 
 <h4>Design des bases de données</h4>
 Plusieurs bases de données ont été utilisées pour compartimenter les informations :
-- Une base de données pour les éléments dans la barre de navigation ainsi que la page d'accueil (<a href="http://www.lacombedominique.com/assets/images/schemas/schema_web.png">diagramme ici</a>)
-- Une base de données pour les informations des projets  (<a href="http://www.lacombedominique.com/assets/images/schemas/schema_projects.png">diagramme ici</a>)
+<ul>
+  <li>une base de données pour les éléments dans la barre de navigation ainsi que la page d'accueil (<a href="http://www.lacombedominique.com/assets/images/schemas/schema_web.png">diagramme ici</a>)</li>
+  <li>une base de données pour les informations des projets  (<a href="http://www.lacombedominique.com/assets/images/schemas/schema_projects.png">diagramme ici</a>)</li>
+</ul>
 
 <h4>Design des pages</h4>
 Actuellement, il s'agit d'un design très sommaire.<br>
