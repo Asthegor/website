@@ -19,7 +19,7 @@ Il a été conçu grâce à :
 <h4>Design des bases de données</h4>
 Plusieurs bases de données ont été utilisées pour compartimenter les informations.
 Une base de données contient les données affichées dans la barre de navigation ainsi que la page d'accueil.
-http://www.lacombedominique.com/assets/images/schemas/projects_Schema.png
+http://www.lacombedominique.com/assets/images/schemas/web_Schema.png
 
 Une seconde base de données stocke les informations des projets.
-http://www.lacombedominique.com/assets/images/schemas/web_Schema.png
+http://www.lacombedominique.com/assets/images/schemas/projects_Schema.png
