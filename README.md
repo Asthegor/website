@@ -18,8 +18,8 @@ Il a été conçu grâce à :
 
 <h4>Design des bases de données</h4>
 Plusieurs bases de données ont été utilisées pour compartimenter les informations :
-- une base de données pour les éléments dans la barre de navigation ainsi que la page d'accueil (<a href="http://www.lacombedominique.com/assets/images/schemas/schema_web.png">diagramme ici</a>)
-- une base de données pour les informations des projets  (<a href="http://www.lacombedominique.com/assets/images/schemas/schema_projects.png">diagramme ici</a>)
+- Une base de données pour les éléments dans la barre de navigation ainsi que la page d'accueil (<a href="http://www.lacombedominique.com/assets/images/schemas/schema_web.png">diagramme ici</a>)
+- Une base de données pour les informations des projets  (<a href="http://www.lacombedominique.com/assets/images/schemas/schema_projects.png">diagramme ici</a>)
 
 <h4>Design des pages</h4>
 Actuellement, il s'agit d'un design très sommaire.<br>
