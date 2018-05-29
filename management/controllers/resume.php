@@ -8,6 +8,14 @@ class Resume extends Controller
         $viewmodel = new ResumeModel();
         $this->returnView($viewmodel->Index());
     }
+
+    protected function add()
+    {
+        $this->checkLogin();
+        $viewmodel = new ResumeModel();
+        $this->returnView($viewmodel->Add());
+    }
+
 }
 
 ?>

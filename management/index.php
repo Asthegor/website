@@ -19,9 +19,11 @@ require('controllers/proglanguage.php');
 require('controllers/framework.php');
 require('controllers/devlog.php');
 require('controllers/version.php');
-
 require('controllers/resume.php');
-require('controllers/tutorials.php');
+require('controllers/company.php');
+require('controllers/city.php');
+
+// require('controllers/tutorials.php');
 
 
 require('models/users.php');
@@ -33,10 +35,12 @@ require('models/proglanguage.php');
 require('models/framework.php');
 require('models/devlog.php');
 require('models/version.php');
-require('models/config.php');
-
-require('models/tutorials.php');
+require('models/configs.php');
 require('models/resume.php');
+require('models/company.php');
+require('models/city.php');
+
+// require('models/tutorials.php');
 
 
 $management = new Management($_GET);

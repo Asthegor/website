@@ -1,3 +1,6 @@
+<?php
+require_once('views/resumenavbar/resumenavbar.php');
+?>
 <h1>Expériences</h1>
 <h2><a href="<?php echo ROOT_MNGT.'resume/add'; ?>">Nouvelle expérience</a></h2>
 <div class="navbar-index">
