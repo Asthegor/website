@@ -165,6 +165,10 @@ class ProjectsModel extends Model
                 $img_nom  = $_FILES['projectimage']['name'];
                 $img_blob = file_get_contents($_FILES['projectimage']['tmp_name']);
             }
+            // var_dump($post);
+            // echo 'description_fr = '.$post['description_fr'].'<br>';
+            // echo 'html_entity_decode(description_fr) = '.html_entity_decode($post['description_fr']).'<br>';
+            // return;
 
             date_default_timezone_set('Europe/Paris');
             $this->startTransaction();
@@ -233,12 +237,13 @@ class ProjectsModel extends Model
             {
                 $this->commit();
                 $this->close();
-                $this->returnToPage('projects');
+                //$this->returnToPage('projects');
+                echo 'Update done => OK';
                 return;
             }
             $this->rollBack();
             $this->close();
-            Messages::setMsg('Error(s) during update : [$resp='.$resp.', $resfr='.$resfr.', $resen='.$resen.', $respid='.$respid.', $respi='.$respi.', $respv='.$respv.']', 'error');
+            Messages::setMsg('Error(s) during update', 'error');
         }
         $this->query("SELECT p.id, p.title, p.first_date_project, p.id_FrameworkEngine, p.bVisible,
                              pfr.description description_fr, pen.description description_en,

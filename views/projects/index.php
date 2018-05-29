@@ -1,11 +1,5 @@
 <?php
 $oldFramework = '';
-function decode_value(&$value)
-{
-    $value = urldecode($value);
-}
-array_filter($post, 'decode_value');
-
 foreach ($viewModel as $project)
 {
     if ($oldFramework != $project['framework'])

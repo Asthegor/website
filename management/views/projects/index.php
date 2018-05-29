@@ -1,10 +1,5 @@
 <?php
 require_once('views/projectnavbar/projectnavbar.php');
-function decode_value(&$value)
-{
-    $value = urldecode($value);
-}
-array_filter($viewModel, 'decode_value');
 ?>
 <h1>Projets</h1>
 <p>Nombre de projets :
