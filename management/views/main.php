@@ -12,7 +12,7 @@
       <li class="nav-item"><a href="<?php echo ROOT_MNGT; ?>navbar">Menu</a></li>
       <li class="nav-item"><a href="<?php echo ROOT_MNGT; ?>content">Contenu</a></li>
       <li class="nav-item"><a href="<?php echo ROOT_MNGT; ?>projects">Projets</a></li>
-      <li class="nav-item"><a href="<?php echo ROOT_MNGT; ?>resume">CV</a></li>
+      <li class="nav-item"><a href="<?php echo ROOT_MNGT; ?>resume">Expériences</a></li>
       <li class="nav-item"><a href="<?php echo ROOT_MNGT; ?>tutorials">Tutoriels</a></li>
       <li class="nav-item"><a id="nav-item-site" href="<?php echo ROOT_URL; ?>" target="_blank">Voir sur le site</a></li>
       <li id="nav-item-last-child" class="nav-item"><a href="<?php echo ROOT_MNGT; ?>users/logout">Logout</a></li>

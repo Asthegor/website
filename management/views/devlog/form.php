@@ -60,11 +60,11 @@
     </div>
     <div class="form-group">
         <label>Description française</label>
-        <input type="text" name="description_fr" value="<?php echo isset($viewModel['description_fr']) ? $viewModel['description_fr'] : ''; ?>" required />
+        <textarea rows="4" cols="150" name="description_fr" value="<?php echo isset($viewModel['description_fr']) ? $viewModel['description_fr'] : ''; ?>" required></textarea>
     </div>
     <div class="form-group">
         <label>Description anglaise</label>
-        <input type="text" name="description_en" value="<?php echo isset($viewModel['description_en']) ? $viewModel['description_en'] : ''; ?>" required />
+        <textarea rows="4" cols="150" name="description_en" value="<?php echo isset($viewModel['description_en']) ? $viewModel['description_en'] : ''; ?>" required></textarea>
     </div>
     <div class="form-group">
         <label>Date de début</label>

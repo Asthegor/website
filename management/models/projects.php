@@ -23,7 +23,7 @@ class ProjectsModel extends Model
 
     public function Add()
     {
-        $post = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+        $post = filter_input_array(INPUT_POST, FILTER_SANITIZE_ENCODED);
         if ($post['submit'])
         {
             if ($post['title'] == '' || $post['description_fr'] == '' || $post['description_en'] == '')
@@ -131,7 +131,7 @@ class ProjectsModel extends Model
     public function Update()
     {
         $this->changeDatabase(self::curDB);
-        $post = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+        $post = filter_input_array(INPUT_POST, FILTER_SANITIZE_ENCODED);
         if ($post['submit'])
         {
             if($post['title'] == '' || $post['description_fr'] == '' || $post['description_en'] == '')
@@ -165,6 +165,11 @@ class ProjectsModel extends Model
                 $img_nom  = $_FILES['projectimage']['name'];
                 $img_blob = file_get_contents($_FILES['projectimage']['tmp_name']);
             }
+            // var_dump($post);
+            // echo 'description_fr = '.$post['description_fr'].'<br>';
+            // echo 'html_entity_decode(description_fr) = '.html_entity_decode($post['description_fr']).'<br>';
+            // return;
+
             date_default_timezone_set('Europe/Paris');
             $this->startTransaction();
             $this->query('UPDATE project 
@@ -232,7 +237,9 @@ class ProjectsModel extends Model
             {
                 $this->commit();
                 $this->close();
-                $this->returnToPage('projects');
+                //$this->returnToPage('projects');
+                echo 'Update done => OK';
+                return;
             }
             $this->rollBack();
             $this->close();

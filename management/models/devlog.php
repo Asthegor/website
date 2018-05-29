@@ -26,7 +26,13 @@ class DevLogModel extends Model
         {
             if ($post['title_fr'] == '' || $post['title_en'] == '' || $post['description_fr'] == '' || $post['description_en'] == '')
             {
-                Messages::setMsg('Please fill in all mandatory fields', 'error');
+                $fields = '';
+                if ($post['title_fr'] == '') { $fields .= 'title_fr, '; }
+                if ($post['title_en'] == '') { $fields .= 'title_en, '; }
+                if ($post['description_fr'] == '') { $fields .= 'description_fr, '; }
+                if ($post['description_en'] == '') { $fields .= 'description_en, '; }
+                $fields = substr($fields, 1, -2);
+                Messages::setMsg('Please fill in all mandatory fields : '.$fields, 'error');
                 return;
             }
             // Insert into MySQL
@@ -46,14 +52,14 @@ class DevLogModel extends Model
                           VALUES(:id, 1, :title, :description)');
             $this->bind(':id', $id);
             $this->bind(':title', $post['title_fr']);
-            $this->bind(':description', $post['description_fr']);
+            $this->bind(':description', addslashes($post['description_fr']));
             $respfr = $this->execute();
             //Insertion du titre anglais
             $this->query('INSERT INTO devlog_tr (id, id_Language, title, description)
                           VALUES(:id, 2, :title, :description)');
             $this->bind(':id', $id);
             $this->bind(':title', $post['title_en']);
-            $this->bind(':description', $post['description_en']);
+            $this->bind(':description', addslashes($post['description_en']));
             $respen = $this->execute();
             //Verify
             if($resp && $respen && $respfr)
@@ -84,7 +90,13 @@ class DevLogModel extends Model
         {
             if ($post['title_fr'] == '' || $post['title_en'] == '' || $post['description_fr'] == '' || $post['description_en'] == '')
             {
-                Messages::setMsg('Please fill in all mandatory fields', 'error');
+                $fields = '';
+                if ($post['title_fr'] == '') { $fields .= 'title_fr, '; }
+                if ($post['title_en'] == '') { $fields .= 'title_en, '; }
+                if ($post['description_fr'] == '') { $fields .= 'description_fr, '; }
+                if ($post['description_en'] == '') { $fields .= 'description_en, '; }
+                $fields = substr($fields, 1, -2);
+                Messages::setMsg('Please fill in all mandatory fields : '.$fields, 'error');
                 return;
             }
             // Insert into MySQL
@@ -105,7 +117,7 @@ class DevLogModel extends Model
                           WHERE id = :id AND id_Language = 1");
             $this->bind(':id', $post['id']);
             $this->bind(':title', $post['title_fr']);
-            $this->bind(':description', $post['description_fr']);
+            $this->bind(':description', addslashes($post['description_fr']));
             $respfr = $this->execute();
             //Insertion du titre anglais
             $this->query("UPDATE devlog_tr
@@ -113,7 +125,7 @@ class DevLogModel extends Model
                           WHERE id = :id AND id_Language = 2");
             $this->bind(':id', $post['id']);
             $this->bind(':title', $post['title_en']);
-            $this->bind(':description', $post['description_en']);
+            $this->bind(':description', addslashes($post['description_en']));
             $respen = $this->execute();
             //Verify
             if($resp && $respen && $respfr)

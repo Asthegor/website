@@ -1,5 +1,5 @@
 <h1>Projets</h1>
-<form enctype="multipart/form-data" method="post" action="<?php $_SERVER['PHP_SELF']; ?>">
+<form enctype="multipart/form-data" method="POST" action="<?php $_SERVER['PHP_SELF']; ?>">
     <?php if (isset($viewModel['id']))
     {
         ?>
@@ -32,11 +32,11 @@
     </div>
     <div class="form-group">
         <label>Description française</label>
-        <textarea rows="6" cols="150" name="description_fr"  required><?php echo isset($viewModel['description_fr']) ? $viewModel['description_fr'] : ''; ?></textarea>
+        <textarea rows="6" cols="150" name="description_fr"  required><?php echo isset($viewModel['description_fr']) ? urldecode($viewModel['description_fr']) : ''; ?></textarea>
     </div>
     <div class="form-group">
         <label>Description anglaise</label>
-        <textarea rows="6" cols="150" name="description_en"  required><?php echo isset($viewModel['description_en']) ? $viewModel['description_en'] : ''; ?></textarea>
+        <textarea rows="6" cols="150" name="description_en"  required><?php echo isset($viewModel['description_en']) ? urldecode($viewModel['description_en']) : ''; ?></textarea>
     </div>
     <div class="form-group">
         <label>Date de début</label>
