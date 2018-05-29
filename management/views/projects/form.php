@@ -20,7 +20,7 @@
             foreach ($fmlist as $item)
             {
                 ?>
-                <option value="<?php echo $item['id']; ?>" <?php echo $viewModel['id_FrameworkEngine'] == $item['id'] ? 'selected' : ''; ?>><?php echo $item['name']; ?></option>
+                <option value="<?php echo $item['id']; ?>" <?php echo $viewModel['id_FrameworkEngine'] == $item['id'] ? 'selected' : ''; ?>><?php echo urldecode($item['name']); ?></option>
                 <?php
             }
             ?>
@@ -28,7 +28,7 @@
     </div>
     <div class="form-group">
         <label>Titre</label>
-        <input type="text" name="title" value="<?php echo isset($viewModel['title']) ? $viewModel['title'] : ''; ?>" required />
+        <input type="text" name="title" value="<?php echo isset($viewModel['title']) ? urldecode($viewModel['title']) : ''; ?>" required />
     </div>
     <div class="form-group">
         <label>Description française</label>

@@ -7,12 +7,12 @@ require('views/projnavbar.php')
 ?>
 <div class="project">
   <div id="project-image">
-    <image width="200" height="250" src="data:image/jpeg;base64,<?php echo $viewModel['img_blob']; ?>" alt="<?php echo $viewModel['title']; ?>"/>
+    <image width="200" height="250" src="data:image/jpeg;base64,<?php echo $viewModel['img_blob']; ?>" alt="<?php echo urldecode($viewModel['title']); ?>"/>
   </div>
-  <h1><?php echo $viewModel['title']; ?></h1>
+  <h1><?php echo urldecode($viewModel['title']); ?></h1>
   <div class="project-inline">
     <h2 class="project-inline-label">Framework / Engin :</h2>
-    <h2><?php echo $viewModel['framework']; ?></h2>
+    <h2><?php echo urldecode($viewModel['framework']); ?></h2>
   </div>
   <?php //$version = get_LastProjectVersion($prj_bdd, $projectid); ?>
   <div class="project-inline">

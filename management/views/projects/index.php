@@ -35,8 +35,8 @@ echo $prjm->getNbActiveProjects();
                 <table style="width:80%;">
                     <tr>
                         <td style="width:5%;"><?php echo $item['id']; ?></td>
-                        <td style="width:15%;"><?php echo $item['title']; ?></td>
-                        <td style="width:15%;"><?php echo $item['framework']; ?></td>
+                        <td style="width:15%;"><?php echo urldecode($item['title']); ?></td>
+                        <td style="width:15%;"><?php echo urldecode($item['framework']); ?></td>
                         <td style="width:15%;"><?php echo $item['first_date_project']; ?></td>
                         <td style="width:15%;"><?php echo $item['version']; ?></td>
                         <td style="width:15%;"><?php echo $item['bVisible'] ? 'Oui' : 'Non'; ?></td>
