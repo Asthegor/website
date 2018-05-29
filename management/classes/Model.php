@@ -31,13 +31,13 @@ abstract class Model
         try
         {
             $this->dbh = new PDO("mysql:host=".DB_HOST.";dbname=".$dbname, $user, $pass);
+            $this->dbh->query('SET NAMES UTF8');
         }
         catch (PDOException $e)
         {
             print $e->getMessage()."<br/>";
             die();
         }
-        $this->dbh->query('SET NAMES UTF8');
     }
 
     public function query($query)
@@ -95,15 +95,24 @@ abstract class Model
     }
     public function rollBack()
     {
-        $this->dbh->rollBack();
+        if(!is_null($this->dbh))
+        {
+            $this->dbh->rollBack();
+        }
     }
     public function commit()
     {
-        $this->dbh->commit();
+        if(!is_null($this->dbh))
+        {
+            $this->dbh->commit();
+        }
     }
     public function close()
     {
-        $this->stmt->closeCursor();
+        if(!is_null($this->stmt))
+        {
+            $this->stmt->closeCursor();
+        }
         $this->dbh = null;
     }
 

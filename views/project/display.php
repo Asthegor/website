@@ -3,6 +3,11 @@ if (!isset($_GET['id']) && !is_numeric($_GET['id']))
 {
   header('Location: '.ROOT_URL.'projects');
 }
+function decode_value(&$value)
+{
+    $value = urldecode($value);
+}
+array_filter($viewModel, 'decode_value');
 require('views/projnavbar.php')
 ?>
 <div class="project">
@@ -24,5 +29,5 @@ require('views/projnavbar.php')
     <h3><?php echo !is_null($viewModel['first_date_project']) ? $viewModel['first_date_project'] : 'Indéterminé'; ?></h3>
   </div>
   <h2 class="project-inline-label">Description :</h2>
-  <p><?php echo urldecode($_SESSION['language'] == 'EN' ? $viewModel['description_en'] : $viewModel['description_fr']); ?></p>
+  <p><?php echo $_SESSION['language'] == 'EN' ? $viewModel['description_en'] : $viewModel['description_fr']; ?></p>
 </div>
