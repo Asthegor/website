@@ -10,8 +10,8 @@ abstract class Model
         try
         {
             $this->dbh = new PDO("mysql:host=".DB_HOST.";dbname=".DB_NAME, DB_USER, DB_PWD);
-            $this->dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-            $this->dbh->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
+            // $this->dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            // $this->dbh->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
         }
         catch (PDOException $e)
         {
@@ -33,8 +33,8 @@ abstract class Model
         try
         {
             $this->dbh = new PDO("mysql:host=".DB_HOST.";dbname=".$dbname, $user, $pass);
-            $this->dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-            $this->dbh->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
+            // $this->dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            // $this->dbh->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
         }
         catch (PDOException $e)
         {
