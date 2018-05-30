@@ -1,11 +1,9 @@
 <?php
 session_start();
-
 if(!isset($_SESSION['language']))
 {
     $_SESSION['language'] = 'FR';
 }
-
 header('Content-Type: text/html; charset=utf-8');
 
 require('config.php');
@@ -24,14 +22,12 @@ require('models/navbar.php');
 require('models/language.php');
 require('models/projects.php');
 require('models/project.php');
+require('models/configs.php');
 
 $mainController = new MainController($_GET);
-
 $controller = $mainController->createController();
-
 if($controller)
 {
     $controller->executeAction();
 }
-
 ?>

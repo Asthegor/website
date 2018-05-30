@@ -144,7 +144,6 @@ class ProjectsModel extends Model
             $img_type = '';
             $img_nom = '';
 
-            // $cm = new ConfigModel();
             $taillemax = intval(ConfigModel::getConfig("MAX_FILE_SIZE"));
 
             if (isset($_FILES['projectimage']) && $_FILES['projectimage']['error'] != 4)
@@ -165,10 +164,6 @@ class ProjectsModel extends Model
                 $img_nom  = $_FILES['projectimage']['name'];
                 $img_blob = file_get_contents($_FILES['projectimage']['tmp_name']);
             }
-            // var_dump($post);
-            // echo 'description_fr = '.$post['description_fr'].'<br>';
-            // echo 'html_entity_decode(description_fr) = '.html_entity_decode($post['description_fr']).'<br>';
-            // return;
 
             date_default_timezone_set('Europe/Paris');
             $this->startTransaction();

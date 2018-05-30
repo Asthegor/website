@@ -4,6 +4,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <title>Management</title>
     <link rel="stylesheet" href="<?php echo ROOT_URL; ?>assets/css/styles.css"></link>
+    <link rel="shortcut icon" href="<?php echo ROOT_URL; ?>assets/images/logo/logo_48x48.png" type="image/x-icon"/>
 </head>
 <body>
   <?php if (isset($_SESSION['is_logged_in'])) : ?>
