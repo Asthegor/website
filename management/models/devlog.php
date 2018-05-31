@@ -33,44 +33,46 @@ class DevLogModel extends Model
                 if ($post['description_en'] == '') { $fields .= 'description_en, '; }
                 $fields = substr($fields, 1, -2);
                 Messages::setMsg('Please fill in all mandatory fields : '.$fields, 'error');
-                return;
             }
-            // Insert into MySQL
-            date_default_timezone_set('Europe/Paris');
-            $this->changeDatabase(self::curDB);
-            $this->startTransaction();
-            //Insertion des données générales
-            $this->query("INSERT INTO devlog (id_Project, date_creation, bVisible)
-                          VALUES (:id_Project, :date_creation, :bVisible)");
-            $this->bind(':id_Project', $post['id_Project']);
-            $this->bind(':date_creation', isset($post['date_creation']) && strtotime($post['date_creation']) ? $post['date_creation'] : date("Y-m-d"));
-            $this->bind(':bVisible', isset($post['bVisible']) ? $post['bVisible'] : 0);
-            $resp = $this->execute();
-            $id = $this->lastIndexId();
-            //Insertion du titre français
-            $this->query('INSERT INTO devlog_tr (id, id_Language, title, description)
-                          VALUES(:id, 1, :title, :description)');
-            $this->bind(':id', $id);
-            $this->bind(':title', $post['title_fr']);
-            $this->bind(':description', addslashes($post['description_fr']));
-            $respfr = $this->execute();
-            //Insertion du titre anglais
-            $this->query('INSERT INTO devlog_tr (id, id_Language, title, description)
-                          VALUES(:id, 2, :title, :description)');
-            $this->bind(':id', $id);
-            $this->bind(':title', $post['title_en']);
-            $this->bind(':description', addslashes($post['description_en']));
-            $respen = $this->execute();
-            //Verify
-            if($resp && $respen && $respfr)
+            else
             {
-                $this->commit();
+                // Insert into MySQL
+                date_default_timezone_set('Europe/Paris');
+                $this->changeDatabase(self::curDB);
+                $this->startTransaction();
+                //Insertion des données générales
+                $this->query("INSERT INTO devlog (id_Project, date_creation, bVisible)
+                            VALUES (:id_Project, :date_creation, :bVisible)");
+                $this->bind(':id_Project', $post['id_Project']);
+                $this->bind(':date_creation', isset($post['date_creation']) && strtotime($post['date_creation']) ? $post['date_creation'] : date("Y-m-d"));
+                $this->bind(':bVisible', isset($post['bVisible']) ? $post['bVisible'] : 0);
+                $resp = $this->execute();
+                $id = $this->lastIndexId();
+                //Insertion du titre français
+                $this->query('INSERT INTO devlog_tr (id, id_Language, title, description)
+                            VALUES(:id, 1, :title, :description)');
+                $this->bind(':id', $id);
+                $this->bind(':title', $post['title_fr']);
+                $this->bind(':description', addslashes($post['description_fr']));
+                $respfr = $this->execute();
+                //Insertion du titre anglais
+                $this->query('INSERT INTO devlog_tr (id, id_Language, title, description)
+                            VALUES(:id, 2, :title, :description)');
+                $this->bind(':id', $id);
+                $this->bind(':title', $post['title_en']);
+                $this->bind(':description', addslashes($post['description_en']));
+                $respen = $this->execute();
+                //Verify
+                if($resp && $respen && $respfr)
+                {
+                    $this->commit();
+                    $this->close();
+                    $this->returnToPage('devlog');
+                }
+                $this->rollback();
                 $this->close();
-                $this->returnToPage('devlog');
+                Messages::setMsg('Error(s) during insert : [resp='.$resp.', respen='.$respen.', respfr='.$respfr.']', 'error');
             }
-            $this->rollback();
-            $this->close();
-            Messages::setMsg('Error(s) during insert : [resp='.$resp.', respen='.$respen.', respfr='.$respfr.']', 'error');
         }
         if ($_GET['action'] == 'add' && isset($_GET['id']))
         {
@@ -97,46 +99,48 @@ class DevLogModel extends Model
                 if ($post['description_en'] == '') { $fields .= 'description_en, '; }
                 $fields = substr($fields, 1, -2);
                 Messages::setMsg('Please fill in all mandatory fields : '.$fields, 'error');
-                return;
             }
-            // Insert into MySQL
-            date_default_timezone_set('Europe/Paris');
-            $this->changeDatabase(self::curDB);
-            $this->startTransaction();
-            //Insertion des données générales
-            $this->query("UPDATE devlog 
-                          SET date_creation = :date_creation, bVisible = :bVisible 
-                          WHERE id = :id");
-            $this->bind(':date_creation', isset($post['date_creation']) && strtotime($post['date_creation']) ? $post['date_creation'] : date("Y-m-d"));
-            $this->bind(':bVisible', isset($post['bVisible']) ? $post['bVisible'] : 0);
-            $this->bind(':id', $post['id']);
-            $resp = $this->execute();
-            //Insertion du titre français
-            $this->query("UPDATE devlog_tr
-                          SET title = :title, description = :description
-                          WHERE id = :id AND id_Language = 1");
-            $this->bind(':id', $post['id']);
-            $this->bind(':title', $post['title_fr']);
-            $this->bind(':description', addslashes($post['description_fr']));
-            $respfr = $this->execute();
-            //Insertion du titre anglais
-            $this->query("UPDATE devlog_tr
-                          SET title = :title, description = :description
-                          WHERE id = :id AND id_Language = 2");
-            $this->bind(':id', $post['id']);
-            $this->bind(':title', $post['title_en']);
-            $this->bind(':description', addslashes($post['description_en']));
-            $respen = $this->execute();
-            //Verify
-            if($resp && $respen && $respfr)
+            else
             {
-                $this->commit();
+                // Insert into MySQL
+                date_default_timezone_set('Europe/Paris');
+                $this->changeDatabase(self::curDB);
+                $this->startTransaction();
+                //Insertion des données générales
+                $this->query("UPDATE devlog 
+                            SET date_creation = :date_creation, bVisible = :bVisible 
+                            WHERE id = :id");
+                $this->bind(':date_creation', isset($post['date_creation']) && strtotime($post['date_creation']) ? $post['date_creation'] : date("Y-m-d"));
+                $this->bind(':bVisible', isset($post['bVisible']) ? $post['bVisible'] : 0);
+                $this->bind(':id', $post['id']);
+                $resp = $this->execute();
+                //Insertion du titre français
+                $this->query("UPDATE devlog_tr
+                            SET title = :title, description = :description
+                            WHERE id = :id AND id_Language = 1");
+                $this->bind(':id', $post['id']);
+                $this->bind(':title', $post['title_fr']);
+                $this->bind(':description', addslashes($post['description_fr']));
+                $respfr = $this->execute();
+                //Insertion du titre anglais
+                $this->query("UPDATE devlog_tr
+                            SET title = :title, description = :description
+                            WHERE id = :id AND id_Language = 2");
+                $this->bind(':id', $post['id']);
+                $this->bind(':title', $post['title_en']);
+                $this->bind(':description', addslashes($post['description_en']));
+                $respen = $this->execute();
+                //Verify
+                if($resp && $respen && $respfr)
+                {
+                    $this->commit();
+                    $this->close();
+                    $this->returnToPage('devlog');
+                }
+                $this->rollback();
                 $this->close();
-                $this->returnToPage('devlog');
+                Messages::setMsg('Error(s) during insert : [resp='.$resp.', respen='.$respen.', respfr='.$respfr.']', 'error');
             }
-            $this->rollback();
-            $this->close();
-            Messages::setMsg('Error(s) during insert : [resp='.$resp.', respen='.$respen.', respfr='.$respfr.']', 'error');
         }
         $this->changeDatabase(self::curDB);
         $this->query("SELECT dl.id, dl.id_Project, dl.date_creation, dl.date_creation, dl.bVisible,

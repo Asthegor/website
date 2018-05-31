@@ -29,101 +29,101 @@ class ProjectsModel extends Model
             if ($post['title'] == '' || $post['description_fr'] == '' || $post['description_en'] == '')
             {
                 Messages::setMsg('Please fill in all mandatory fields', 'error');
-                return;
             }
-
-            if (($post['num_version'] != '' && $post['date_version'] == '') || ($post['num_version'] == '' && $post['date_version'] != ''))
+            else if (($post['num_version'] != '' && $post['date_version'] == '') || ($post['num_version'] == '' && $post['date_version'] != ''))
             {
                 Messages::setMsg('If "Version number" is filled, "Version date" must be filled too (or vice versa).', 'error');
-                return;
             }
-            if ($post['date_version'] != '' && $post['date_version'] < $post['dateproject'])
+            else if ($post['date_version'] != '' && $post['date_version'] < $post['dateproject'])
             {
                 Messages::setMsg("Date of version must be greater or equal than the project's date", 'error');
-                return;
             }
-            $img_blob = '';
-            $img_taille = 0;
-            $img_type = '';
-            $img_nom = '';
-            $taillemax = intval(ConfigModel::getConfig("MAX_FILE_SIZE"));
-            if (isset($_FILES['projectimage']) && $_FILES['projectimage']['error'] != 4)
+            else
             {
-                $ret = is_uploaded_file($_FILES['projectimage']['tmp_name']);
-                if (!$ret)
+                $img_blob = '';
+                $img_taille = 0;
+                $img_type = '';
+                $img_nom = '';
+                $taillemax = intval(ConfigModel::getConfig("MAX_FILE_SIZE"));
+                if (isset($_FILES['projectimage']) && $_FILES['projectimage']['error'] != 4)
                 {
-                    echo 'fichier manquant<br>';
-                    Messages::setMsg('Error during file transfert', 'error');
-                    return;
+                    $img_taille = $_FILES['projectimage']['size'];
+                    $ret = is_uploaded_file($_FILES['projectimage']['tmp_name']);
+                    if (!$ret)
+                    {
+                        Messages::setMsg('Error during file transfert', 'error');
+                    }
+                    else if ($img_taille > $taillemax)
+                    {
+                        Messages::setMsg('File oversized', 'error');
+                    }
+                    else
+                    {
+                        $img_type = $_FILES['projectimage']['type'];
+                        $img_nom  = $_FILES['projectimage']['name'];
+                        $img_blob = file_get_contents($_FILES['projectimage']['tmp_name']);
+                    }
                 }
-                $img_taille = $_FILES['projectimage']['size'];
-                if ($img_taille > $taillemax)
-                {
-                    Messages::setMsg('File oversized', 'error');
-                    return;
-                }
-                $img_type = $_FILES['projectimage']['type'];
-                $img_nom  = $_FILES['projectimage']['name'];
-                $img_blob = file_get_contents($_FILES['projectimage']['tmp_name']);
-            }
-            // Insert into MySQL
-            date_default_timezone_set('Europe/Paris');
-            $dateproject = isset($post['dateproject']) && strtotime($post['dateproject']) ? $post['dateproject'] : date("Y-m-d");
-            $this->changeDatabase(self::curDB);
-            $this->startTransaction();
-            //Insertion des données générales
-            $this->query("INSERT INTO project (id_FrameworkEngine, title, first_date_project, bVisible)
-                          VALUES (:idframework, :title, :dateproject, :bVisible)");
-            $this->bind(':idframework', $post['framework']);
-            $this->bind(':title', $post['title']);
-            $this->bind(':dateproject', $dateproject);
-            //$this->bind(':image', isset($post['image']) ? $post['image'] : 'null');
-            $this->bind(':bVisible', isset($post['bVisible']) ? $post['bVisible'] : 0);
-            $resp = $this->execute();
-            $id = $this->lastIndexId();
-            //Insertion du titre français
-            $this->query('INSERT INTO project_tr (id, id_Language, description)
-                          VALUES(:id, 1, :description)');
-            $this->bind(':id', $id);
-            $this->bind(':description', $post['description_fr']);
-            $respfr = $this->execute();
-            //Insertion du titre anglais
-            $this->query('INSERT INTO project_tr (id, id_Language, description)
-                          VALUES(:id, 2, :description)');
-            $this->bind(':id', $id);
-            $this->bind(':description', $post['description_en']);
-            $respen = $this->execute();
-            //Insertion de la version
-            $this->query('INSERT INTO version (id_Project, num_version, date_version)
-                          VALUES(:id, :num_version, :date_version)');
-            $this->bind(':id', $id);
-            $this->bind(':num_version', isset($post['num_version']) ? $post['num_version'] : '0.0.1' );
-            $this->bind(':date_version', isset($post['date_version']) ? $post['date_version'] : $dateproject );
-            $respv = $this->execute();
-            //Insertion de l'image
-            $respi = 1;
-            if ($img_blob != '')
-            {
-                $this->query("INSERT INTO projectimage (name, img_size, img_type, img_blob, id_Project)
-                              VALUES (:name, :size, :type, :blob, :id_Project)");
-                $this->bind(':id_Project', $id);
-                $this->bind(':name', $img_nom);
-                $this->bind(':size', $img_taille);
-                $this->bind(':type', $img_type);
-                $this->bind(':blob', base64_encode($img_blob));
-                $respi = $this->execute();
-            }
 
-            //Verify
-            if($resp && $respen && $respfr && $respi && $respv)
-            {
-                $this->commit();
+                // Insert into MySQL
+                date_default_timezone_set('Europe/Paris');
+                $dateproject = isset($post['dateproject']) && strtotime($post['dateproject']) ? $post['dateproject'] : date("Y-m-d");
+                $this->changeDatabase(self::curDB);
+                $this->startTransaction();
+                //Insertion des données générales
+                $this->query("INSERT INTO project (id_FrameworkEngine, title, first_date_project, bVisible)
+                            VALUES (:idframework, :title, :dateproject, :bVisible)");
+                $this->bind(':idframework', $post['framework']);
+                $this->bind(':title', $post['title']);
+                $this->bind(':dateproject', $dateproject);
+                //$this->bind(':image', isset($post['image']) ? $post['image'] : 'null');
+                $this->bind(':bVisible', isset($post['bVisible']) ? $post['bVisible'] : 0);
+                $resp = $this->execute();
+                $id = $this->lastIndexId();
+                //Insertion du titre français
+                $this->query('INSERT INTO project_tr (id, id_Language, description)
+                            VALUES(:id, 1, :description)');
+                $this->bind(':id', $id);
+                $this->bind(':description', $post['description_fr']);
+                $respfr = $this->execute();
+                //Insertion du titre anglais
+                $this->query('INSERT INTO project_tr (id, id_Language, description)
+                            VALUES(:id, 2, :description)');
+                $this->bind(':id', $id);
+                $this->bind(':description', $post['description_en']);
+                $respen = $this->execute();
+                //Insertion de la version
+                $this->query('INSERT INTO version (id_Project, num_version, date_version)
+                            VALUES(:id, :num_version, :date_version)');
+                $this->bind(':id', $id);
+                $this->bind(':num_version', isset($post['num_version']) ? $post['num_version'] : '0.0.1' );
+                $this->bind(':date_version', isset($post['date_version']) ? $post['date_version'] : $dateproject );
+                $respv = $this->execute();
+                //Insertion de l'image
+                $respi = true;
+                if ($img_blob != '')
+                {
+                    $this->query("INSERT INTO projectimage (name, img_size, img_type, img_blob, id_Project)
+                                VALUES (:name, :size, :type, :blob, :id_Project)");
+                    $this->bind(':id_Project', $id);
+                    $this->bind(':name', $img_nom);
+                    $this->bind(':size', $img_taille);
+                    $this->bind(':type', $img_type);
+                    $this->bind(':blob', base64_encode($img_blob));
+                    $respi = $this->execute();
+                }
+
+                //Verify
+                if($resp && $respen && $respfr && $respi && $respv)
+                {
+                    $this->commit();
+                    $this->close();
+                    $this->returnToPage('projects');
+                }
+                $this->rollback();
                 $this->close();
-                $this->returnToPage('projects');
+                Messages::setMsg('Error(s) during insert : [resp='.$resp.', respen='.$respen.', respfr='.$respfr.', respi='.$respi.']', 'error');
             }
-            $this->rollback();
-            $this->close();
-            Messages::setMsg('Error(s) during insert : [resp='.$resp.', respen='.$respen.', respfr='.$respfr.', respi='.$respi.']', 'error');
         }
         return;
     }

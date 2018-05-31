@@ -24,31 +24,33 @@ class FrameworksModel extends Model
             if ($post['name'] == '')
             {
                 Messages::setMsg('Please fill in all mandatory fields', 'error');
-                return;
             }
-            // Insert into MySQL
-            $this->changeDatabase(self::curDB);
-            $this->startTransaction();
-            //Insertion des données générales
-            $this->query('INSERT INTO frameworkengine (name, id_ProgLanguage, sortOrder, bVisible)
-                          VALUES (:name, :proglanguage, :sortOrder, :bVisible)');
-            $this->bind(':name', $post['name']);
-            $this->bind(':proglanguage', $post['proglanguage']);
-            $this->bind(':sortOrder', $post['sortOrder']);
-            $this->bind(':bVisible', isset($post['bVisible']) ? $post['bVisible'] : 0);
-            $this->execute();
-            $id = $this->lastIndexId();
-
-            //Verify
-            if($id)
+            else
             {
-                $this->commit();
+                // Insert into MySQL
+                $this->changeDatabase(self::curDB);
+                $this->startTransaction();
+                //Insertion des données générales
+                $this->query('INSERT INTO frameworkengine (name, id_ProgLanguage, sortOrder, bVisible)
+                            VALUES (:name, :proglanguage, :sortOrder, :bVisible)');
+                $this->bind(':name', $post['name']);
+                $this->bind(':proglanguage', $post['proglanguage']);
+                $this->bind(':sortOrder', $post['sortOrder']);
+                $this->bind(':bVisible', isset($post['bVisible']) ? $post['bVisible'] : 0);
+                $this->execute();
+                $id = $this->lastIndexId();
+
+                //Verify
+                if($id)
+                {
+                    $this->commit();
+                    $this->close();
+                    $this->returnToPage('frameworks');
+                }
+                $this->rollback();
                 $this->close();
-                $this->returnToPage('frameworks');
+                Messages::setMsg('Error(s) during insert', 'error');
             }
-            $this->rollback();
-            $this->close();
-            Messages::setMsg('Error(s) during insert', 'error');
         }
         return;
     }
@@ -62,24 +64,23 @@ class FrameworksModel extends Model
             if ($post['name'] == '')
             {
                 Messages::setMsg('Please fill in all mandatory fields', 'error');
-                return;
-            }
-            $this->query('UPDATE frameworkengine 
-                          SET name = :name, id_ProgLanguage = :proglanguage, sortOrder = :sortOrder, bVisible = :bVisible
-                          WHERE id = :id');
-            $this->bind(':name', $post['name']);
-            $this->bind(':proglanguage', $post['proglanguage']);
-            $this->bind(':sortOrder', $post['sortOrder']);
-            $this->bind(':bVisible', isset($post['bVisible']) ? $post['bVisible'] : 0);
-            $this->bind(':id', $post['id']);
-            $res = $this->execute();
-            $this->close();
-            if($res)
-            {
-                $this->returnToPage('frameworks');
             }
             else
             {
+                $this->query('UPDATE frameworkengine 
+                            SET name = :name, id_ProgLanguage = :proglanguage, sortOrder = :sortOrder, bVisible = :bVisible
+                            WHERE id = :id');
+                $this->bind(':name', $post['name']);
+                $this->bind(':proglanguage', $post['proglanguage']);
+                $this->bind(':sortOrder', $post['sortOrder']);
+                $this->bind(':bVisible', isset($post['bVisible']) ? $post['bVisible'] : 0);
+                $this->bind(':id', $post['id']);
+                $res = $this->execute();
+                $this->close();
+                if($res)
+                {
+                    $this->returnToPage('frameworks');
+                }
                 Messages::setMsg('Error(s) during update', 'error');
             }
         }

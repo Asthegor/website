@@ -23,23 +23,25 @@ class ProgLanguageModel extends Model
             if ($post['name'] == '')
             {
                 Messages::setMsg('Please fill in all mandatory fields', 'error');
-                return;
             }
-            // Insert into MySQL
-            $this->changeDatabase(self::curDB);
-            //Insertion des données générales
-            $this->query('INSERT INTO proglanguage (name)
-                          VALUES (:name)');
-            $this->bind(':name', $post['name']);
-            $this->execute();
-            //Verify
-            $id = $this->lastIndexId();
-            $this->close();
-            if($id)
+            else
             {
-                $this->returnToPage('proglanguage');
+                // Insert into MySQL
+                $this->changeDatabase(self::curDB);
+                //Insertion des données générales
+                $this->query('INSERT INTO proglanguage (name)
+                            VALUES (:name)');
+                $this->bind(':name', $post['name']);
+                $this->execute();
+                //Verify
+                $id = $this->lastIndexId();
+                $this->close();
+                if($id)
+                {
+                    $this->returnToPage('proglanguage');
+                }
+                Messages::setMsg('Error(s) during insert', 'error');
             }
-            Messages::setMsg('Error(s) during insert', 'error');
         }
         return;
     }
@@ -63,14 +65,11 @@ class ProgLanguageModel extends Model
                 $this->bind(':id', $post['id']);
                 $res = $this->execute();
                 $this->close();
-                if(!$res)
-                {
-                    Messages::setMsg('Error(s) during update', 'error');
-                }
-                else
+                if($res)
                 {
                     $this->returnToPage('proglanguage');
                 }
+                Messages::setMsg('Error(s) during update', 'error');
             }
         }
         $this->query('SELECT id, name

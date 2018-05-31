@@ -24,45 +24,44 @@ class VersionModel extends Model
         $post = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
         if ($post['submit'])
         {
-            if ($post['num_version'] == '' || $post['date_version'] == '')
-            {
-                Messages::setMsg('Please fill in all mandatory fields', 'error');
-                return;
-            }
-            // Insert into MySQL
             date_default_timezone_set('Europe/Paris');
-            if (!strtotime($post['date_version']))
-            {
-                Messages::setMsg('Please fill a correct date', 'error');
-                return;
-            }
             $this->changeDatabase(self::curDB);
             $prjm = new ProjectsModel();
             $date_project = $prjm->getDateProject($post['id_Project']);
-            if (strtotime($post['date_version']) < strtotime($date_project))
+            if ($post['num_version'] == '' || $post['date_version'] == '')
+            {
+                Messages::setMsg('Please fill in all mandatory fields', 'error');
+            }
+            else if (!strtotime($post['date_version']))
+            {
+                Messages::setMsg('Please fill a correct date', 'error');
+            }
+            else if (strtotime($post['date_version']) < strtotime($date_project))
             {
                 Messages::setMsg('Date of version must be greater or equal than the project date', 'error');
-                return;
             }
-            //Insertion des données générales
-            $this->startTransaction();
-            $this->query("UPDATE version 
-                          SET date_version = :date_version, num_version = :num_version 
-                          WHERE id = :id");
-            $this->bind(':date_version', $post['date_version']);
-            $this->bind(':num_version', $post['num_version']);
-            $this->bind(':id', $post['id']);
-            $resp = $this->execute();
-            //Verify
-            if($resp)
+            else
             {
-                $this->commit();
+                //Insertion des données générales
+                $this->startTransaction();
+                $this->query("UPDATE version 
+                            SET date_version = :date_version, num_version = :num_version 
+                            WHERE id = :id");
+                $this->bind(':date_version', $post['date_version']);
+                $this->bind(':num_version', $post['num_version']);
+                $this->bind(':id', $post['id']);
+                $resp = $this->execute();
+                //Verify
+                if($resp)
+                {
+                    $this->commit();
+                    $this->close();
+                    $this->returnToPage('version');
+                }
+                $this->rollback();
                 $this->close();
-                $this->returnToPage('version');
+                Messages::setMsg('Error(s) during insert', 'error');
             }
-            $this->rollback();
-            $this->close();
-            Messages::setMsg('Error(s) during insert', 'error');
         }
         $this->changeDatabase(self::curDB);
         $this->query("SELECT v.id, p.title project, v.num_version, v.date_version, v.id_Project
