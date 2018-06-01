@@ -49,7 +49,6 @@ class ResumeModel extends Model
             else
             {
                 // Insert into MySQL
-                var_dump($post);
                 $this->changeDatabase(self::curDB);
                 $this->startTransaction();
                 //Insertion des données générales
@@ -95,6 +94,7 @@ class ResumeModel extends Model
 
     public function Update()
     {
+        $this->changeDatabase(self::curDB);
         $post = filter_input_array(INPUT_POST, FILTER_SANITIZE_ENCODED);
         if ($post['submit'])
         {
@@ -113,31 +113,34 @@ class ResumeModel extends Model
             else
             {
                 // Insert into MySQL
-                $this->changeDatabase(self::curDB);
                 $this->startTransaction();
+                $id = $post['id'];
                 //Insertion des données générales
-                $this->query("INSERT INTO experience (id_Company, id_Country, date_start, date_end, bVisible)
-                            VALUES (:id_Company, :id_Country, :date_start, :date_end, :bVisible)");
+                $this->query("UPDATE experience SET id_Company = :id_Company, id_City = :id_City,
+                                date_start = :date_start, date_end = :date_end, bVisible = :bVisible
+                              WHERE id = :id");
+                $this->bind(':id', $id);
                 $this->bind(':id_Company', $post['id_Company']);
-                $this->bind(':id_Country', $post['id_Country']);
+                $this->bind(':id_City', $post['id_City']);
                 $this->bind(':date_start', $post['date_start']);
-                $this->bind(':date_end', $post['date_end']);
+                $this->bind(':date_end', $post['date_end'] != '' ? $post['date_end'] : NULL);
                 $this->bind(':bVisible', isset($post['bVisible']) ? $post['bVisible'] : 0);
                 $resp = $this->execute();
-                $id = $this->lastIndexId();
                 //Insertion du titre français
-                $this->query('INSERT INTO experience_tr (id, id_Language, title, description)
-                            VALUES(:id, 1, :title, :description)');
+                $this->query('UPDATE experience_tr
+                              SET title = :title, content = :content
+                              WHERE id = :id AND id_Language = 1');
                 $this->bind(':id', $id);
                 $this->bind(':title', $post['title_fr']);
-                $this->bind(':description', $post['description_fr']);
+                $this->bind(':content', $post['content_fr']);
                 $respfr = $this->execute();
                 //Insertion du titre anglais
-                $this->query('INSERT INTO experience_tr (id, id_Language, title, description)
-                            VALUES(:id, 2, :title, :description)');
+                $this->query('UPDATE experience_tr
+                              SET title = :title, content = :content
+                              WHERE id = :id AND id_Language = 2');
                 $this->bind(':id', $id);
                 $this->bind(':title', $post['title_en']);
-                $this->bind(':description', $post['description_en']);
+                $this->bind(':content', $post['content_en']);
                 $respen = $this->execute();
 
                 //Verify
@@ -152,9 +155,11 @@ class ResumeModel extends Model
                 Messages::setMsg('Error(s) during insert : [resp='.$resp.', respen='.$respen.', respfr='.$respfr.']', 'error');
             }
         }
-        $this->query("SELECT e.id, efr.title title_fr, een.title title_en, e.id_Company, e.id_City, e.bVisible,
-                             e.date_start, e.date_end, efr.content content_fr, een.content content_en
-                      FROM experience AS e 
+        $this->query("SELECT e.id, e.date_start, e.date_end, e.bVisible,
+                             efr.title title_fr, efr.content content_fr,
+                             een.title title_en, een.content content_en,
+                             e.id_Company, e.id_City
+                      FROM experience AS e
                         INNER JOIN experience_tr AS efr ON e.id = efr.id AND efr.id_Language = 1
                         INNER JOIN experience_tr AS een ON e.id = een.id AND een.id_Language = 2
                       WHERE e.id = :id");
