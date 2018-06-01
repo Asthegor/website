@@ -11,7 +11,7 @@ require_once('views/projectnavbar/projectnavbar.php');
     }
     ?>
     <select name="projectid">
-        <option value=""></option>
+        <option value="">Tous les projets</option>
         <?php
         $vm = new VersionModel();
         $vmlist = $vm->getProjectList();

@@ -8,7 +8,8 @@ class LanguageModel extends Model
     {
         // Affichage du contenu
         $this->changeDatabase(self::curDB);
-        $this->query("SELECT image FROM languages WHERE code = '".$codelanguage."'");
+        $this->query("SELECT image FROM languages WHERE code = :codelanguage");
+        $this->bind(':codelanguage', $codelanguage);
         $rows = $this->single();
         $this->close();
         return $rows;

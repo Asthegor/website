@@ -132,6 +132,7 @@ class ProjectsModel extends Model
     {
         $this->changeDatabase(self::curDB);
         $post = filter_input_array(INPUT_POST, FILTER_SANITIZE_ENCODED);
+        $get = filter_input_array(INPUT_GET, FILTER_SANITIZE_STRING);
         if ($post['submit'])
         {
             if($post['title'] == '' || $post['description_fr'] == '' || $post['description_en'] == '')
@@ -232,9 +233,7 @@ class ProjectsModel extends Model
             {
                 $this->commit();
                 $this->close();
-                //$this->returnToPage('projects');
-                echo 'Update done => OK';
-                return;
+                $this->returnToPage('projects');
             }
             $this->rollBack();
             $this->close();
@@ -250,12 +249,13 @@ class ProjectsModel extends Model
                         LEFT JOIN projectimage AS pi ON p.id = pi.id_Project
                         LEFT JOIN version AS v ON v.id = 
                             (SELECT vv.id FROM version AS vv WHERE vv.id_Project = p.id ORDER BY vv.date_version DESC LIMIT 1)
-                      WHERE p.id = ".$_GET['id']);
+                      WHERE p.id = :id");
+        $this->bind(':id', $get['id']);
         $rows = $this->single();
         $this->close();
         if (!$rows)
         {
-            Messages::setMsg('Record "'.$_GET['id'].'" not found', 'error');
+            Messages::setMsg('Record "'.$get['id'].'" not found', 'error');
             $this->returnToPage('projects');
         }
         return $rows;
@@ -265,15 +265,16 @@ class ProjectsModel extends Model
     {
         $this->changeDatabase(self::curDB);
         $post = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+        $get = filter_input_array(INPUT_GET, FILTER_SANITIZE_STRING);
         if (isset($post['todelete']))
         {
             //Mise à jour de la base
             $this->startTransaction();
             $this->query('DELETE FROM project WHERE id = :id');
-            $this->bind(':id', $_GET['id']);
+            $this->bind(':id', $post['id']);
             $resp = $this->execute();
             $this->query('DELETE FROM project_tr WHERE id = :id');
-            $this->bind(':id', $_GET['id']);
+            $this->bind(':id', $post['id']);
             $resptr = $this->execute();
 
             if($resp && $resptr)
@@ -287,13 +288,14 @@ class ProjectsModel extends Model
             $this->close();
             $this->returnToPage('projects');
         }
-        $this->query("SELECT title FROM project WHERE id = ".$_GET['id']);
+        $this->query("SELECT id, title FROM project WHERE id = :id");
+        $this->bind(':id', $get['id]']);
         $rows = $this->single();
         $this->close();
         if (!$rows)
         {
-            Messages::setMsg('Record "'.$_GET['id'].'" not found', 'error');
-            $this->returnToPage('frameworks');
+            Messages::setMsg('Record "'.$get['id'].'" not found', 'error');
+            $this->returnToPage('projects');
         }
         return $rows;
     }
@@ -303,7 +305,8 @@ class ProjectsModel extends Model
         $this->changeDatabase(self::curDB);
         $this->query("SELECT name, img_size, img_type, img_blob
                       FROM projectimage
-                      WHERE id_Project = ".$_GET['id']);
+                      WHERE id_Project = :id");
+        $this->bind(':id', $id);
         $rows = $this->single();
         $this->close();
         return $rows;
@@ -337,7 +340,8 @@ class ProjectsModel extends Model
     public function getDateProject($id)
     {
         $this->changeDatabase(self::curDB);
-        $this->query("SELECT first_date_project FROM project WHERE id = ".$_GET['id']);
+        $this->query("SELECT first_date_project FROM project WHERE id = :id");
+        $this->bind(':id', $id);
         $rows = $this->single();
         $this->close();
         return $rows['first_date_project'];

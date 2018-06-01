@@ -59,6 +59,7 @@ class FrameworksModel extends Model
     {
         $this->changeDatabase(self::curDB);
         $post = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+        $get = filter_input_array(INPUT_GET, FILTER_SANITIZE_STRING);
         if ($post['submit'])
         {
             if ($post['name'] == '')
@@ -86,12 +87,13 @@ class FrameworksModel extends Model
         }
         $this->query("SELECT id, name, sortOrder, bVisible, id_ProgLanguage
                       FROM frameworkengine
-                      WHERE id = ".$_GET['id']);
+                      WHERE id = :id");
+        $this->bind(':id', $get['id']);
         $rows = $this->single();
         $this->close();
         if (!$rows)
         {
-            Messages::setMsg('Record "'.$_GET['id'].'" not found', 'error');
+            Messages::setMsg('Record "'.$get['id'].'" not found', 'error');
             $this->returnToPage('frameworks');
         }
         return $rows;
@@ -101,10 +103,11 @@ class FrameworksModel extends Model
     {
         $this->changeDatabase(self::curDB);
         $post = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+        $get = filter_input_array(INPUT_GET, FILTER_SANITIZE_STRING);
         if (isset($post['todelete']))
         {
             $this->query('DELETE FROM frameworkengine WHERE id = :id');
-            $this->bind(':id', $_GET['id']);
+            $this->bind(':id', $post['id']);
             $res = $this->execute();
             if (!$res)
             {
@@ -113,15 +116,16 @@ class FrameworksModel extends Model
             $this->close();
             $this->returnToPage('frameworks');
         }
-        $this->query("SELECT fe.name, pl.name proglanguage 
+        $this->query("SELECT fe.id, fe.name, pl.name proglanguage 
                       FROM frameworkengine AS fe
                         INNER JOIN proglanguage AS pl ON fe.id_ProgLanguage = pl.id
-                      WHERE fe.id = ".$_GET['id']);
+                      WHERE fe.id = :id");
+        $this->bind(':id', $get['id']);
         $rows = $this->single();
         $this->close();
         if (!$rows)
         {
-            Messages::setMsg('Record "'.$_GET['id'].'" not found', 'error');
+            Messages::setMsg('Record "'.$get['id'].'" not found', 'error');
             $this->returnToPage('frameworks');
         }
         return $rows;

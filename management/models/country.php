@@ -62,6 +62,7 @@ class CountryModel extends Model
     {
         $this->changeDatabase(self::curDB);
         $post = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+        $get = filter_input_array(INPUT_GET, FILTER_SANITIZE_STRING);
         if (isset($post['submit']))
         {
             // Contrôle des données
@@ -98,7 +99,7 @@ class CountryModel extends Model
                         INNER JOIN country_tr AS cfr ON c.id = cfr.id AND cfr.id_Language = 1
                         INNER JOIN country_tr AS cen ON c.id = cen.id AND cen.id_Language = 2
                       WHERE c.id = :id');
-        $this->bind(':id', $_GET['id']);
+        $this->bind(':id', $get['id']);
         $rows = $this->single();
         $this->close();
         if (!$rows)
@@ -112,10 +113,11 @@ class CountryModel extends Model
     {
         $this->changeDatabase(self::curDB);
         $post = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+        $get = filter_input_array(INPUT_GET, FILTER_SANITIZE_STRING);
         if (isset($post['todelete']))
         {
             $this->query('DELETE FROM country WHERE id = :id');
-            $this->bind(':id', $_GET['id']);
+            $this->bind(':id', $post['id']);
             $res = $this->execute();
             if (!$res)
             {
@@ -129,7 +131,7 @@ class CountryModel extends Model
                         INNER JOIN country_tr AS cfr ON c.id = cfr.id AND cfr.id_Language = 1
                         INNER JOIN country_tr AS cen ON c.id = cen.id AND cen.id_Language = 2
                       WHERE c.id = :id');
-        $this->bind(':id', $_GET['id']);
+        $this->bind(':id', $get['id']);
         $rows = $this->single();
         $this->close();
         if (!$rows)

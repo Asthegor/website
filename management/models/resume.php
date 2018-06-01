@@ -23,7 +23,7 @@ class ResumeModel extends Model
                         INNER JOIN country_tr AS cten ON ct.id = cten.id AND cten.id_Language = 2
                         INNER JOIN company AS cpy ON e.id_Company = cpy.id
                       WHERE e.bVisible = 1
-                      ORDER BY e.bVisible DESC, e.date_end DESC, e.date_start DESC");
+                      ORDER BY e.bVisible DESC, e.date_start DESC, e.date_end DESC");
         $rows = $this->resultSet();
         $this->close();
         return $rows;
@@ -61,7 +61,6 @@ class ResumeModel extends Model
                 $this->bind(':bVisible', isset($post['bVisible']) ? $post['bVisible'] : 0);
                 $resp = $this->execute();
                 $id = $this->lastIndexId();
-                echo $id;
                 //Insertion du titre français
                 $this->query('INSERT INTO experience_tr (id, id_Language, title, content)
                             VALUES(:id, 1, :title, :content)');
@@ -96,6 +95,7 @@ class ResumeModel extends Model
     {
         $this->changeDatabase(self::curDB);
         $post = filter_input_array(INPUT_POST, FILTER_SANITIZE_ENCODED);
+        $get = filter_input_array(INPUT_GET, FILTER_SANITIZE_STRING);
         if ($post['submit'])
         {
             date_default_timezone_set('Europe/Paris');
@@ -163,12 +163,12 @@ class ResumeModel extends Model
                         INNER JOIN experience_tr AS efr ON e.id = efr.id AND efr.id_Language = 1
                         INNER JOIN experience_tr AS een ON e.id = een.id AND een.id_Language = 2
                       WHERE e.id = :id");
-        $this->bind(':id', $_GET['id']);
+        $this->bind(':id', $get['id']);
         $rows = $this->single();
         $this->close();
         if (!$rows)
         {
-            Messages::setMsg('Record "'.$_GET['id'].'" not found', 'error');
+            Messages::setMsg('Record "'.$get['id'].'" not found', 'error');
             $this->returnToPage('resume');
         }
         return $rows;
@@ -176,7 +176,46 @@ class ResumeModel extends Model
 
     public function Delete()
     {
-        return;
+        $this->changeDatabase(self::curDB);
+        $post = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+        $get = filter_input_array(INPUT_GET, FILTER_SANITIZE_STRING);
+        if (isset($post['todelete']))
+        {
+            //Mise à jour de la base
+            $this->startTransaction();
+            $this->query('DELETE FROM experience WHERE id = :id');
+            $this->bind(':id', $post['id']);
+            $resp = $this->execute();
+            $this->query('DELETE FROM experience_tr WHERE id = :id');
+            $this->bind(':id', $post['id']);
+            $resptr = $this->execute();
+
+            if($resp && $resptr)
+            {
+                $this->commit();
+            }
+            else
+            {
+                $this->rollBack();
+            }
+            $this->close();
+            $this->returnToPage('resume');
+        }
+        $this->query("SELECT e.id, efr.title title_fr, een.title title_en
+                      FROM experience AS e
+                        INNER JOIN experience_tr AS efr ON e.id = efr.id AND efr.id_Language = 1
+                        INNER JOIN experience_tr AS een ON e.id = een.id AND een.id_Language = 2
+                      WHERE e.id = :id");
+        $this->bind(':id', $get['id']);
+        $rows = $this->single();
+        $this->close();
+        if (!$rows)
+        {
+            Messages::setMsg('Record "'.$get['id'].'" not found', 'error');
+            return;
+            //$this->returnToPage('resume');
+        }
+        return $rows;
     }
 }
 

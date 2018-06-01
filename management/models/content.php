@@ -71,6 +71,7 @@ class ContentModel extends Model
     {
         $this->changeDatabase(self::curDB);
         $post = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+        $get = filter_input_array(INPUT_GET, FILTER_SANITIZE_STRING);
         if (isset($post['submit']))
         {
             // Contrôle des données
@@ -124,12 +125,13 @@ class ContentModel extends Model
                       FROM indexitems AS i
                         INNER JOIN indexitems_tr AS itrfr ON i.id = itrfr.id AND itrfr.id_Language = 1
                         INNER JOIN indexitems_tr AS itren ON i.id = itren.id AND itren.id_Language = 2
-                      WHERE i.id_Category = 2 AND i.id = '.$_GET['id']);
+                      WHERE i.id_Category = 2 AND i.id = :id');
+        $this->bind(':id', $get['id']);
         $rows = $this->single();
         $this->close();
         if (!$rows)
         {
-            Messages::setMsg('Record "'.$_GET['id'].'" not found', 'error');
+            Messages::setMsg('Record "'.$get['id'].'" not found', 'error');
             $this->returnToPage('content');
         }
         return $rows;
@@ -139,16 +141,17 @@ class ContentModel extends Model
     {
         $this->changeDatabase(self::curDB);
         $post = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+        $get = filter_input_array(INPUT_GET, FILTER_SANITIZE_STRING);
         if (isset($post['todelete']))
         {
             $this->startTransaction();
             
             $this->query('DELETE FROM indexitems WHERE id = :id');
-            $this->bind(':id', $_GET['id']);
+            $this->bind(':id', $post['id']);
             $resii = $this->execute();
             
             $this->query('DELETE FROM indexitems_tr WHERE id = :id');
-            $this->bind(':id', $_GET['id']);
+            $this->bind(':id', $post['id']);
             $resitr = $this->execute();
 
             if ($resii && $resitr)
@@ -162,16 +165,17 @@ class ContentModel extends Model
             $this->close();
             $this->returnToPage('content');
         }
-        $this->query('SELECT itrfr.title title_fr, itren.title title_en
+        $this->query('SELECT i.id, itrfr.title title_fr, itren.title title_en
                       FROM indexitems AS i
                         INNER JOIN indexitems_tr AS itrfr ON i.id = itrfr.id AND itrfr.id_Language = 1
                         INNER JOIN indexitems_tr AS itren ON i.id = itren.id AND itren.id_Language = 2
-                      WHERE i.id_Category = 2 AND i.id = '.$_GET['id']);
+                      WHERE i.id_Category = 2 AND i.id = :id');
+        $this->bind(':id', $get['id']);
         $rows = $this->single();
         $this->close();
         if (!$rows)
         {
-            Messages::setMsg('Record "'.$_GET['id'].'" not found', 'error');
+            Messages::setMsg('Record "'.$get['id'].'" not found', 'error');
             $this->returnToPage('content');
         }
         return $rows;

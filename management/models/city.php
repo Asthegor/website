@@ -68,6 +68,7 @@ class CityModel extends Model
     public function Update()
     {
         $post = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+        $get = filter_input_array(INPUT_GET, FILTER_SANITIZE_STRING);
         if ($post['submit'])
         {
             $id = $post['id'];
@@ -113,12 +114,12 @@ class CityModel extends Model
                         INNER JOIN city_tr AS cfr ON c.id = cfr.id AND cfr.id_Language = 1
                         INNER JOIN city_tr AS cen ON c.id = cen.id AND cen.id_Language = 2
                       WHERE c.id = :id");
-        $this->bind(':id', $_GET['id']);
+        $this->bind(':id', $get['id']);
         $rows = $this->single();
         $this->close();
         if (!$rows)
         {
-            Messages::setMsg('Record "'.$_GET['id'].'" not found', 'error');
+            Messages::setMsg('Record "'.$get['id'].'" not found', 'error');
             $this->returnToPage('city');
         }
         return $rows;
@@ -128,10 +129,11 @@ class CityModel extends Model
     {
         $this->changeDatabase(self::curDB);
         $post = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+        $get = filter_input_array(INPUT_GET, FILTER_SANITIZE_STRING);
         if (isset($post['todelete']))
         {
             $this->query('DELETE FROM city WHERE id = :id');
-            $this->bind(':id', $_GET['id']);
+            $this->bind(':id', $post['id']);
             $res = $this->execute();
             if (!$res)
             {
@@ -140,7 +142,7 @@ class CityModel extends Model
             $this->close();
             $this->returnToPage('city');
         }
-        $this->query("SELECT cfr.name name_fr, cen.name name_en,
+        $this->query("SELECT c.id, cfr.name name_fr, cen.name name_en,
                              CONCAT(ctfr.name, ' (', cten.name, ')') country
                       FROM city AS c
                         INNER JOIN city_tr AS cfr ON c.id = cfr.id AND cfr.id_Language = 1
@@ -148,12 +150,12 @@ class CityModel extends Model
                         INNER JOIN country_tr AS ctfr ON c.id_Country = ctfr.id AND ctfr.id_Language = 1
                         INNER JOIN country_tr AS cten ON c.id_Country = cten.id AND cten.id_Language = 2
                       WHERE c.id = :id");
-        $this->bind(':id', $_GET['id']);
+        $this->bind(':id', $get['id']);
         $rows = $this->single();
         $this->close();
         if (!$rows)
         {
-            Messages::setMsg('Record "'.$_GET['id'].'" not found', 'error');
+            Messages::setMsg('Record "'.$get['id'].'" not found', 'error');
             $this->returnToPage('frameworks');
         }
         return $rows;

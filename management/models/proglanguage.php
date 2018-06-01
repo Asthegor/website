@@ -50,6 +50,7 @@ class ProgLanguageModel extends Model
     {
         $this->changeDatabase(self::curDB);
         $post = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+        $get = filter_input_array(INPUT_GET, FILTER_SANITIZE_STRING);
         if (isset($post['submit']))
         {
             // Contrôle des données
@@ -72,9 +73,8 @@ class ProgLanguageModel extends Model
                 Messages::setMsg('Error(s) during update', 'error');
             }
         }
-        $this->query('SELECT id, name
-                      FROM proglanguage
-                      WHERE id = '.$_GET['id']);
+        $this->query('SELECT id, name FROM proglanguage WHERE id = :id');
+        $this->bind(':id', $get['id']);
         $rows = $this->single();
         $this->close();
         if (!$rows)
@@ -88,10 +88,11 @@ class ProgLanguageModel extends Model
     {
         $this->changeDatabase(self::curDB);
         $post = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+        $get = filter_input_array(INPUT_GET, FILTER_SANITIZE_STRING);
         if (isset($post['todelete']))
         {
             $this->query('DELETE FROM proglanguage WHERE id = :id');
-            $this->bind(':id', $_GET['id']);
+            $this->bind(':id', $post['id']);
             $res = $this->execute();
             if (!$res)
             {
@@ -100,9 +101,8 @@ class ProgLanguageModel extends Model
             $this->close();
             $this->returnToPage('proglanguage');
         }
-        $this->query('SELECT name
-                      FROM proglanguage
-                      WHERE id = '.$_GET['id']);
+        $this->query('SELECT id, name FROM proglanguage WHERE id = :id');
+        $this->bind(':id', $get['id']);
         $rows = $this->single();
         $this->close();
         if (!$rows)

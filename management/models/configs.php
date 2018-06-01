@@ -8,7 +8,8 @@ class ConfigModel extends Model
     {
         $model = new ConfigModel();
         $model->changeDatabase(self::curDB);
-        $model->query("SELECT value FROM config WHERE data = '".$data."'");
+        $model->query("SELECT value FROM config WHERE data = :data");
+        $model->bind(':data', $data);
         $rows = $model->single();
         return $rows['value'];
     }

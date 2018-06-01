@@ -22,6 +22,7 @@ class DevLogModel extends Model
     public function Add()
     {
         $post = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+        $get = filter_input_array(INPUT_GET, FILTER_SANITIZE_STRING);
         if ($post['submit'])
         {
             if ($post['title_fr'] == '' || $post['title_en'] == '' || $post['description_fr'] == '' || $post['description_en'] == '')
@@ -74,10 +75,11 @@ class DevLogModel extends Model
                 Messages::setMsg('Error(s) during insert : [resp='.$resp.', respen='.$respen.', respfr='.$respfr.']', 'error');
             }
         }
-        if ($_GET['action'] == 'add' && isset($_GET['id']))
+        if ($get['action'] == 'add' && isset($get['id']))
         {
             $this->changeDatabase(self::curDB);
-            $this->query("SELECT id id_Project, title project FROM project WHERE id = ".$_GET['id']);
+            $this->query("SELECT id id_Project, title project FROM project WHERE id = :id");
+            $this->bind(':id', $get['id']);
             $rows = $this->single();
             $this->close();
             return $rows;
@@ -88,6 +90,7 @@ class DevLogModel extends Model
     public function Update()
     {
         $post = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+        $get = filter_input_array(INPUT_GET, FILTER_SANITIZE_STRING);
         if ($post['submit'])
         {
             if ($post['title_fr'] == '' || $post['title_en'] == '' || $post['description_fr'] == '' || $post['description_en'] == '')
@@ -150,7 +153,8 @@ class DevLogModel extends Model
                         INNER JOIN devlog_tr AS dlfr ON dl.id = dlfr.id AND dlfr.id_Language = 1
                         INNER JOIN devlog_tr AS dlen ON dl.id = dlen.id AND dlen.id_Language = 2
                         INNER JOIN project AS p ON dl.id_Project = p.id
-                      WHERE dl.id = ".$_GET['id']);
+                      WHERE dl.id = :id");
+        $this->bind(':id', $get['id']);
         $rows = $this->single();
         $this->close();
         return $rows;
@@ -160,14 +164,15 @@ class DevLogModel extends Model
     {
         $this->changeDatabase(self::curDB);
         $post = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+        $get = filter_input_array(INPUT_GET, FILTER_SANITIZE_STRING);
         if (isset($post['todelete']))
         {
             $this->startTransaction();
             $this->query('DELETE FROM devlog WHERE id = :id');
-            $this->bind(':id', $_GET['id']);
+            $this->bind(':id', $post['id']);
             $resii = $this->execute();
             $this->query('DELETE FROM devlog_tr WHERE id = :id');
-            $this->bind(':id', $_GET['id']);
+            $this->bind(':id', $post['id']);
             $resitr = $this->execute();
 
             if ($resii && $resitr)
@@ -181,16 +186,17 @@ class DevLogModel extends Model
             $this->close();
             $this->returnToPage('devlog');
         }
-        $this->query('SELECT dlfr.title title_fr, dlen.title title_en
+        $this->query('SELECT d.id, dlfr.title title_fr, dlen.title title_en
                       FROM devlog AS d
                         INNER JOIN devlog_tr AS dlfr ON d.id = dlfr.id AND dlfr.id_Language = 1
                         INNER JOIN devlog_tr AS dlen ON d.id = dlen.id AND dlen.id_Language = 2
-                      WHERE d.id = '.$_GET['id']);
+                      WHERE d.id = :id');
+        $this->bind(':id', $get['id']);
         $rows = $this->single();
         $this->close();
         if (!$rows)
         {
-            Messages::setMsg('Record "'.$_GET['id'].'" not found', 'error');
+            Messages::setMsg('Record "'.$get['id'].'" not found', 'error');
             $this->returnToPage('devlog');
         }
         return $rows;

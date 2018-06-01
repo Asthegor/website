@@ -44,6 +44,7 @@ class CompanyModel extends Model
     {
         $this->changeDatabase(self::curDB);
         $post = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+        $get = filter_input_array(INPUT_GET, FILTER_SANITIZE_STRING);
         if (isset($post['submit']))
         {
             // Contrôle des données
@@ -69,9 +70,8 @@ class CompanyModel extends Model
                 }
             }
         }
-        $this->query('SELECT id, name
-                      FROM company
-                      WHERE id = '.$_GET['id']);
+        $this->query('SELECT id, name FROM company WHERE id = :id');
+        $this->bind(':id', $get['id']);
         $rows = $this->single();
         $this->close();
         if (!$rows)
@@ -85,10 +85,11 @@ class CompanyModel extends Model
     {
         $this->changeDatabase(self::curDB);
         $post = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+        $get = filter_input_array(INPUT_GET, FILTER_SANITIZE_STRING);
         if (isset($post['todelete']))
         {
             $this->query('DELETE FROM company WHERE id = :id');
-            $this->bind(':id', $_GET['id']);
+            $this->bind(':id', $post['id']);
             $res = $this->execute();
             if (!$res)
             {
@@ -97,9 +98,8 @@ class CompanyModel extends Model
             $this->close();
             $this->returnToPage('company');
         }
-        $this->query('SELECT name
-                      FROM company
-                      WHERE id = '.$_GET['id']);
+        $this->query('SELECT id, name FROM company WHERE id = :id');
+        $this->bind(':id', $get['id']);
         $rows = $this->single();
         $this->close();
         if (!$rows)
