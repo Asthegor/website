@@ -1,5 +1,5 @@
 <h1>Ville</h1>
-<form method="post" action="<?php $_SERVER['PHP_SELF']; ?>">
+<form method="post" action="<?= $_SERVER['PHP_SELF']; ?>">
     <?php if (isset($viewModel['id']))
     {
         ?>
