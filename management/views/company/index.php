@@ -1,5 +1,5 @@
 <?php
-require_once('views/projectnavbar/projectnavbar.php');
+require_once('views/resumenavbar/resumenavbar.php');
 ?>
 <h1>Sociétés</h1>
 <h5><a href="<?php echo ROOT_MNGT.'company/add'; ?>">Nouvelle société</a></h5>

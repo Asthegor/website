@@ -1,18 +1,18 @@
 <?php
 
-class City extends Controller
+class Country extends Controller
 {
     protected function index()
     {
         $this->checkLogin();
-        $viewmodel = new CityModel();
+        $viewmodel = new CountryModel();
         $this->returnView($viewmodel->Index());
     }
 
     protected function add()
     {
         $this->checkLogin();
-        $viewmodel = new CityModel();
+        $viewmodel = new CountryModel();
         $this->returnView($viewmodel->Add());
     }
 
@@ -23,7 +23,7 @@ class City extends Controller
         {
             header('Location: '.ROOT_MNGT.'/'.strtolower(get_class($this)));
         }
-        $viewmodel = new CityModel();
+        $viewmodel = new CountryModel();
         $this->returnView($viewmodel->Update());
     }
 
@@ -34,7 +34,7 @@ class City extends Controller
         {
             header('Location: '.ROOT_MNGT.'/'.strtolower(get_class($this)));
         }
-        $viewmodel = new CityModel();
+        $viewmodel = new CountryModel();
         $this->returnView($viewmodel->Delete());
     }
 }

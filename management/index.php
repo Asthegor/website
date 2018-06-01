@@ -22,6 +22,7 @@ require('controllers/version.php');
 require('controllers/resume.php');
 require('controllers/company.php');
 require('controllers/city.php');
+require('controllers/country.php');
 
 // require('controllers/tutorials.php');
 
@@ -39,6 +40,7 @@ require('models/configs.php');
 require('models/resume.php');
 require('models/company.php');
 require('models/city.php');
+require('models/country.php');
 
 // require('models/tutorials.php');
 

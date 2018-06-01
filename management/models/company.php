@@ -17,23 +17,25 @@ class CompanyModel extends Model
             if ($post['name'] == '')
             {
                 Messages::setMsg('Please fill in all mandatory fields', 'error');
-                return;
             }
-            // Insert into MySQL
-            $this->changeDatabase(self::curDB);
-            //Insertion des données générales
-            $this->query('INSERT INTO company (name)
-                          VALUES (:name)');
-            $this->bind(':name', $post['name']);
-            $this->execute();
-            //Verify
-            $id = $this->lastIndexId();
-            $this->close();
-            if($id)
+            else
             {
-                $this->returnToPage('company');
+                // Insert into MySQL
+                $this->changeDatabase(self::curDB);
+                //Insertion des données générales
+                $this->query('INSERT INTO company (name)
+                            VALUES (:name)');
+                $this->bind(':name', $post['name']);
+                $this->execute();
+                //Verify
+                $id = $this->lastIndexId();
+                $this->close();
+                if($id)
+                {
+                    $this->returnToPage('company');
+                }
+                Messages::setMsg('Error(s) during insert', 'error');
             }
-            Messages::setMsg('Error(s) during insert', 'error');
         }
         return;
     }

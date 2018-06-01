@@ -30,13 +30,13 @@ require_once('views/resumenavbar/resumenavbar.php');
         ?>
         <div style="display: inline-block; width:100%">
             <a href="<?php echo ROOT_MNGT.'resume/update/'.$item['id']; ?>">
-                <table style="width:80%;">
+                <table style="width:100%;">
                     <tr>
                         <td style="width:20%;"><?php echo $title; ?></td>
                         <td style="width:15%;"><?php echo $item['company']; ?></td>
                         <td style="width:15%;"><?php echo $city; ?></td>
                         <td style="width:15%;"><?php echo $item['date_start']; ?></td>
-                        <td style="width:15%;"><?php echo $item['date_end']; ?></td>
+                        <td style="width:15%;"><?php echo $item['date_end'].' '; ?></td>
                         <td style="width:15%;"><?php echo $item['bVisible'] ? 'Oui' : 'Non'; ?></td>
                     </tr>
                 </table>

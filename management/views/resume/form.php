@@ -20,7 +20,7 @@
     </div>
     <div class="form-group">
         <label>Société</label>
-        <select name="company" required>
+        <select name="id_Company" required>
             <option value=""></option>
             <?php
             $cpym = new CompanyModel();
@@ -36,7 +36,7 @@
     </div>
     <div class="form-group">
         <label>Ville</label>
-        <select name="city" required>
+        <select name="id_City" required>
             <option value=""></option>
             <?php
             $citym = new CityModel();
@@ -52,34 +52,30 @@
     </div>
     <div class="form-group">
         <label>Date de début</label>
-        <input type="date" name="date_start" value="<?php echo isset($viewModel['date_start']) ? $viewModel['date_start'] : ''; ?>" />
+        <input type="date" name="date_start" value="<?php echo isset($viewModel['date_start']) ? $viewModel['date_start'] : ''; ?>" required />
     </div>
     <div class="form-group">
         <label>Date de fin</label>
         <input type="date" name="date_end" value="<?php echo isset($viewModel['date_end']) ? $viewModel['date_end'] : ''; ?>" />
     </div>
     <div class="form-group">
-        <label>Poste actuel</label>
-        <input type="checkbox" name="current" value="1" <?php echo isset($viewModel['date_end']) && $viewModel['date_end'] ? '' : 'checked'; ?> />
-    </div>
-    <div class="form-group">
         <label>Description française</label>
-        <input type="text" name="content_fr" value="<?php echo isset($viewModel['content_fr']) ? $viewModel['content_fr'] : ''; ?>" required />
+        <textarea rows="6" cols="150" name="content_fr"><?php echo isset($viewModel['content_fr']) ? $viewModel['content_fr'] : ''; ?></textarea>
     </div>
     <div class="form-group">
         <label>Description anglaise</label>
-        <input type="text" name="content_en" value="<?php echo isset($viewModel['content_en']) ? $viewModel['content_en'] : ''; ?>" required />
+        <textarea rows="6" cols="150" name="content_en"><?php echo isset($viewModel['content_en']) ? $viewModel['content_en'] : ''; ?></textarea>
     </div>
     <div class="form-group">
         <label>Visible</label>
         <input type="checkbox" name="bVisible" value="1" <?php echo isset($viewModel['bVisible']) && $viewModel['bVisible'] ? 'checked' : ''; ?> />
     </div>
     <input class="btn btn-primary" name="submit" type="submit" value="Submit" />
-    <a class="btn btn-danger" href="<?php echo ROOT_MNGT; ?>projects">Cancel</a>
+    <a class="btn btn-danger" href="<?php echo ROOT_MNGT; ?>resume">Cancel</a>
     <?php if (isset($viewModel['id']))
     {
         ?>
-        <a class="btn btn-danger" href="<?php echo ROOT_MNGT.'projects/delete/'.$viewModel['id']; ?>">Delete</a><br>
+        <a class="btn btn-danger" href="<?php echo ROOT_MNGT.'resume/delete/'.$viewModel['id']; ?>">Delete</a><br>
         <?php
     }
     ?>

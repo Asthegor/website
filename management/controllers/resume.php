@@ -16,6 +16,19 @@ class Resume extends Controller
         $this->returnView($viewmodel->Add());
     }
 
+    protected function update()
+    {
+        $this->checkLogin();
+        $viewmodel = new ResumeModel();
+        $this->returnView($viewmodel->Update());
+    }
+
+    protected function delete()
+    {
+        $this->checkLogin();
+        $viewmodel = new ResumeModel();
+        $this->returnView($viewmodel->Delete());
+    }
 }
 
 ?>
