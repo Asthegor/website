@@ -2,7 +2,7 @@
 require_once('views/resumenavbar/resumenavbar.php');
 ?>
 <h1>Expériences</h1>
-<h2><a href="<?php echo ROOT_MNGT.'resume/add'; ?>">Nouvelle expérience</a></h2>
+<h2><a href="<?= ROOT_MNGT.'resume/add'; ?>">Nouvelle expérience</a></h2>
 <div class="navbar-index">
     <table style="width:100%; text-align: left;">
         <tr>
@@ -29,15 +29,15 @@ require_once('views/resumenavbar/resumenavbar.php');
         }
         ?>
         <div style="display: inline-block; width:100%">
-            <a href="<?php echo ROOT_MNGT.'resume/update/'.$item['id']; ?>">
+            <a href="<?= ROOT_MNGT.'resume/update/'.$item['id']; ?>">
                 <table style="width:100%;">
                     <tr>
-                        <td style="width:20%;"><?php echo $title; ?></td>
-                        <td style="width:15%;"><?php echo $item['company']; ?></td>
-                        <td style="width:15%;"><?php echo $city; ?></td>
-                        <td style="width:15%;"><?php echo $item['date_start']; ?></td>
-                        <td style="width:15%;"><?php echo $item['date_end'].' '; ?></td>
-                        <td style="width:15%;"><?php echo $item['bVisible'] ? 'Oui' : 'Non'; ?></td>
+                        <td style="width:20%;"><?= urldecode($title); ?></td>
+                        <td style="width:15%;"><?= urldecode($item['company']); ?></td>
+                        <td style="width:15%;"><?= urldecode($city); ?></td>
+                        <td style="width:15%;"><?= $item['date_start']; ?></td>
+                        <td style="width:15%;"><?= $item['date_end'].' '; ?></td>
+                        <td style="width:15%;"><?= $item['bVisible'] ? 'Oui' : 'Non'; ?></td>
                     </tr>
                 </table>
             </a>

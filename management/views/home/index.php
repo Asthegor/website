@@ -12,15 +12,15 @@
 foreach ($viewModel as $datas)
 {
     ?>
-    <a href="<?php echo ROOT_MNGT.$datas['dest']; ?>">
+    <a href="<?= ROOT_MNGT.$datas['dest']; ?>">
         <table style="width:100%;">
             <tr>
-                <td style="width: 30%;"><?php echo $datas['title']; ?></td>
+                <td style="width: 30%;"><?= $datas['title']; ?></td>
                 <?php
                 foreach ($datas['datas'] as $number)
                 {
                     ?>
-                    <td style="width: 15%; text-align: center;"><?php echo $number; ?></td>
+                    <td style="width: 15%; text-align: center;"><?= $number; ?></td>
                     <?php
                 }
                 ?>

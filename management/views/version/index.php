@@ -18,7 +18,7 @@ require_once('views/projectnavbar/projectnavbar.php');
         foreach ($vmlist as $item)
         {
             ?>
-            <option value="<?php echo $item['id']; ?>" <?php echo $item['id'] == $projectid ? 'selected' : ''; ?>><?php echo $item['title']; ?></option>
+            <option value="<?= $item['id']; ?>" <?= $item['id'] == $projectid ? 'selected' : ''; ?>><?= $item['title']; ?></option>
             <?php
         }
         ?>
@@ -38,13 +38,13 @@ require_once('views/projectnavbar/projectnavbar.php');
     foreach ($viewModel as $item)
     {
     ?>
-        <a href="<?php echo ROOT_MNGT.'version/update/'.$item['id']; ?>">
+        <a href="<?= ROOT_MNGT.'version/update/'.$item['id']; ?>">
             <table style="width:100%;">
                 <tr>
-                    <td style="width:5%;"><?php echo $item['id']; ?></td>
-                    <td style="width:15%;"><?php echo $item['project']; ?></td>
-                    <td style="width:15%;"><?php echo $item['num_version']; ?></td>
-                    <td style="width:15%;"><?php echo $item['date_version']; ?></td>
+                    <td style="width:5%;"><?= $item['id']; ?></td>
+                    <td style="width:15%;"><?= $item['project']; ?></td>
+                    <td style="width:15%;"><?= $item['num_version']; ?></td>
+                    <td style="width:15%;"><?= $item['date_version']; ?></td>
                 </tr>
             </table>
         </a>

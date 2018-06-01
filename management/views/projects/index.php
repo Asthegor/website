@@ -13,7 +13,7 @@ echo $prjm->getNbProjects();
 echo $prjm->getNbActiveProjects();
 ?>
 </p>
-<h2><a href="<?php echo ROOT_MNGT.'projects/add'; ?>">Nouveau projet</a></h2>
+<h2><a href="<?= ROOT_MNGT.'projects/add'; ?>">Nouveau projet</a></h2>
 <div class="navbar-index">
     <table style="width:100%; text-align: left;">
         <tr>
@@ -31,19 +31,19 @@ echo $prjm->getNbActiveProjects();
     {
     ?>
         <div style="display: inline-block; width:100%">
-            <a href="<?php echo ROOT_MNGT.'projects/update/'.$item['id']; ?>">
+            <a href="<?= ROOT_MNGT.'projects/update/'.$item['id']; ?>">
                 <table style="width:80%;">
                     <tr>
-                        <td style="width:5%;"><?php echo $item['id']; ?></td>
-                        <td style="width:15%;"><?php echo urldecode($item['title']); ?></td>
-                        <td style="width:15%;"><?php echo urldecode($item['framework']); ?></td>
-                        <td style="width:15%;"><?php echo $item['first_date_project']; ?></td>
-                        <td style="width:15%;"><?php echo $item['version']; ?></td>
-                        <td style="width:15%;"><?php echo $item['bVisible'] ? 'Oui' : 'Non'; ?></td>
+                        <td style="width:5%;"><?= $item['id']; ?></td>
+                        <td style="width:15%;"><?= urldecode($item['title']); ?></td>
+                        <td style="width:15%;"><?= urldecode($item['framework']); ?></td>
+                        <td style="width:15%;"><?= $item['first_date_project']; ?></td>
+                        <td style="width:15%;"><?= $item['version']; ?></td>
+                        <td style="width:15%;"><?= $item['bVisible'] ? 'Oui' : 'Non'; ?></td>
                     </tr>
                 </table>
             </a>
-            <a style="width:20%;" href="<?php echo ROOT_MNGT.'devlog/add/'.$item['id']; ?>">Nouveau DevLog</a>
+            <a style="width:20%;" href="<?= ROOT_MNGT.'devlog/add/'.$item['id']; ?>">Nouveau DevLog</a>
         </div>
     <?php
     }

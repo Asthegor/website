@@ -5,14 +5,14 @@
         ?>
         <div class="form-group">
             <label>ID</label>
-            <input type="text" name="id" value="<?php echo $viewModel['id']; ?>" readonly />
+            <input type="text" name="id" value="<?= $viewModel['id']; ?>" readonly />
         </div>
         <?php
     }
     ?>
     <div class="form-group">
         <label>Nom</label>
-        <input type="text" name="name" value="<?php echo isset($viewModel['name']) ? $viewModel['name'] : ''; ?>" required />
+        <input type="text" name="name" value="<?= isset($viewModel['name']) ? $viewModel['name'] : ''; ?>" required />
     </div>
     <div class="form-group">
         <label>Langage de programmation</label>
@@ -24,27 +24,27 @@
             foreach ($plmlist as $item)
             {
                 ?>
-                <option value="<?php echo $item['id']; ?>" <?php echo $viewModel['id_ProgLanguage'] == $item['id'] ? 'selected' : ''; ?>><?php echo $item['name']; ?></option>
+                <option value="<?= $item['id']; ?>" <?= $viewModel['id_ProgLanguage'] == $item['id'] ? 'selected' : ''; ?>><?= $item['name']; ?></option>
                 <?php
             }
             ?>
         </select>
-        <a href="<?php echo ROOT_MNGT; ?>proglanguage/add">Ajout</a>
+        <a href="<?= ROOT_MNGT; ?>proglanguage/add">Ajout</a>
     </div>
     <div class="form-group">
         <label>Ordre d'affichage</label>
-        <input type="text" name="sortOrder" value="<?php echo isset($viewModel['sortOrder']) ? $viewModel['sortOrder'] : ''; ?>"/>
+        <input type="text" name="sortOrder" value="<?= isset($viewModel['sortOrder']) ? $viewModel['sortOrder'] : ''; ?>"/>
     </div>
     <div class="form-group">
         <label>Visible</label>
-        <input type="checkbox" name="bVisible" value="1" <?php echo isset($viewModel['bVisible']) && $viewModel['bVisible'] ? 'checked' : ''; ?> />
+        <input type="checkbox" name="bVisible" value="1" <?= isset($viewModel['bVisible']) && $viewModel['bVisible'] ? 'checked' : ''; ?> />
     </div>
     <input class="btn btn-primary" name="submit" type="submit" value="Submit" />
-    <a class="btn btn-danger" href="<?php echo ROOT_MNGT; ?>frameworks">Cancel</a>
+    <a class="btn btn-danger" href="<?= ROOT_MNGT; ?>frameworks">Cancel</a>
     <?php if (isset($viewModel['id']))
     {
         ?>
-        <a class="btn btn-danger" href="<?php echo ROOT_MNGT.'frameworks/delete/'.$viewModel['id']; ?>">Delete</a><br>
+        <a class="btn btn-danger" href="<?= ROOT_MNGT.'frameworks/delete/'.$viewModel['id']; ?>">Delete</a><br>
         <?php
     }
     ?>
