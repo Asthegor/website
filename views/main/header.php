@@ -1,3 +1,7 @@
+<?php
+if(!isset($_SESSION['language'])) $_SESSION['language'] = 'FR';
+$language = $_SESSION['language'];
+?>
 <!DOCTYPE html>
 <html>
 
@@ -14,7 +18,10 @@
 <body>
   <div class="header">
     <img src="<?= ROOT_URL; ?>assets/images/logo/logo_textonly_475x150.png"/>
-    <h1><?= ConfigModel::getConfig('MAIN_TITLE_'.(isset($_SESSION['language']) ? $_SESSION['language'] : 'FR')); ?></h1>
+    <h1><?= ConfigModel::getConfig('MAIN_TITLE_'.$language); ?></h1>
+    <h3 style="width: 100%; text-align: center;">
+      <a href="mailto:lacombe.dominique@outlook.fr">Me contacter</a>
+    </h3>
   </div>
 
   <?php
