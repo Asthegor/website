@@ -14,7 +14,6 @@
       <li class="nav-item"><a href="<?= ROOT_MNGT; ?>content">Contenu</a></li>
       <li class="nav-item"><a href="<?= ROOT_MNGT; ?>projects">Projets</a></li>
       <li class="nav-item"><a href="<?= ROOT_MNGT; ?>resume">Expériences</a></li>
-      <li class="nav-item"><a href="<?= ROOT_MNGT; ?>tutorials">Tutoriels</a></li>
       <li class="nav-item"><a id="nav-item-site" href="<?= ROOT_URL; ?>" target="_blank">Voir sur le site</a></li>
       <li id="nav-item-last-child" class="nav-item"><a href="<?= ROOT_MNGT; ?>users/logout">Logout</a></li>
     </ul>

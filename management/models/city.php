@@ -29,38 +29,40 @@ class CityModel extends Model
             if ($post['name_fr'] == '' || $post['name_en'] == '')
             {
                 Messages::setMsg('Please fill in all mandatory fields', 'error');
-                return;
             }
-            // Insert into MySQL
-            $this->changeDatabase(self::curDB);
-            $this->startTransaction();
-            //Insertion des données générales
-            $this->query("INSERT INTO city (id_Country)
-                          VALUES (:id_Country)");
-            $this->bind(':id_Country', $post['id_Country']);
-            $resp = $this->execute();
-            $id = $this->lastIndexId();
-
-            // Insertion du nom français
-            $this->query("INSERT INTO city_tr (id, name, id_Language) VALUES (:id, :name, 1)");
-            $this->bind(':id', $id);
-            $this->bind(':name', $post['name_fr']);
-            $respfr = $this->execute();
-            // insertion du nom anglais
-            $this->query("INSERT INTO city_tr (id, name, id_Language) VALUES (:id, :name, 2)");
-            $this->bind(':id', $id);
-            $this->bind(':name', $post['name_en']);
-            $respen = $this->execute();
-            //Verify
-            if($resp && $respfr && $respen)
+            else
             {
-                $this->commit();
+                // Insert into MySQL
+                $this->changeDatabase(self::curDB);
+                $this->startTransaction();
+                //Insertion des données générales
+                $this->query("INSERT INTO city (id_Country)
+                            VALUES (:id_Country)");
+                $this->bind(':id_Country', $post['id_Country']);
+                $resp = $this->execute();
+                $id = $this->lastIndexId();
+
+                // Insertion du nom français
+                $this->query("INSERT INTO city_tr (id, name, id_Language) VALUES (:id, :name, 1)");
+                $this->bind(':id', $id);
+                $this->bind(':name', $post['name_fr']);
+                $respfr = $this->execute();
+                // insertion du nom anglais
+                $this->query("INSERT INTO city_tr (id, name, id_Language) VALUES (:id, :name, 2)");
+                $this->bind(':id', $id);
+                $this->bind(':name', $post['name_en']);
+                $respen = $this->execute();
+                //Verify
+                if($resp && $respfr && $respen)
+                {
+                    $this->commit();
+                    $this->close();
+                    $this->returnToPage('city');
+                }
+                $this->rollback();
                 $this->close();
-                $this->returnToPage('city');
+                Messages::setMsg('Error(s) during insert : [resp='.$resp.', respfr='.$respfr.', respen='.$respen.']', 'error');
             }
-            $this->rollback();
-            $this->close();
-            Messages::setMsg('Error(s) during insert : [resp='.$resp.', respfr='.$respfr.', respen='.$respen.']', 'error');
         }
         return;
     }

@@ -25,35 +25,37 @@ class CountryModel extends Model
             if ($post['name_fr'] == '' || $post['name_en'] == '')
             {
                 Messages::setMsg('Please fill in all mandatory fields', 'error');
-                return;
             }
-            // Insert into MySQL
-            $this->changeDatabase(self::curDB);
-            $this->startTransaction();
-            $this->query("INSERT INTO country (id) VALUES (NULL)");
-            $this->execute();
-            $id = $this->lastIndexId();
-
-            //Insertion du nom français
-            $this->query('INSERT INTO country_tr (id, name, id_Language) VALUES (:id, :name, 1)');
-            $this->bind(':id', $id);
-            $this->bind(':name', $post['name_fr']);
-            $resfr = $this->execute();
-            //Insertion du nom anglais
-            $this->query('INSERT INTO country_tr (id, name, id_Language) VALUES (:id, :name, 2)');
-            $this->bind(':id', $id);
-            $this->bind(':name', $post['name_en']);
-            $resen = $this->execute();
-            if($id && $resfr && $resen)
+            else
             {
-                $this->commit();
+                // Insert into MySQL
+                $this->changeDatabase(self::curDB);
+                $this->startTransaction();
+                $this->query("INSERT INTO country (id) VALUES (NULL)");
+                $this->execute();
+                $id = $this->lastIndexId();
+
+                //Insertion du nom français
+                $this->query('INSERT INTO country_tr (id, name, id_Language) VALUES (:id, :name, 1)');
+                $this->bind(':id', $id);
+                $this->bind(':name', $post['name_fr']);
+                $resfr = $this->execute();
+                //Insertion du nom anglais
+                $this->query('INSERT INTO country_tr (id, name, id_Language) VALUES (:id, :name, 2)');
+                $this->bind(':id', $id);
+                $this->bind(':name', $post['name_en']);
+                $resen = $this->execute();
+                if($id && $resfr && $resen)
+                {
+                    $this->commit();
+                    $this->close();
+                    $this->returnToPage('country');
+                    return;
+                }
+                $this->rollBack();
                 $this->close();
-                $this->returnToPage('country');
-                return;
+                Messages::setMsg('Error(s) during insert [$resfr='.$resfr.', $resen='.$resen.']', 'error');
             }
-            $this->rollBack();
-            $this->close();
-            Messages::setMsg('Error(s) during insert [$resfr='.$resfr.', $resen='.$resen.']', 'error');
         }
         return;
     }

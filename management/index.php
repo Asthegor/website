@@ -24,8 +24,6 @@ require('controllers/company.php');
 require('controllers/city.php');
 require('controllers/country.php');
 
-// require('controllers/tutorials.php');
-
 
 require('models/users.php');
 require('models/home.php');
@@ -42,13 +40,8 @@ require('models/company.php');
 require('models/city.php');
 require('models/country.php');
 
-// require('models/tutorials.php');
-
-
 $management = new Management($_GET);
-
 $controller = $management->createController();
-
 if($controller)
 {
     $controller->executeAction();

@@ -27,42 +27,44 @@ class ContentModel extends Model
             if ($post['title_fr'] == '' || $post['title_en'] == '' || $post['destination'] == '')
             {
                 Messages::setMsg('Please fill in all mandatory fields', 'error');
-                return;
             }
-            // Insert into MySQL
-            $this->changeDatabase(self::curDB);
-            $this->startTransaction();
-            //Insertion des données générales
-            $this->query('INSERT INTO indexitems (id_Category, destination, bVisible, sortOrder)
-                          VALUES (2, :destination, :bVisible, :sortOrder)');
-            $this->bind(':destination', $post['destination']);
-            $this->bind(':bVisible', isset($post['bVisible']) ? $post['bVisible'] : 0);
-            $this->bind(':sortOrder', $post['sortorder']);
-            $this->execute();
-            $id = $this->lastIndexId();
-            //Insertion du titre français
-            $this->query('INSERT INTO indexitems_tr (id, id_Language, title)
-                          VALUES(:id, 1, :title)');
-            $this->bind(':id', $id);
-            $this->bind(':title', $post['title_fr']);
-            $this->execute();
-            //Insertion du titre anglais
-            $this->query('INSERT INTO indexitems_tr (id, id_Language, title)
-                          VALUES(:id, 2, :title)');
-            $this->bind(':id', $id);
-            $this->bind(':title', $post['title_en']);
-            $this->execute();
-
-            //Verify
-            if($id)
+            else
             {
-                $this->commit();
+                // Insert into MySQL
+                $this->changeDatabase(self::curDB);
+                $this->startTransaction();
+                //Insertion des données générales
+                $this->query('INSERT INTO indexitems (id_Category, destination, bVisible, sortOrder)
+                            VALUES (2, :destination, :bVisible, :sortOrder)');
+                $this->bind(':destination', $post['destination']);
+                $this->bind(':bVisible', isset($post['bVisible']) ? $post['bVisible'] : 0);
+                $this->bind(':sortOrder', $post['sortorder']);
+                $this->execute();
+                $id = $this->lastIndexId();
+                //Insertion du titre français
+                $this->query('INSERT INTO indexitems_tr (id, id_Language, title)
+                            VALUES(:id, 1, :title)');
+                $this->bind(':id', $id);
+                $this->bind(':title', $post['title_fr']);
+                $this->execute();
+                //Insertion du titre anglais
+                $this->query('INSERT INTO indexitems_tr (id, id_Language, title)
+                            VALUES(:id, 2, :title)');
+                $this->bind(':id', $id);
+                $this->bind(':title', $post['title_en']);
+                $this->execute();
+
+                //Verify
+                if($id)
+                {
+                    $this->commit();
+                    $this->close();
+                    $this->returnToPage('content');
+                }
+                $this->rollback();
                 $this->close();
-                $this->returnToPage('content');
+                Messages::setMsg('Error(s) during insert', 'error');
             }
-            $this->rollback();
-            $this->close();
-            Messages::setMsg('Error(s) during insert', 'error');
         }
         return;
     }
