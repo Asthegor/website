@@ -1,7 +1,7 @@
 ﻿<?php
 
 // Année de début du copyright
-define("COPY_YEAR","2015");
+define("COPY_YEAR","2018");
 // Définition du fuseau horaire
 date_default_timezone_set("Europe/Paris");
 
