@@ -9,17 +9,25 @@ class HomeModel extends Model
                     'dest'  => 'navbar',
                     'datas' => array($this->countNavItems(), $this->countVisibleNavItems(), $this->countNotVisibleNavItems())
             ),
-            array(  'title' =>'Contenu page principale',
+            array(  'title' => 'Contenu page principale',
                     'dest'  => 'content',
                     'datas' => array($this->countContent(), $this->countVisibleContent(), $this->countNotVisibleContent())
             ),
-            array(  'title' =>'Projets',
+            array(  'title' => 'Configurations',
+                    'dest'  => 'configs',
+                    'datas' => array($this->countConfigs(), 'N/A', 'N/A')
+            ),
+            array(  'title' => 'Projets',
                     'dest'  => 'projects',
                     'datas' => array($this->countProjects(), $this->countVisibleProjects(), $this->countNotVisibleProjects())
             ),
-            array(  'title' =>'Expériences professionnelles',
+            array(  'title' => 'Expériences professionnelles',
                     'dest'  => 'resume',
                     'datas' => array($this->countExp(), $this->countVisibleExp(), $this->countNotVisibleExp())
+            ),
+            array(  'title' => 'Parcours scolaire',
+                    'dest'  => 'education',
+                    'datas' => array($this->countEduc(), $this->countVisibleEduc(), $this->countNotVisibleEduc())
             )
         );
 
@@ -56,6 +64,15 @@ class HomeModel extends Model
         $this->close();
         return $rows['nb'];
     }
+    private function countConfigs()
+    {
+        $this->changeDatabase("lacombed_config");
+        $query = 'SELECT count(id) nb FROM config';
+        $this->query($query);
+        $rows = $this->single();
+        $this->close();
+        return $rows['nb'];
+    }
     private function countVisibleProjects() { return (int)$this->countProjects(true); }
     private function countNotVisibleProjects() { return (int)$this->countProjects(false); }
     private function countProjects($bVisible = null)
@@ -77,6 +94,21 @@ class HomeModel extends Model
     {
         $this->changeDatabase("lacombed_experiences");
         $query = 'SELECT count(id) nb FROM experience';
+        if (!is_null($bVisible))
+        {
+            $query .= ' WHERE bVisible = '.(int)$bVisible;
+        }
+        $this->query($query);
+        $rows = $this->single();
+        $this->close();
+        return $rows['nb'];
+    }
+    private function countVisibleEduc() { return (int)$this->countEduc(true); }
+    private function countNotVisibleEduc() { return (int)$this->countEduc(false); }
+    private function countEduc($bVisible = null)
+    {
+        $this->changeDatabase("lacombed_experiences");
+        $query = 'SELECT count(id) nb FROM education';
         if (!is_null($bVisible))
         {
             $query .= ' WHERE bVisible = '.(int)$bVisible;

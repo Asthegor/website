@@ -23,6 +23,8 @@ require('controllers/resume.php');
 require('controllers/company.php');
 require('controllers/city.php');
 require('controllers/country.php');
+require('controllers/configs.php');
+require('controllers/education.php');
 
 
 require('models/users.php');
@@ -39,6 +41,8 @@ require('models/resume.php');
 require('models/company.php');
 require('models/city.php');
 require('models/country.php');
+require('models/education.php');
+
 
 $management = new Management($_GET);
 $controller = $management->createController();

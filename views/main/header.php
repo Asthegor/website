@@ -20,7 +20,7 @@ $language = $_SESSION['language'];
     <img src="<?= ROOT_URL; ?>assets/images/logo/logo_textonly_475x150.png"/>
     <h1><?= ConfigModel::getConfig('MAIN_TITLE_'.$language); ?></h1>
     <h3 style="width: 100%; text-align: center;">
-      <a href="mailto:lacombe.dominique@outlook.fr">Me contacter</a>
+      <a href="mailto:lacombe.dominique@outlook.fr"><?= ConfigModel::getConfig('CONTACT_'.$language); ?></a>
     </h3>
   </div>
 
