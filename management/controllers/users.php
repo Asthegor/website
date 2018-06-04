@@ -12,13 +12,16 @@ class Users extends Controller
         $this->returnView($viewmodel->Login(), false);
     }
 
-    protected function logout()
+    protected function logout($redirect=true)
     {
         unset($_SESSION['is_logged_in']);
         unset($_SESSION['user_data']);
         session_destroy();
         // Redirect
-        header('Location: '.ROOT_URL);
+        if ($redirect)
+        {
+            header('Location: '.ROOT_URL);
+        }
     }
 }
 

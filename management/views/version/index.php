@@ -18,7 +18,7 @@ require_once('views/projectnavbar/projectnavbar.php');
         foreach ($vmlist as $item)
         {
             ?>
-            <option value="<?= $item['id']; ?>" <?= $item['id'] == $projectid ? 'selected' : ''; ?>><?= $item['title']; ?></option>
+            <option value="<?= $item['id']; ?>" <?= $item['id'] == $projectid ? 'selected' : ''; ?>><?= urldecode($item['title']); ?></option>
             <?php
         }
         ?>
@@ -42,7 +42,7 @@ require_once('views/projectnavbar/projectnavbar.php');
             <table style="width:100%;">
                 <tr>
                     <td style="width:5%;"><?= $item['id']; ?></td>
-                    <td style="width:15%;"><?= $item['project']; ?></td>
+                    <td style="width:15%;"><?= urldecode($item['project']); ?></td>
                     <td style="width:15%;"><?= $item['num_version']; ?></td>
                     <td style="width:15%;"><?= $item['date_version']; ?></td>
                 </tr>
