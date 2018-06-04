@@ -19,6 +19,7 @@ class Resume extends Controller
     protected function update()
     {
         $this->checkLogin();
+        $this->checkId();
         $viewmodel = new ResumeModel();
         $this->returnView($viewmodel->Update());
     }
@@ -26,6 +27,7 @@ class Resume extends Controller
     protected function delete()
     {
         $this->checkLogin();
+        $this->checkId();
         $viewmodel = new ResumeModel();
         $this->returnView($viewmodel->Delete());
     }

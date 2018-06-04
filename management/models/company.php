@@ -23,8 +23,7 @@ class CompanyModel extends Model
                 // Insert into MySQL
                 $this->changeDatabase(self::curDB);
                 //Insertion des données générales
-                $this->query('INSERT INTO company (name)
-                            VALUES (:name)');
+                $this->query('INSERT INTO company (name) VALUES (:name)');
                 $this->bind(':name', $post['name']);
                 $this->execute();
                 //Verify
@@ -44,7 +43,6 @@ class CompanyModel extends Model
     {
         $this->changeDatabase(self::curDB);
         $post = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
-        $get = filter_input_array(INPUT_GET, FILTER_SANITIZE_STRING);
         if (isset($post['submit']))
         {
             // Contrôle des données
@@ -70,6 +68,7 @@ class CompanyModel extends Model
                 }
             }
         }
+        $get = filter_input_array(INPUT_GET, FILTER_SANITIZE_STRING);
         $this->query('SELECT id, name FROM company WHERE id = :id');
         $this->bind(':id', $get['id']);
         $rows = $this->single();
@@ -85,7 +84,6 @@ class CompanyModel extends Model
     {
         $this->changeDatabase(self::curDB);
         $post = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
-        $get = filter_input_array(INPUT_GET, FILTER_SANITIZE_STRING);
         if (isset($post['todelete']))
         {
             $this->query('DELETE FROM company WHERE id = :id');
@@ -98,6 +96,7 @@ class CompanyModel extends Model
             $this->close();
             $this->returnToPage('company');
         }
+        $get = filter_input_array(INPUT_GET, FILTER_SANITIZE_STRING);
         $this->query('SELECT id, name FROM company WHERE id = :id');
         $this->bind(':id', $get['id']);
         $rows = $this->single();

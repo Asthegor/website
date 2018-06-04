@@ -19,16 +19,15 @@ class Content extends Controller
     protected function update()
     {
         $this->checkLogin();
-        if ($_GET['id'] == '')
-        {
-            header('Location: '.ROOT_MNGT.'/'.strtolower(get_class($this)));
-        }
+        $this->checkId();
         $viewmodel = new contentModel();
         $this->returnView($viewmodel->Update());
     }
 
     protected function delete()
     {
+        $this->checkLogin();
+        $this->checkId();
         $this->checkLogin();
         $viewmodel = new ContentModel();
         $this->returnView($viewmodel->Delete());

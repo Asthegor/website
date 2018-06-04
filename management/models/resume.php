@@ -95,7 +95,6 @@ class ResumeModel extends Model
     {
         $this->changeDatabase(self::curDB);
         $post = filter_input_array(INPUT_POST, FILTER_SANITIZE_ENCODED);
-        $get = filter_input_array(INPUT_GET, FILTER_SANITIZE_STRING);
         if ($post['submit'])
         {
             date_default_timezone_set('Europe/Paris');
@@ -155,6 +154,7 @@ class ResumeModel extends Model
                 Messages::setMsg('Error(s) during insert : [resp='.$resp.', respen='.$respen.', respfr='.$respfr.']', 'error');
             }
         }
+        $get = filter_input_array(INPUT_GET, FILTER_SANITIZE_STRING);
         $this->query("SELECT e.id, e.date_start, e.date_end, e.bVisible,
                              efr.title title_fr, efr.content content_fr,
                              een.title title_en, een.content content_en,
@@ -178,7 +178,6 @@ class ResumeModel extends Model
     {
         $this->changeDatabase(self::curDB);
         $post = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
-        $get = filter_input_array(INPUT_GET, FILTER_SANITIZE_STRING);
         if (isset($post['todelete']))
         {
             //Mise à jour de la base
@@ -201,6 +200,7 @@ class ResumeModel extends Model
             $this->close();
             $this->returnToPage('resume');
         }
+        $get = filter_input_array(INPUT_GET, FILTER_SANITIZE_STRING);
         $this->query("SELECT e.id, efr.title title_fr, een.title title_en
                       FROM experience AS e
                         INNER JOIN experience_tr AS efr ON e.id = efr.id AND efr.id_Language = 1
@@ -212,8 +212,7 @@ class ResumeModel extends Model
         if (!$rows)
         {
             Messages::setMsg('Record "'.$get['id'].'" not found', 'error');
-            return;
-            //$this->returnToPage('resume');
+            $this->returnToPage('resume');
         }
         return $rows;
     }

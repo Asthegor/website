@@ -19,10 +19,7 @@ class City extends Controller
     protected function update()
     {
         $this->checkLogin();
-        if ($_GET['id'] == '')
-        {
-            header('Location: '.ROOT_MNGT.'/'.strtolower(get_class($this)));
-        }
+        $this->checkId();
         $viewmodel = new CityModel();
         $this->returnView($viewmodel->Update());
     }
@@ -30,10 +27,7 @@ class City extends Controller
     protected function delete()
     {
         $this->checkLogin();
-        if ($_GET['id'] == '')
-        {
-            header('Location: '.ROOT_MNGT.'/'.strtolower(get_class($this)));
-        }
+        $this->checkId();
         $viewmodel = new CityModel();
         $this->returnView($viewmodel->Delete());
     }

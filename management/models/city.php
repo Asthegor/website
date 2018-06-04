@@ -70,7 +70,6 @@ class CityModel extends Model
     public function Update()
     {
         $post = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
-        $get = filter_input_array(INPUT_GET, FILTER_SANITIZE_STRING);
         if ($post['submit'])
         {
             $id = $post['id'];
@@ -110,6 +109,7 @@ class CityModel extends Model
                 Messages::setMsg('Error(s) during insert : [resp='.$resp.', respfr='.$respfr.', respen='.$respen.']', 'error');
             }
         }
+        $get = filter_input_array(INPUT_GET, FILTER_SANITIZE_STRING);
         $this->changeDatabase(self::curDB);
         $this->query("SELECT c.id, cfr.name name_fr, cen.name name_en, c.id_Country
                       FROM city AS c
@@ -131,7 +131,6 @@ class CityModel extends Model
     {
         $this->changeDatabase(self::curDB);
         $post = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
-        $get = filter_input_array(INPUT_GET, FILTER_SANITIZE_STRING);
         if (isset($post['todelete']))
         {
             $this->query('DELETE FROM city WHERE id = :id');
@@ -144,6 +143,7 @@ class CityModel extends Model
             $this->close();
             $this->returnToPage('city');
         }
+        $get = filter_input_array(INPUT_GET, FILTER_SANITIZE_STRING);
         $this->query("SELECT c.id, cfr.name name_fr, cen.name name_en,
                              CONCAT(ctfr.name, ' (', cten.name, ')') country
                       FROM city AS c

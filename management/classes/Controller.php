@@ -37,5 +37,15 @@ abstract class Controller
             header('Location: '.ROOT_MNGT);
         }
     }
+
+    protected function checkId()
+    {
+        $get = filter_input_array(INPUT_GET, FILTER_SANITIZE_STRING);
+        if ($get['id'] == '')
+        {
+            header('Location: '.ROOT_MNGT.strtolower(get_class($this)));
+        }
+    }
+
 }
 ?>

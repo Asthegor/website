@@ -59,7 +59,6 @@ class FrameworksModel extends Model
     {
         $this->changeDatabase(self::curDB);
         $post = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
-        $get = filter_input_array(INPUT_GET, FILTER_SANITIZE_STRING);
         if ($post['submit'])
         {
             if ($post['name'] == '')
@@ -85,6 +84,7 @@ class FrameworksModel extends Model
                 Messages::setMsg('Error(s) during update', 'error');
             }
         }
+        $get = filter_input_array(INPUT_GET, FILTER_SANITIZE_STRING);
         $this->query("SELECT id, name, sortOrder, bVisible, id_ProgLanguage
                       FROM frameworkengine
                       WHERE id = :id");
@@ -103,7 +103,6 @@ class FrameworksModel extends Model
     {
         $this->changeDatabase(self::curDB);
         $post = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
-        $get = filter_input_array(INPUT_GET, FILTER_SANITIZE_STRING);
         if (isset($post['todelete']))
         {
             $this->query('DELETE FROM frameworkengine WHERE id = :id');
@@ -116,6 +115,7 @@ class FrameworksModel extends Model
             $this->close();
             $this->returnToPage('frameworks');
         }
+        $get = filter_input_array(INPUT_GET, FILTER_SANITIZE_STRING);
         $this->query("SELECT fe.id, fe.name, pl.name proglanguage 
                       FROM frameworkengine AS fe
                         INNER JOIN proglanguage AS pl ON fe.id_ProgLanguage = pl.id

@@ -73,7 +73,6 @@ class NavBarModel extends Model
     {
         $this->changeDatabase(self::curDB);
         $post = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
-        $get = filter_input_array(INPUT_GET, FILTER_SANITIZE_STRING);
         if (isset($post['submit']))
         {
             // Contrôle des données
@@ -122,6 +121,7 @@ class NavBarModel extends Model
                 Messages::setMsg('Error(s) during update', 'error');
             }
         }
+        $get = filter_input_array(INPUT_GET, FILTER_SANITIZE_STRING);
         $this->query('SELECT i.id, i.bVisible, i.destination, i.sortOrder, 
                              itrfr.title title_fr, itren.title title_en
                       FROM indexitems AS i
@@ -143,7 +143,6 @@ class NavBarModel extends Model
     {
         $this->changeDatabase(self::curDB);
         $post = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
-        $get = filter_input_array(INPUT_GET, FILTER_SANITIZE_STRING);
         if (isset($post['todelete']))
         {
             //Mise à jour de la base
@@ -166,6 +165,7 @@ class NavBarModel extends Model
             $this->close();
             $this->returnToPage('navbar');
         }
+        $get = filter_input_array(INPUT_GET, FILTER_SANITIZE_STRING);
         $this->query("SELECT i.id, itrfr.title title_fr, itren.title title_en
                       FROM indexitems AS i
                         INNER JOIN indexitems_tr AS itrfr ON i.id = itrfr.id AND itrfr.id_Language = 1

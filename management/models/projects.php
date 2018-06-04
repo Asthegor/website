@@ -132,7 +132,6 @@ class ProjectsModel extends Model
     {
         $this->changeDatabase(self::curDB);
         $post = filter_input_array(INPUT_POST, FILTER_SANITIZE_ENCODED);
-        $get = filter_input_array(INPUT_GET, FILTER_SANITIZE_STRING);
         if ($post['submit'])
         {
             if($post['title'] == '' || $post['description_fr'] == '' || $post['description_en'] == '')
@@ -239,6 +238,7 @@ class ProjectsModel extends Model
             $this->close();
             Messages::setMsg('Error(s) during update', 'error');
         }
+        $get = filter_input_array(INPUT_GET, FILTER_SANITIZE_STRING);
         $this->query("SELECT p.id, p.title, p.first_date_project, p.id_FrameworkEngine, p.bVisible,
                              pfr.description description_fr, pen.description description_en,
                              pi.name, pi.img_size, pi.img_type, pi.img_blob,
@@ -265,7 +265,6 @@ class ProjectsModel extends Model
     {
         $this->changeDatabase(self::curDB);
         $post = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
-        $get = filter_input_array(INPUT_GET, FILTER_SANITIZE_STRING);
         if (isset($post['todelete']))
         {
             //Mise à jour de la base
@@ -288,14 +287,15 @@ class ProjectsModel extends Model
             $this->close();
             $this->returnToPage('projects');
         }
+        $get = filter_input_array(INPUT_GET, FILTER_SANITIZE_STRING);
         $this->query("SELECT id, title FROM project WHERE id = :id");
-        $this->bind(':id', $get['id]']);
+        $this->bind(':id', $get['id']);
         $rows = $this->single();
         $this->close();
         if (!$rows)
         {
             Messages::setMsg('Record "'.$get['id'].'" not found', 'error');
-            $this->returnToPage('projects');
+            //$this->returnToPage('projects');
         }
         return $rows;
     }

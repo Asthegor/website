@@ -22,7 +22,6 @@ class DevLogModel extends Model
     public function Add()
     {
         $post = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
-        $get = filter_input_array(INPUT_GET, FILTER_SANITIZE_STRING);
         if ($post['submit'])
         {
             if ($post['title_fr'] == '' || $post['title_en'] == '' || $post['description_fr'] == '' || $post['description_en'] == '')
@@ -75,6 +74,7 @@ class DevLogModel extends Model
                 Messages::setMsg('Error(s) during insert : [resp='.$resp.', respen='.$respen.', respfr='.$respfr.']', 'error');
             }
         }
+        $get = filter_input_array(INPUT_GET, FILTER_SANITIZE_STRING);
         if ($get['action'] == 'add' && isset($get['id']))
         {
             $this->changeDatabase(self::curDB);
@@ -90,7 +90,6 @@ class DevLogModel extends Model
     public function Update()
     {
         $post = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
-        $get = filter_input_array(INPUT_GET, FILTER_SANITIZE_STRING);
         if ($post['submit'])
         {
             if ($post['title_fr'] == '' || $post['title_en'] == '' || $post['description_fr'] == '' || $post['description_en'] == '')
@@ -145,6 +144,7 @@ class DevLogModel extends Model
                 Messages::setMsg('Error(s) during insert : [resp='.$resp.', respen='.$respen.', respfr='.$respfr.']', 'error');
             }
         }
+        $get = filter_input_array(INPUT_GET, FILTER_SANITIZE_STRING);
         $this->changeDatabase(self::curDB);
         $this->query("SELECT dl.id, dl.id_Project, dl.date_creation, dl.date_creation, dl.bVisible,
                              dlfr.title title_fr, dlfr.description description_fr,
@@ -164,7 +164,6 @@ class DevLogModel extends Model
     {
         $this->changeDatabase(self::curDB);
         $post = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
-        $get = filter_input_array(INPUT_GET, FILTER_SANITIZE_STRING);
         if (isset($post['todelete']))
         {
             $this->startTransaction();
@@ -186,6 +185,7 @@ class DevLogModel extends Model
             $this->close();
             $this->returnToPage('devlog');
         }
+        $get = filter_input_array(INPUT_GET, FILTER_SANITIZE_STRING);
         $this->query('SELECT d.id, dlfr.title title_fr, dlen.title title_en
                       FROM devlog AS d
                         INNER JOIN devlog_tr AS dlfr ON d.id = dlfr.id AND dlfr.id_Language = 1

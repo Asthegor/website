@@ -64,7 +64,6 @@ class CountryModel extends Model
     {
         $this->changeDatabase(self::curDB);
         $post = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
-        $get = filter_input_array(INPUT_GET, FILTER_SANITIZE_STRING);
         if (isset($post['submit']))
         {
             // Contrôle des données
@@ -96,6 +95,7 @@ class CountryModel extends Model
                 Messages::setMsg('Error(s) during update', 'error');
             }
         }
+        $get = filter_input_array(INPUT_GET, FILTER_SANITIZE_STRING);
         $this->query('SELECT c.id, cfr.name name_fr, cen.name name_en
                       FROM country AS c
                         INNER JOIN country_tr AS cfr ON c.id = cfr.id AND cfr.id_Language = 1
@@ -115,7 +115,6 @@ class CountryModel extends Model
     {
         $this->changeDatabase(self::curDB);
         $post = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
-        $get = filter_input_array(INPUT_GET, FILTER_SANITIZE_STRING);
         if (isset($post['todelete']))
         {
             $this->query('DELETE FROM country WHERE id = :id');
@@ -128,6 +127,7 @@ class CountryModel extends Model
             $this->close();
             $this->returnToPage('country');
         }
+        $get = filter_input_array(INPUT_GET, FILTER_SANITIZE_STRING);
         $this->query('SELECT c.id, cfr.name name_fr, cen.name name_en
                       FROM country AS c
                         INNER JOIN country_tr AS cfr ON c.id = cfr.id AND cfr.id_Language = 1

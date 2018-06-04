@@ -9,7 +9,7 @@ class VersionModel extends Model
         $post = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
         $this->changeDatabase(self::curDB);
         $condition = "";
-        if(is_numeric($post['projectid']))
+        if(isset($post['projectid']) && is_numeric($post['projectid']))
         {
             $condition .= " AND p.id = :id ";
         }
@@ -18,7 +18,7 @@ class VersionModel extends Model
                     INNER JOIN project AS p ON v.id_Project = p.id ".$condition." 
                   ORDER BY p.title, v.date_version DESC";
         $this->query($query);
-        if (is_numeric($post['projectid']))
+        if (isset($post['projectid']) && is_numeric($post['projectid']))
         {
             $this->bind(':id', $post['projectid']);
         }
@@ -30,7 +30,6 @@ class VersionModel extends Model
     public function Update()
     {
         $post = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
-        $get = filter_input_array(INPUT_GET, FILTER_SANITIZE_STRING);
         if ($post['submit'])
         {
             date_default_timezone_set('Europe/Paris');
@@ -72,6 +71,7 @@ class VersionModel extends Model
                 Messages::setMsg('Error(s) during insert', 'error');
             }
         }
+        $get = filter_input_array(INPUT_GET, FILTER_SANITIZE_STRING);
         $this->changeDatabase(self::curDB);
         $this->query("SELECT v.id, p.title project, v.num_version, v.date_version, v.id_Project
                       FROM version AS v
@@ -106,7 +106,7 @@ class VersionModel extends Model
             $this->returnToPage('version');
         }
         $this->query('SELECT id, num_version, date_version FROM version WHERE id = :id');
-        $this-Àbind(':id', $get['id']);
+        $this->bind(':id', $get['id']);
         $rows = $this->single();
         $this->close();
         if (!$rows)

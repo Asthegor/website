@@ -12,6 +12,7 @@ class Version extends Controller
     protected function update()
     {
         $this->checkLogin();
+        $this->checkId();
         $viewmodel = new VersionModel();
         $this->returnView($viewmodel->Update());
     }
@@ -19,6 +20,7 @@ class Version extends Controller
     protected function delete()
     {
         $this->checkLogin();
+        $this->checkId();
         $viewmodel = new VersionModel();
         $this->returnView($viewmodel->Delete());
     }

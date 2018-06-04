@@ -19,11 +19,7 @@ class NavBar extends Controller
     protected function update()
     {
         $this->checkLogin();
-        if ($_GET['id'] == '')
-        {
-            header('Location: '.ROOT_MNGT.'/'.strtolower(get_class($this)));
-            return;
-        }
+        $this->checkId();
         $viewmodel = new NavBarModel();
         $this->returnView($viewmodel->Update());
     }
@@ -31,6 +27,7 @@ class NavBar extends Controller
     protected function delete()
     {
         $this->checkLogin();
+        $this->checkId();
         $viewmodel = new NavBarModel();
         $this->returnView($viewmodel->Delete());
     }

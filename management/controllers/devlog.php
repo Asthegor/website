@@ -19,20 +19,14 @@ class DevLog extends Controller
     protected function update()
     {
         $this->checkLogin();
-        if ($_GET['id'] == '')
-        {
-            header('Location: '.ROOT_MNGT.'/'.strtolower(get_class($this)));
-        }
+        $this->checkId();
         $viewmodel = new DevLogModel();
         $this->returnView($viewmodel->Update());
     }
     protected function delete()
     {
         $this->checkLogin();
-        if ($_GET['id'] == '')
-        {
-            header('Location: '.ROOT_MNGT.'/'.strtolower(get_class($this)));
-        }
+        $this->checkId();
         $viewmodel = new DevLogModel();
         $this->returnView($viewmodel->Delete());
     }
