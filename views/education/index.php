@@ -21,6 +21,9 @@ foreach ($viewModel as $education)
     <h2><?= urldecode($title); ?></h2>
     <h4><?= urldecode($education['institution_'.$language]); ?></h4>
     <p><?= urldecode($education['description_'.$language]); ?></p>
+    <a href="<?= urldecode($education['link_diploma']); ?>" target="_blank">
+        <img height="100" width="150" src="<?= urldecode($education['link_diploma']); ?>" alt="<?= urldecode($title); ?>"/>
+    </a>
     <hr>
     <?php
 }

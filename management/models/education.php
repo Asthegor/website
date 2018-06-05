@@ -49,18 +49,20 @@ class EducationModel extends Model
                 $resp = $this->execute();
                 $id = $this->lastIndexId();
                 //Insertion du titre français
-                $this->query('INSERT INTO education_tr (id, id_Language, title, description)
-                            VALUES(:id, 1, :title, :description)');
+                $this->query('INSERT INTO education_tr (id, id_Language, title, description, institution)
+                            VALUES(:id, 1, :title, :description, :institution)');
                 $this->bind(':id', $id);
                 $this->bind(':title', $post['title_fr']);
                 $this->bind(':description', addslashes($post['description_fr']));
+                $this->bind(':institution', addslashes($post['institution_fr']));
                 $respfr = $this->execute();
                 //Insertion du titre anglais
-                $this->query('INSERT INTO education_tr (id, id_Language, title, description)
-                            VALUES(:id, 2, :title, :description)');
+                $this->query('INSERT INTO education_tr (id, id_Language, title, description, institution)
+                            VALUES(:id, 2, :title, :description, :institution)');
                 $this->bind(':id', $id);
                 $this->bind(':title', $post['title_en']);
                 $this->bind(':description', addslashes($post['description_en']));
+                $this->bind(':institution', addslashes($post['institution_en']));
                 $respen = $this->execute();
                 //Verify
                 if($resp && $respen && $respfr)
