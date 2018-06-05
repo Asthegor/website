@@ -17,6 +17,7 @@ require('controllers/home.php');
 require('controllers/projects.php');
 require('controllers/project.php');
 require('controllers/experiences.php');
+require('controllers/education.php');
 
 require('models/configs.php');
 require('models/home.php');
@@ -25,6 +26,7 @@ require('models/language.php');
 require('models/projects.php');
 require('models/project.php');
 require('models/experiences.php');
+require('models/education.php');
 
 $mainController = new MainController($_GET);
 $controller = $mainController->createController();

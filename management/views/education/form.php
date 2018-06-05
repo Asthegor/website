@@ -19,6 +19,14 @@
         <input type="text" name="title_en" value="<?= isset($viewModel['title_en']) ? urldecode($viewModel['title_en']) : ''; ?>" required />
     </div>
     <div class="form-group">
+        <label>Institution (français)</label>
+        <input type="text" name="institution_fr" value="<?= isset($viewModel['institution_fr']) ? urldecode($viewModel['institution_fr']) : ''; ?>" required />
+    </div>
+    <div class="form-group">
+        <label>Institution (anglais)</label>
+        <input type="text" name="institution_en" value="<?= isset($viewModel['institution_en']) ? urldecode($viewModel['institution_en']) : ''; ?>" required />
+    </div>
+    <div class="form-group">
         <label>Description française</label>
         <textarea rows="6" cols="150" name="description_fr"  required><?= isset($viewModel['description_fr']) ? urldecode($viewModel['description_fr']) : ''; ?></textarea>
     </div>

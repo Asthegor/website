@@ -22,8 +22,6 @@ foreach ($viewModel as $experience)
     $title = $datestart->format('m-Y').' - ';
     $title .= (!$bCurrent ? 'XX-XXXX' : $dateend->format('m-Y'));
     $title .= ' ('.$duree.') : '.$experience['title_'.strtolower($_SESSION['language'])];
-    // Concaténation des dates avec le titre (selon la langue de la session)
-    // Récupération de la société, de la ville et du pays (selon la langue de la session)
     ?>
     <h2><?= urldecode($title); ?></h2>
     <h4><?= urldecode($experience['company'].' - '.$experience['city_'.$language]); ?></h4>

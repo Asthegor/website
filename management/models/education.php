@@ -101,8 +101,7 @@ class EducationModel extends Model
                 //Insertion des données générales
                 $this->query("UPDATE education 
                             SET date_start = :date_start, date_end = :date_end,
-                                bCertification = :bCertification, link_diploma = :link_diploma,
-                                bVisible = :bVisible
+                                link_diploma = :link_diploma, bVisible = :bVisible
                             WHERE id = :id");
                 $this->bind(':date_start', $post['date_start']);
                 $this->bind(':date_end', $post['date_end'] > 0 ? $post['date_end'] : NULL);
@@ -112,19 +111,21 @@ class EducationModel extends Model
                 $resp = $this->execute();
                 //Insertion du titre français
                 $this->query("UPDATE education_tr
-                            SET title = :title, description = :description
+                            SET title = :title, description = :description, institution = :institution
                             WHERE id = :id AND id_Language = 1");
                 $this->bind(':id', $post['id']);
                 $this->bind(':title', $post['title_fr']);
                 $this->bind(':description', $post['description_fr']);
+                $this->bind(':institution', $post['institution_fr']);
                 $respfr = $this->execute();
                 //Insertion du titre anglais
                 $this->query("UPDATE education_tr
-                            SET title = :title, description = :description
+                            SET title = :title, description = :description, institution = :institution
                             WHERE id = :id AND id_Language = 2");
                 $this->bind(':id', $post['id']);
                 $this->bind(':title', $post['title_en']);
                 $this->bind(':description', $post['description_en']);
+                $this->bind(':institution', $post['institution_en']);
                 $respen = $this->execute();
                 //Verify
                 if($resp && $respen && $respfr)
@@ -142,7 +143,8 @@ class EducationModel extends Model
         $this->changeDatabase(self::curDB);
         $this->query("SELECT ed.id, ed.date_start, ed.date_end, ed.bVisible, ed.link_diploma,
                              edfr.title title_fr, edfr.description description_fr,
-                             eden.title title_en, eden.description description_en
+                             eden.title title_en, eden.description description_en,
+                             edfr.institution institution_fr, eden.institution institution_en
                       FROM education AS ed
                         INNER JOIN education_tr AS edfr ON ed.id = edfr.id AND edfr.id_Language = 1
                         INNER JOIN education_tr AS eden ON ed.id = eden.id AND eden.id_Language = 2
