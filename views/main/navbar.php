@@ -18,7 +18,9 @@ $fileName = basename($_SERVER['PHP_SELF']);
           <?php
         }
         ?>
-        href="<?= ($item['bPage'] ? ROOT_URL : '').$item['destination']; ?>"><?= $item['title']; ?>
+        href="<?= ($item['bPage'] ? ROOT_URL : '').$item['destination']; ?>"
+        <?= !$item['bPage'] ? 'target="_blanck"' : ''; ?>
+        ><?= $item['title']; ?>
       </a>
     </li>
     <?php
