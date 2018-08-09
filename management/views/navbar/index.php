@@ -22,6 +22,7 @@
                     <td style="width:15%;"><?= $item['title_fr']; ?></td>
                     <td style="width:15%;"><?= $item['title_en']; ?></td>
                     <td style="width:15%;"><?= $item['destination']; ?></td>
+                    <td style="width:15%;"><?= $item['bPage'] ? 'Oui' : 'Non'; ?></td>
                     <td style="width:15%;"><?= $item['sortOrder']; ?></td>
                     <td style="width:15%;"><?= $item['bVisible'] ? 'Oui' : 'Non'; ?></td>
                 </tr>

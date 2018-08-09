@@ -27,6 +27,10 @@
         <input type="text" name="sortorder" value="<?= isset($viewModel['sortOrder']) ? $viewModel['sortOrder'] : ''; ?>" />
     </div>
     <div class="form-group">
+        <label>Est une page ?</label>
+        <input type="checkbox" name="bPage" value="1" <?= isset($viewModel['bPage']) && $viewModel['bPage'] ? 'checked' : ''; ?> />
+    </div>
+    <div class="form-group">
         <label>Visible</label>
         <input type="checkbox" name="bVisible" value="1" <?= isset($viewModel['bVisible']) && $viewModel['bVisible'] ? 'checked' : ''; ?> />
     </div>

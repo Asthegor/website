@@ -7,7 +7,7 @@ class NavBarModel extends Model
     public function Index()
     {
         $this->changeDatabase(self::curDB);
-        $this->query('SELECT i.id, i.bVisible, i.destination, i.sortOrder, 
+        $this->query('SELECT i.id, i.bPage, i.bVisible, i.destination, i.sortOrder, 
                              itrfr.title title_fr, itren.title title_en
                       FROM indexitems AS i
                         INNER JOIN indexitems_tr AS itrfr ON i.id = itrfr.id AND itrfr.id_Language = 1
@@ -34,9 +34,10 @@ class NavBarModel extends Model
                 $this->changeDatabase(self::curDB);
                 $this->startTransaction();
                 //Insertion des données générales
-                $this->query('INSERT INTO indexitems (id_Category, destination, bVisible, sortOrder)
+                $this->query('INSERT INTO indexitems (id_Category, destination, bPage, bVisible, sortOrder)
                             VALUES (1, :destination, :bVisible, :sortOrder)');
                 $this->bind(':destination', $post['destination']);
+                $this->bind(':bPage', isset($post['bPage']) ? $post['bPage'] : 0);
                 $this->bind(':bVisible', isset($post['bVisible']) ? $post['bVisible'] : 0);
                 $this->bind(':sortOrder', $post['sortorder']);
                 $this->execute();
@@ -102,9 +103,10 @@ class NavBarModel extends Model
 
                 // Mise à jour de la table indexitems
                 $this->query('UPDATE indexitems 
-                              SET destination=:destination, bVisible=:bVisible, sortOrder=:sortOrder 
+                              SET destination=:destination, bPage=:bPage, bVisible=:bVisible, sortOrder=:sortOrder 
                               WHERE id=:id');
                 $this->bind(':destination', $post['destination']);
+                $this->bind(':bPage', $post['bPage']);
                 $this->bind(':bVisible', $post['bVisible']);
                 $this->bind(':sortOrder', $post['sortorder']);
                 $this->bind(':id', $post['id']);
@@ -122,7 +124,7 @@ class NavBarModel extends Model
             }
         }
         $get = filter_input_array(INPUT_GET, FILTER_SANITIZE_STRING);
-        $this->query('SELECT i.id, i.bVisible, i.destination, i.sortOrder, 
+        $this->query('SELECT i.id, i.bPage, i.bVisible, i.destination, i.sortOrder, 
                              itrfr.title title_fr, itren.title title_en
                       FROM indexitems AS i
                         INNER JOIN indexitems_tr AS itrfr ON i.id = itrfr.id AND itrfr.id_Language = 1
