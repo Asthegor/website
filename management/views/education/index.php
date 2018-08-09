@@ -8,7 +8,7 @@
             <th style="width:15%;">Nom anglais</th>
             <th style="width:15%;">Date de début</th>
             <th style="width:15%;">Date de fin</th>
-            <th style="width:10%;">Visible</td>
+            <th style="width:10%;">Visible</th>
         </tr>
     </table>
     <?php

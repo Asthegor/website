@@ -10,7 +10,7 @@ require_once('views/projectnavbar/projectnavbar.php');
             <th style="width:15%;">Nom</th>
             <th style="width:15%;">Langage de programmation</th>
             <th style="width:15%;">Ordre d'affichage</th>
-            <th style="width:15%;">Visible</td>
+            <th style="width:15%;">Visible</th>
         </tr>
     </table>
     <?php

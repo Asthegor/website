@@ -11,7 +11,7 @@ require_once('views/resumenavbar/resumenavbar.php');
             <th style="width:15%;">Ville</th>
             <th style="width:15%;">Début</th>
             <th style="width:15%;">Fin</th>
-            <th style="width:15%;">Visible</td>
+            <th style="width:15%;">Visible</th>
         </tr>
     </table>
     <?php

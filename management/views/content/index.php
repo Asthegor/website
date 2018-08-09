@@ -8,8 +8,8 @@
             <th style="width:15%;">Titre français</th>
             <th style="width:15%;">Titre anglais</th>
             <th style="width:15%;">Destination</th>
-            <th style="width:15%;">Ordre d'affichage</td>
-            <th style="width:15%;">Visible</td>
+            <th style="width:15%;">Ordre d'affichage</th>
+            <th style="width:15%;">Visible</th>
         </tr>
     </table>
     <?php

@@ -11,7 +11,7 @@ require_once('views/projectnavbar/projectnavbar.php');
             <th style="width:15%;">Titre anglais</th>
             <th style="width:15%;">Projet associé</th>
             <th style="width:15%;">Date de création</th>
-            <th style="width:15%;">Visible</td>
+            <th style="width:15%;">Visible</th>
         </tr>
     </table>
     <?php

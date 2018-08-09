@@ -22,8 +22,8 @@ echo $prjm->getNbActiveProjects();
             <th style="width:15%;">Framework/Engin</th>
             <th style="width:15%;">Date de création</th>
             <th style="width:15%;">Version</th>
-            <th style="width:15%;">Visible</td>
-            <th style="width:20%;"></td>
+            <th style="width:15%;">Visible</th>
+            <th style="width:20%;"></th>
         </tr>
     </table>
     <?php
