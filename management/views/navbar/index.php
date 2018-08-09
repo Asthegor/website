@@ -7,6 +7,7 @@
             <th style="width:15%;">Titre français</th>
             <th style="width:15%;">Titre anglais</th>
             <th style="width:15%;">Destination</th>
+            <th style="width:15%;">Est une page ?</td>
             <th style="width:15%;">Ordre d'affichage</td>
             <th style="width:15%;">Visible</td>
         </tr>
