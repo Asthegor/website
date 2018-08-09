@@ -9,7 +9,7 @@ class NavBarModel extends Model
         // Affichage du contenu
         if($language == null || $language == '') $language = 'FR';
         $this->changeDatabase(self::curDB);
-        $this->query("SELECT i.destination, itr.title
+        $this->query("SELECT i.destination, i.bPage, itr.title
                       FROM indexitems AS i
                         INNER JOIN indexitems_tr AS itr ON i.id = itr.id
                         INNER JOIN languages AS l ON itr.id_Language = l.id AND l.code = :language
