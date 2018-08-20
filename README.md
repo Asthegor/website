@@ -3,10 +3,10 @@ Ce site a été conçu par LACOMBE Dominique, propriétaire du site.<br>
 Il a pour objectif principal de présenter les travaux réalisés par LACOMBE Dominique.
 
 <h2>Environnement technique</h2>
-Le site http://php.lacombedominique.com a été développé exclusivement en PHP à l'aide de l'architecture MVC.<br>
+Le site <a href="http://php.lacombedominique.com" target="_blank">http://php.lacombedominique.com</a> a été développé exclusivement en PHP à l'aide de l'architecture MVC.<br>
 Aucune librairie ou framework n'a été utilisé pour concevoir ce site.
 
-Une formation Udemy a servi de base pour la conception du site (https://www.udemy.com/learn-object-oriented-php-by-building-a-complete-website/learn/v4/overview).
+Une formation Udemy a servi de base pour la conception du site (<a href="https://www.udemy.com/learn-object-oriented-php-by-building-a-complete-website/learn/v4/overview" target="_blank">https://www.udemy.com/learn-object-oriented-php-by-building-a-complete-website/learn/v4/overview</a>).
 
 Il a été conçu grâce à :
 <ul>
@@ -28,4 +28,4 @@ Plusieurs bases de données ont été utilisées pour compartimenter les informa
 <h4>Design des pages</h4>
 Actuellement, il s'agit d'un design très sommaire.<br>
 Une attention toute particulière a été mise sur le développement au détriment de la partie présentation.<br>
-Cette dernière sera réalisée dès que les développements seront finalisés.<br>
+Cette dernière sera réalisée dès que les développements seront complètement finalisés.<br>
