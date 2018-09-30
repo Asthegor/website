@@ -18,7 +18,7 @@ define("DB_USER", DB_USER_PREF."user_ro");
 define("DB_PWD", "1SlOn7AEmp@W");
 
 // Define URL
-//define("ROOT_URL", "http://php.lacombedominique.com/");
+//define("ROOT_URL", "https://php.lacombedominique.com/");
 define("ROOT_URL", "http://localhost:8090/");
 define("ROOT_PATH", "");
 define("ROOT_MNGT", ROOT_URL.ROOT_PATH);
