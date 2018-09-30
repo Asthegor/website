@@ -23,37 +23,4 @@ define("ROOT_URL", "http://localhost:8090/");
 define("ROOT_PATH", "");
 define("ROOT_MNGT", ROOT_URL.ROOT_PATH);
 
-
-
-
-
-
-
-
-
-
-// $web_bdd = new mysqli(DB_HOST, DB_USER, "user_web", "lacombed_web");
-// if (mysqli_connect_errno())
-// {
-//     echo'Erreur de connexion (base=web) : '.mysqli_connect_error();
-//     exit();
-// }
-// mysqli_set_charset($web_bdd, 'utf8');
-
-// $prj_bdd = new mysqli(DB_HOST, DB_USER, "user_web", "lacombed_projects");
-// if (mysqli_connect_errno())
-// {
-//     echo'Erreur de connexion (base=projects) : '.mysqli_connect_error();
-//     exit();
-// }
-// mysqli_set_charset($prj_bdd, 'utf8');
-
-// $exp_bdd = new mysqli(DB_HOST, DB_USER, "user_web", "lacombed_experiences");
-// if (mysqli_connect_errno())
-// {
-//     echo'Erreur de connexion (base=experiences) : '.mysqli_connect_error();
-//     exit();
-// }
-// mysqli_set_charset($exp_bdd, 'utf8');
-
 ?>
