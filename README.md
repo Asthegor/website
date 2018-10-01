@@ -26,6 +26,4 @@ Plusieurs bases de données ont été utilisées pour compartimenter les informa
 </ul>
 
 <h4>Design des pages</h4>
-Actuellement, il s'agit d'un design très sommaire.<br>
-Une attention toute particulière a été mise sur le développement au détriment de la partie présentation.<br>
-Cette dernière sera réalisée dès que les développements seront complètement finalisés.<br>
+Le design des formulaires a été réalisé par Fen LIU-LACOMBE, développeuse Web.
