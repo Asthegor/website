@@ -27,3 +27,5 @@ Plusieurs bases de données ont été utilisées pour compartimenter les informa
 
 <h4>Design des pages</h4>
 Le design des formulaires a été réalisé par Fen LIU-LACOMBE, développeuse Web.
+
+Un grand merci pour sa contribution !
