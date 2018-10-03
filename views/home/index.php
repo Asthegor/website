@@ -1,3 +1,6 @@
+<div id="background1">
+<img src="<?= ROOT_URL; ?>assets/images/backgrounds/background2.jpg"/>
+</div>
 <?php
 foreach ($viewModel as $item)
 {

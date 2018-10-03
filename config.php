@@ -7,8 +7,8 @@ date_default_timezone_set("Europe/Paris");
 
 
 //Define DB Params
-//define("DB_PORT", "");
-define("DB_PORT", ":3399");
+define("DB_PORT", "");
+// define("DB_PORT", ":3399");
 define("DB_HOST", "localhost".DB_PORT);
 define("DB_NAME", "lacombed_web");
 
@@ -19,7 +19,7 @@ define("DB_PWD", "1SlOn7AEmp@W");
 
 // Define URL
 //define("ROOT_URL", "https://php.lacombedominique.com/");
-define("ROOT_URL", "http://localhost:8090/");
+define("ROOT_URL", "http://127.0.0.1/website/");
 define("ROOT_PATH", "");
 define("ROOT_MNGT", ROOT_URL.ROOT_PATH);
 
