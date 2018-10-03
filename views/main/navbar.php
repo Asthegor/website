@@ -26,7 +26,6 @@ $fileName = basename($_SERVER['PHP_SELF']);
     <?php
   }
   ?>
-  <li class="nav-item"><a href="mailto:lacombe.dominique@outlook.fr"><?= "Email"; //ConfigModel::getConfig('CONTACT_'.$language); ?></a></li>
   <li id="nav-item-last-child" class="nav-item">
     <a href="<?= ROOT_URL.'views/main/language.php'; ?>">
       <?php
