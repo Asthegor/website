@@ -172,25 +172,31 @@ div.back{
  ***************************/
 #project-image {
   float: left;
-  margin-right: 10px;
+  margin:0 20px 10px 0 ;
 }
 div.project-inline * {
-  display: inline-block;
-  color: orange;
+  display: inline-block; 
+  color: white;
 }
-.project-inline-label {
-  text-decoration: underline;
-  color: orangered;
+
+div.project-inline-label {
+  /* text-decoration: underline; */
+  color: rgb(144, 102, 211);
 }
 div.project-inline > .project-inline-label {
-  text-decoration: underline;
-  color: orangered;
+  /* text-decoration: underline; */
+  color:  rgb(144, 102, 211);
+}
+
+#projet-desc h1{
+  color:orange;
+
 }
 /***************************
  * Partie PROJET NAVIGATION
  ***************************/
 #prev-next-bar {
-  background-color: orangered;
+  background-color: rgb(57, 4, 70);
   margin-left:auto;
   margin-right: auto;
   list-style-type: none;
