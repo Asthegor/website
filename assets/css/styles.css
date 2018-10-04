@@ -226,7 +226,24 @@ div.project-inline > .project-inline-label {
 .framework-summary h4{
   color:#293831;
 }
+/***************************
+ * Partie EDUCATION
+ ***************************/
+ /* #accordion .ui-state-default{
+   background-color: violet !important;
+ } */
+ #accordion div{
+   background-color: rgb(231, 221, 230);
+   /* height: auto !important; */
+   border:1px solid red;
+ }
+ #accordion .ui-state-active{
+  background-color: rgb(103, 27, 126) !important;
+}
 
+#accordion .ui-state-default{
+  background-color: rgb(187, 163, 197);
+}
 /***************************
  * Partie FOOTER
  ***************************/

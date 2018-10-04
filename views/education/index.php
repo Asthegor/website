@@ -36,5 +36,6 @@ foreach ($viewModel as $education)
 ?>
 </div>
 <script>
-$( "#accordion" ).accordion();
+$( "#accordion" ).accordion({collapsible: true});
+$( "#accordion div" ).css("height","auto");
 </script>

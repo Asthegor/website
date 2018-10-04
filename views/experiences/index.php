@@ -1,7 +1,9 @@
 <?php
 if (!isset($_SESSION['language'])) $_SESSION['language'] = 'FR';
 $language = strtolower($_SESSION['language']);
-
+?>
+<div id="accordion">
+<?php
 foreach ($viewModel as $experience)
 {
     date_default_timezone_set('Europe/Paris');
@@ -24,9 +26,15 @@ foreach ($viewModel as $experience)
     $title .= ' ('.$duree.') : '.$experience['title_'.strtolower($_SESSION['language'])];
     ?>
     <h2><?= urldecode($title); ?></h2>
-    <h4><?= urldecode($experience['company'].' - '.$experience['city_'.$language]); ?></h4>
+    <div><h4><?= urldecode($experience['company'].' - '.$experience['city_'.$language]); ?></h4>
     <p><?= urldecode($experience['content_'.$language]); ?></p>
     <hr>
+    </div>
     <?php
 }
 ?>
+</div>
+<script>
+$( "#accordion" ).accordion({collapsible: true});
+$( "#accordion div" ).css("height","auto");
+</script>

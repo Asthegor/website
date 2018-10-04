@@ -12,14 +12,17 @@ $language = $_SESSION['language'];
   <meta name="keywords" content="HTML,CSS,XML,JavaScript,PHP,C#,C++,VB,HP,AssetManager,Games,jeux,programming">
   <title>LACOMBE Dominique | Portfolio</title>
   <link rel="stylesheet" href="<?= ROOT_URL; ?>assets/css/bootstrap.css" />
-  <link rel="stylesheet" href="<?= ROOT_URL; ?>assets/css/styles.css" />
+ 
   <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
   <script src="<?= ROOT_URL; ?>assets/jquery/jquery.flip.min.js"></script>
   <link href="https://fonts.googleapis.com/css?family=Comfortaa|Courgette" rel="stylesheet">
   <link rel="shortcut icon" href="<?= ROOT_URL; ?>assets/images/logo/logo_48x48.png" type="image/x-icon"/>
-  <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/smoothness/jquery-ui.css">
+  <link rel="stylesheet" href="<?= ROOT_URL; ?>assets/css/styles.css" />
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+  
   <!-- <script src="//code.jquery.com/jquery-1.12.4.js"></script> -->
   <script src="//code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
 </head>
 
 <body>
