@@ -13,8 +13,9 @@ a:visited, a {
   color: rgb(248, 236, 202);
 }
 
-a:hover{
+a:hover, a:active {
   color:rgb(73, 13, 73);
+  background-color: orange;
 }
 
 /***************************
@@ -142,21 +143,21 @@ div.back{
   display: block;
 }
 
-.project {
+.project-list {
   margin: 10px;
   position: relative;
   display: inline-block;
 }
-.project * {
+.project-list * {
   width: 200px;
   max-width: 200px;
   height: 250px;
   max-height: 250px;
 }
-.project-image {
+.project-list-image {
   display: block;
 }
-.project-overlay {
+.project-list-overlay {
   position: absolute;
   top: 0;
   right: 0;
@@ -166,23 +167,29 @@ div.back{
   height: 100%;
   opacity: 0;
   transition: .5s ease;
-  background-color: black;
   display:flex;
 }
-.project:hover .project-overlay {
+.project-list-overlay-back {
+  position: absolute;
+  background-color: black;
   opacity: 0.8;
 }
-.project-desc {
-  position: absolute;
-  color: white;
+
+.project-list:hover .project-list-overlay {
+  opacity: 1;
 }
-.project-desc * {
+
+.project-list-desc {
+  position: absolute;
+  z-index: 2;
+}
+.project-list-desc * {
   clear: both;
+  color: white;
   display: flex;
   height: auto;
   margin: 0;
   padding: 15px;
-  opacity: 1;
 }
 
 /***************************
@@ -221,6 +228,9 @@ div.project-inline > .project-inline-label {
   margin: 0;
   padding: 0;
   overflow: hidden;
+}
+.prev-next-item:hover {
+  /* background-color:  */
 }
 .prev-item {
   float: left;
