@@ -153,10 +153,8 @@ div.back{
   height: 250px;
   max-height: 250px;
 }
-.projec-image {
+.project-image {
   display: block;
-  width: 100%;
-  height: auto;
 }
 .project-overlay {
   position: absolute;
@@ -168,7 +166,7 @@ div.back{
   height: 100%;
   opacity: 0;
   transition: .5s ease;
-  background-color: rgb(80, 80, 80);
+  background-color: black;
   display:flex;
 }
 .project:hover .project-overlay {
@@ -177,11 +175,14 @@ div.back{
 .project-desc {
   position: absolute;
   color: white;
-  text-align: center;
 }
 .project-desc * {
-  align-items: center;
+  clear: both;
   display: flex;
+  height: auto;
+  margin: 0;
+  padding: 15px;
+  opacity: 1;
 }
 
 /***************************
