@@ -31,8 +31,16 @@
         <input type="text" name="title" value="<?= isset($viewModel['title']) ? urldecode($viewModel['title']) : ''; ?>" required />
     </div>
     <div class="form-group">
+        <label>Description courte française</label>
+        <input type="text" name="desc_fr" value="<?= isset($viewModel['desc_fr']) ? urldecode($viewModel['desc_fr']) : ''; ?>" required />
+    </div>
+    <div class="form-group">
         <label>Description française</label>
         <textarea rows="6" cols="150" name="description_fr"  required><?= isset($viewModel['description_fr']) ? urldecode($viewModel['description_fr']) : ''; ?></textarea>
+    </div>
+    <div class="form-group">
+        <label>Description courte anglaise</label>
+        <input type="text" name="desc_en" value="<?= isset($viewModel['desc_en']) ? urldecode($viewModel['desc_en']) : ''; ?>" required />
     </div>
     <div class="form-group">
         <label>Description anglaise</label>

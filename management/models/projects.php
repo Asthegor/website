@@ -26,7 +26,7 @@ class ProjectsModel extends Model
         $post = filter_input_array(INPUT_POST, FILTER_SANITIZE_ENCODED);
         if ($post['submit'])
         {
-            if ($post['title'] == '' || $post['description_fr'] == '' || $post['description_en'] == '')
+            if ($post['title'] == '' || $post['description_fr'] == '' || $post['description_en'] == '' || $post['desc_fr'] == '' || $post['desc_en'] == '')
             {
                 Messages::setMsg('Please fill in all mandatory fields', 'error');
             }
@@ -81,16 +81,18 @@ class ProjectsModel extends Model
                 $resp = $this->execute();
                 $id = $this->lastIndexId();
                 //Insertion du titre français
-                $this->query('INSERT INTO project_tr (id, id_Language, description)
-                            VALUES(:id, 1, :description)');
+                $this->query('INSERT INTO project_tr (id, id_Language, description, short_desc)
+                            VALUES(:id, 1, :description, :short_desc)');
                 $this->bind(':id', $id);
                 $this->bind(':description', $post['description_fr']);
+                $this->bind(':short_desc', $post['desc_fr']);
                 $respfr = $this->execute();
                 //Insertion du titre anglais
-                $this->query('INSERT INTO project_tr (id, id_Language, description)
-                            VALUES(:id, 2, :description)');
+                $this->query('INSERT INTO project_tr (id, id_Language, description, short_desc)
+                            VALUES(:id, 2, :description, short_desc)');
                 $this->bind(':id', $id);
                 $this->bind(':description', $post['description_en']);
+                $this->bind(':short_desc', $post['desc_en']);
                 $respen = $this->execute();
                 //Insertion de la version
                 $this->query('INSERT INTO version (id_Project, num_version, date_version)
@@ -134,7 +136,7 @@ class ProjectsModel extends Model
         $post = filter_input_array(INPUT_POST, FILTER_SANITIZE_ENCODED);
         if ($post['submit'])
         {
-            if($post['title'] == '' || $post['description_fr'] == '' || $post['description_en'] == '')
+            if ($post['title'] == '' || $post['description_fr'] == '' || $post['description_en'] == '' || $post['desc_fr'] == '' || $post['desc_en'] == '')
             {
                 Messages::setMsg('Please fill in all mandatory fields', 'error');
                 return;
@@ -179,16 +181,18 @@ class ProjectsModel extends Model
             $resp = $this->execute();
             // Mise à jour du titre FR
             $this->query('UPDATE project_tr 
-                            SET description = :description 
+                            SET description = :description, short_desc = :short_desc
                             WHERE id = :id AND id_Language = 1');
             $this->bind(':description', $post['description_fr']);
+            $this->bind(':short_desc', $post['desc_fr']);
             $this->bind(':id', $post['id']);
             $resfr = $this->execute();
             // Mise à jour du titre EN
             $this->query('UPDATE project_tr 
-                            SET description = :description 
+                            SET description = :description, short_desc = :short_desc
                             WHERE id = :id AND id_Language = 2');
             $this->bind(':description', $post['description_en']);
+            $this->bind(':short_desc', $post['desc_en']);
             $this->bind(':id', $post['id']);
             $resen = $this->execute();
             //Insertion de la version si date plus récente
@@ -241,6 +245,7 @@ class ProjectsModel extends Model
         $get = filter_input_array(INPUT_GET, FILTER_SANITIZE_STRING);
         $this->query("SELECT p.id, p.title, p.first_date_project, p.id_FrameworkEngine, p.bVisible,
                              pfr.description description_fr, pen.description description_en,
+                             pfr.short_desc desc_fr, pen.short_desc desc_en,
                              pi.name, pi.img_size, pi.img_type, pi.img_blob,
                              v.num_version, v.date_version
                       FROM project AS p 
