@@ -20,7 +20,7 @@
             foreach ($fmlist as $item)
             {
                 ?>
-                <option value="<?= $item['id']; ?>" <?= $viewModel['id_FrameworkEngine'] == $item['id'] ? 'selected' : ''; ?>><?= urldecode($item['name']); ?></option>
+                <option value="<?= $item['id']; ?>" <?= $viewModel['id_FrameworkEngine'] == $item['id'] ? 'selected' : ''; ?>><?= $item['name']; ?></option>
                 <?php
             }
             ?>
