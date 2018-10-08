@@ -3,6 +3,9 @@
     <meta charset="UTF-8">
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <title>Management</title>
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+    <link rel="stylesheet" href="<?= ROOT_URL; ?>assets/css/bootstrap.css" />
     <link rel="stylesheet" href="<?= ROOT_URL; ?>assets/css/styles.css"></link>
     <link rel="shortcut icon" href="<?= ROOT_URL; ?>assets/images/logo/logo_48x48.png" type="image/x-icon"/>
 </head>
@@ -24,5 +27,12 @@
     <?php Messages::display(); ?>
     <?php require($view); ?>
   </main>
+  <script>
+    $(document).ready(function()
+      {
+        $('input[type=checkbox]').css('width','auto');
+      }
+    ); 
+  </script>
 </body>
 </html>

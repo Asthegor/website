@@ -285,7 +285,7 @@ div.project-inline > .project-inline-label {
  * Partie FORMULAIRE
  ***************************/
  input, textarea, select {
-  color:blue;
+  color:rgb(88, 6, 88);
   width: 60%;
   border-radius: 5px;
 }
@@ -302,3 +302,10 @@ div.form-group label {
   width: 98%;
   height:auto;
 }
+
+.btn-primary{
+  width: auto !important;
+}
+
+
+
