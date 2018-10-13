@@ -5,8 +5,8 @@ if (!isset($_SESSION['language'])) {
 }
 header('Content-Type: text/html; charset=utf-8');
 
-require( __DIR__ . 'config.php');
-require( __DIR__ . 'autoload.php');
+require( __DIR__ . '/config.php');
+require( __DIR__ . '/autoload.php');
 
 Profiling::StartChrono();
 
