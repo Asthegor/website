@@ -1,5 +1,5 @@
 <?php
-require('views/main/header.php');
+include_once(__DIR__.'/header.php');
 ?>
 
   <main role="main" class="container">
@@ -7,5 +7,5 @@ require('views/main/header.php');
     <?php require($view); ?>
   </main>
 <?php
-require('views/main/footer.php');
+include_once(__DIR__.'/footer.php');
 ?>

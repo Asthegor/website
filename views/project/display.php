@@ -3,7 +3,7 @@ if (!isset($_GET['id']) && !is_numeric($_GET['id']))
 {
   header('Location: '.ROOT_URL.'projects');
 }
-require('views/projnavbar.php')
+include_once(__DIR__.'/projnavbar.php')
 ?>
 <div class="project">
   <div id="project-image">

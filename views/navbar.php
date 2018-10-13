@@ -27,7 +27,7 @@ $fileName = basename($_SERVER['PHP_SELF']);
   }
   ?>
   <li id="nav-item-last-child" class="nav-item">
-    <a href="<?= ROOT_URL.'views/main/language.php'; ?>">
+    <a href="<?= ROOT_URL.'views/language.php'; ?>">
       <?php
       $language = $_SESSION['language'] == 'EN' ? 'FR' : 'EN';
       $lm = new LanguageModel();
