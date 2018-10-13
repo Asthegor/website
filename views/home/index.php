@@ -1,6 +1,3 @@
-<?php
-Profiling::StartChrono('View_Home_Index');
-?>
 <div id="background1">
 <img src="<?= ROOT_URL; ?>assets/images/backgrounds/background2.jpg"/>
 <h1 id="maintitle"><?= ConfigModel::getConfig('MAIN_TITLE_'.$language); ?></h1>
@@ -14,8 +11,6 @@ $(function(){
 </script>
 
 <?php
-Profiling::EndChrono('View_Home_Index');
-Profiling::StartChrono('View_Home_Index_Loop');
 foreach ($viewModel as $item)
 {
     ?>
@@ -31,6 +26,5 @@ foreach ($viewModel as $item)
     </a>
     <?php
 }
-Profiling::EndChrono('View_Home_Index_Loop');
 ?>
 

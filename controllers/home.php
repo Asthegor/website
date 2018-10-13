@@ -8,15 +8,9 @@ class Home extends Controller
         {
             $_SESSION['language'] = 'FR';
         }
-        Profiling::StartChrono('HomeModel');
         $viewmodel = new HomeModel();
-        Profiling::EndChrono('HomeModel');
-        Profiling::StartChrono('HomeModelIndex');
         $index = $viewmodel->Index();
-        Profiling::EndChrono('HomeModelIndex');
-        Profiling::StartChrono('Home_ReturnView');
         $this->returnView($index);
-        Profiling::EndChrono('Home_ReturnView');
     }
     protected function en()
     {

@@ -11,17 +11,8 @@ abstract class Model
     {
         $this->dbname = DB_NAME;
         $this->dbuser = DB_USER;
-        try
-        {
-            Profiling::StartChrono('PDO');
-            $this->dbh = new PDO("mysql:host=".DB_HOST.";dbname=".DB_NAME, DB_USER, DB_PWD);
-            Profiling::EndChrono('PDO');
-        }
-        catch (PDOException $e)
-        {
-            print $e->getMessage()."<br/>";
-            die();
-        }
+
+        $this->dbh = Singleton::getInstance(DB_NAME, DB_USER, DB_PWD);
         $this->dbh->query('SET NAMES UTF8');
     }
 

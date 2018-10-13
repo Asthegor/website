@@ -13,7 +13,7 @@ class Profiling {
         if(is_null(self::$instance))
         {
             self::$instance = new Profiling();
-            self::$instance->mainChrono = new Mesure();
+            self::$instance->mainChrono = new MesureItem('MainChrono');
         }
         return self::$instance;
     }
@@ -27,15 +27,15 @@ class Profiling {
                 $mesure = $instance->valeurs[$name]; 
                 if (!$mesure->isFinished())
                 {
-                    $mesure->endChorno();
-                    $instance->results[$name] = $mesure;
+                    $mesure->EndChrono();
+                    $instance->results[] = $mesure;
                     unset($mesure);
                 }
-                $mesure = new Mesure();
+                $mesure = new MesureItem($name);
             }
             else
             {
-                $instance->valeurs[$name] = new Mesure();
+                $instance->valeurs[] = new MesureItem($name);
             }
         }
     }
@@ -50,8 +50,8 @@ class Profiling {
                 $mesure = $instance->valeurs[$name]; 
                 if (!$mesure->isFinished())
                 {
-                    $mesure->endChorno();
-                    $instance->results[$name] = $mesure;
+                    $mesure->EndChrono();
+                    $instance->results[] = $mesure;
                     unset($mesure);
                 }
             }
@@ -62,29 +62,56 @@ class Profiling {
             {
                 if(!$mesure->isFinished())
                 {
-                    $mesure->endChorno();
+                    $mesure->EndChrono();
                 }
-                $instance->results[$name] = $mesure;
+                $instance->results[] = $mesure;
                 unset($mesure);
             }
-            $instance->mainChrono->endChorno();
+            $instance->mainChrono->EndChrono();
         }
     }
 
-    public static function DisplayResults()
+    public static function DisplayResults($commented = false)
     {
-        $msg = "<h5>Start profiling</h5><ul>";
+        if ($commented) { $msg .= "/*"; }
+
+        $msg .= "<h5>Start profiling</h5><ul>";
         $instance = self::getSingleton();
-        foreach ($instance->results as $key => $value)
+        foreach ($instance->results as $value)
         {
-            $msg .= "<li>". $key ." : ". $value->getElapsedTime() ."</li>";
+            $msg .= "<li>". $value->getElapsedTime() ."</li>";
         }
         $msg .= "</ul>";
         $msg .= "Total elapsed time : ". $instance->mainChrono->getElapsedTime();
+
+        if ($commented) { $msg .= "*/"; }
         echo $msg;
     }
 }
+class MesureItem
+{
+    private $name;
+    private $mesure;
+    private static $count;
 
+    public function __construct($name)
+    {
+        $this->name = $name;
+        $this->mesure = new Mesure();
+    }
+    public function EndChrono()
+    {
+        $this->mesure->endChrono();
+    }
+    public function isFinished()
+    {
+        return $this->mesure->isFinished();
+    }
+    public function getElapsedTime()
+    {
+        return $this->name ." : ". $this->mesure->getElapsedTime();
+    }
+}
 class Mesure
 {
     private $startTime = null;
@@ -93,7 +120,7 @@ class Mesure
     {
         $this->startTime = microtime(true);
     }
-    public function endChorno()
+    public function endChrono()
     {
         $this->endTime = microtime(true);
     }
