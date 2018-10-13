@@ -10,13 +10,7 @@ require 'config.php';
 Profiling::StartChrono();
 
 $mainController = new MainController($_GET);
-
-Profiling::StartChrono('CreateController');
-
 $controller = $mainController->createController();
-
-Profiling::EndChrono('CreateController');
-
 if ($controller) {
     $controller->executeAction();
 }

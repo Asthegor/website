@@ -1,11 +1,12 @@
 <?php
-
+Profiling::StartChrono('Header_Session');
 if(!isset($_SESSION['language'])) $_SESSION['language'] = 'FR';
 $language = $_SESSION['language'];
+Profiling::EndChrono('Header_Session');
 ?>
 <!DOCTYPE html>
 <html>
-
+<?php Profiling::StartChrono('Header_head'); ?>
 <head>
   <meta charset="UTF-8">
   <meta name="author" content="LACOMBE Dominique">
@@ -25,12 +26,17 @@ $language = $_SESSION['language'];
   <script src="//code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
 </head>
+<?php Profiling::EndChrono('Header_head'); ?>
 
 <body>
+<?php Profiling::StartChrono('Body_Header'); ?>
   <header>
     <a href="<?= ROOT_URL; ?>"><img src="<?= ROOT_URL; ?>assets/images/logo/logo_textonly_475x150.png"/></a>
   </header>
+  <?php Profiling::EndChrono('Body_Header'); ?>
 
   <?php
+  Profiling::StartChrono('Header_navbar');
   include_once(__DIR__.'/navbar.php');
+  Profiling::EndChrono('Header_navbar');
   ?>

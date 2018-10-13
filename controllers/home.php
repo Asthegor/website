@@ -4,12 +4,10 @@ class Home extends Controller
 {
     protected function index()
     {
-        Profiling::StartChrono('SessionLanguage');
         if (!isset($_SESSION['language']))
         {
             $_SESSION['language'] = 'FR';
         }
-        Profiling::EndChrono('SessionLanguage');
         Profiling::StartChrono('HomeModel');
         $viewmodel = new HomeModel();
         Profiling::EndChrono('HomeModel');

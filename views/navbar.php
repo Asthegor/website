@@ -3,8 +3,10 @@ $fileName = basename($_SERVER['PHP_SELF']);
 ?>
 <ul class="nav-bar">
   <?php
+Profiling::StartChrono('NavBar_datas');
   $navbar = new NavBarModel();
   $items = $navbar->getVisibleItems($_SESSION['language']);
+  Profiling::EndChrono('NavBar_datas');
   foreach ($items as $item)
   {
     ?>
@@ -31,9 +33,9 @@ $fileName = basename($_SERVER['PHP_SELF']);
       <?php
       $language = $_SESSION['language'] == 'EN' ? 'FR' : 'EN';
       $lm = new LanguageModel();
-$_SESSION['starttime'] = microtime(true);
+      Profiling::StartChrono('Image_Language');
       $lmres = $lm->getImage($language);
-$_SESSION['endtime'] = microtime(true);
+      Profiling::EndChrono('Image_Language');
       $imgsrc = 'data:image/jpeg;base64,'.base64_encode($lmres['image']);
       ?>
       <img src="<?= $imgsrc; ?>" alt="<?= $language; ?>" width="24" height="16"/>
