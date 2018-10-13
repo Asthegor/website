@@ -1,3 +1,6 @@
+<?php
+include_once('../views/header.php');
+?>
 <div class="panel panel-default">
   <div class="panel-heading">
     <h3 class="panel-title">User Login</h3>
@@ -16,3 +19,6 @@
     </form>
   </div>
 </div>
+<?php
+include_once('../views/footer.php');
+?>
