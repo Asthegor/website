@@ -4,7 +4,6 @@ $language = $_SESSION['language'];
 ?>
 <!DOCTYPE html>
 <html>
-
 <head>
   <meta charset="UTF-8">
   <meta name="author" content="LACOMBE Dominique">
@@ -28,9 +27,8 @@ $language = $_SESSION['language'];
 <body>
   <header>
     <a href="<?= ROOT_URL; ?>"><img src="<?= ROOT_URL; ?>assets/images/logo/logo_textonly_475x150.png"/></a>
-
-</header>
+  </header>
 
   <?php
-  include(__DIR__ .'/navbar.php');
+  include_once(__DIR__.'/navbar.php');
   ?>
