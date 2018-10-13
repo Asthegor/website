@@ -5,9 +5,9 @@ if(!isset($_SESSION['language']))
     $_SESSION['language'] = 'FR';
 }
 header('Content-Type: text/html; charset=utf-8');
-
-require('config.php');
 //autre modif
+require('config.php');
+
 require('classes/Messages.php');
 require('classes/MainController.php');
 require('classes/Controller.php');
