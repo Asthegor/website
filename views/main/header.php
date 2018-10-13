@@ -28,6 +28,7 @@ $language = $_SESSION['language'];
 <body>
   <header>
     <a href="<?= ROOT_URL; ?>"><img src="<?= ROOT_URL; ?>assets/images/logo/logo_textonly_475x150.png"/></a>
+
 </header>
 
   <?php
