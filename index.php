@@ -7,7 +7,7 @@ if(!isset($_SESSION['language']))
 header('Content-Type: text/html; charset=utf-8');
 
 require('config.php');
-
+//autre modif
 require('classes/Messages.php');
 require('classes/MainController.php');
 require('classes/Controller.php');
