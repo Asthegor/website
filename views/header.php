@@ -1,4 +1,5 @@
 <?php
+
 if(!isset($_SESSION['language'])) $_SESSION['language'] = 'FR';
 $language = $_SESSION['language'];
 ?>
@@ -28,7 +29,7 @@ $language = $_SESSION['language'];
 <body>
   <header>
     <a href="<?= ROOT_URL; ?>"><img src="<?= ROOT_URL; ?>assets/images/logo/logo_textonly_475x150.png"/></a>
-</header>
+  </header>
 
   <?php
   include_once(__DIR__.'/navbar.php');

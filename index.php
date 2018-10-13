@@ -1,37 +1,24 @@
 <?php
 session_start();
-if(!isset($_SESSION['language']))
-{
+if (!isset($_SESSION['language'])) {
     $_SESSION['language'] = 'FR';
 }
 header('Content-Type: text/html; charset=utf-8');
 
-require('config.php');
+require 'config.php';
 
-require('classes/Messages.php');
-require('classes/MainController.php');
-require('classes/Controller.php');
-require('classes/Model.php');
-
-require('controllers/home.php');
-require('controllers/projects.php');
-require('controllers/project.php');
-require('controllers/experiences.php');
-require('controllers/education.php');
-
-require('models/configs.php');
-require('models/home.php');
-require('models/navbar.php');
-require('models/language.php');
-require('models/projects.php');
-require('models/project.php');
-require('models/experiences.php');
-require('models/education.php');
+Profiling::StartChrono();
 
 $mainController = new MainController($_GET);
+
+Profiling::StartChrono('CreateController');
+
 $controller = $mainController->createController();
-if($controller)
-{
+
+Profiling::EndChrono('CreateController');
+
+if ($controller) {
     $controller->executeAction();
 }
-?>
+Profiling::EndChrono();
+Profiling::DisplayResults();

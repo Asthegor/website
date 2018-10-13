@@ -31,7 +31,9 @@ $fileName = basename($_SERVER['PHP_SELF']);
       <?php
       $language = $_SESSION['language'] == 'EN' ? 'FR' : 'EN';
       $lm = new LanguageModel();
+$_SESSION['starttime'] = microtime(true);
       $lmres = $lm->getImage($language);
+$_SESSION['endtime'] = microtime(true);
       $imgsrc = 'data:image/jpeg;base64,'.base64_encode($lmres['image']);
       ?>
       <img src="<?= $imgsrc; ?>" alt="<?= $language; ?>" width="24" height="16"/>

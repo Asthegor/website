@@ -4,9 +4,13 @@ abstract class Model
 {
     protected $dbh;
     protected $stmt;
+    protected $dbname;
+    protected $dbuser;
 
     public function __construct()
     {
+        $this->dbname = DB_NAME;
+        $this->dbuser = DB_USER;
         try
         {
             $this->dbh = new PDO("mysql:host=".DB_HOST.";dbname=".DB_NAME, DB_USER, DB_PWD);
@@ -23,13 +27,20 @@ abstract class Model
 
     public function changeDatabase($dbname, $dbuser=null, $dbpass=null)
     {
+        $user = is_null($dbuser) ? DB_USER : $dbuser;
+        $pass = is_null($dbuser) ? DB_PWD : $dbpass;
+        if ($dbname == $this->dbname && $user == $this->dbuser)
+        {
+            // même base et même user => on change rien
+            return;
+        }
+        $this->dbname = $dbname;
+        $this->dbuser = $user;
         if(!is_null($this->stmt))
         {
             $this->close();
         }
         $this->dbh = null;
-        $user = is_null($dbuser) ? DB_USER : $dbuser;
-        $pass = is_null($dbuser) ? DB_PWD : $dbpass;
         try
         {
             $this->dbh = new PDO("mysql:host=".DB_HOST.";dbname=".$dbname, $user, $pass);
