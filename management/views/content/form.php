@@ -31,7 +31,7 @@
         <input type="checkbox" name="bVisible" value="1" <?= isset($viewModel['bVisible']) && $viewModel['bVisible'] ? 'checked' : ''; ?> />
     </div>
     <input class="btn btn-primary" name="submit" type="submit" value="Submit" />
-    <a class="btn btn-danger" href="<?= ROOT_MNGT; ?>content">Cancel</a><br>
+    <a class="btn btn-warning" href="<?= ROOT_MNGT; ?>content">Cancel</a>
     <?php if (isset($viewModel['id']))
     {
         ?>

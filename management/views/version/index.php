@@ -10,7 +10,7 @@ require_once('views/projectnavbar/projectnavbar.php');
         $projectid = $_POST['projectid'];
     }
     ?>
-    <select name="projectid">
+    <select name="projectid" style="width:auto;">
         <option value="">Tous les projets</option>
         <?php
         $vm = new VersionModel();
@@ -23,7 +23,7 @@ require_once('views/projectnavbar/projectnavbar.php');
         }
         ?>
     </select>
-    <input name="filter" type="submit" value="Filtrer" />
+    <input name="filter" type="submit" style="width:auto;height:auto;" value="Filtrer" />
 </form>
 <div class="navbar-index">
     <table style="width:100%; text-align: left;">

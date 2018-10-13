@@ -32,5 +32,5 @@ $language = $_SESSION['language'];
 </header>
 
   <?php
-  include('views/main/navbar.php');
+  include(__DIR__ .'/navbar.php');
   ?>

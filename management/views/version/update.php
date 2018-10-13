@@ -24,7 +24,7 @@
         <input type="date" name="date_version" value="<?= isset($viewModel['date_version']) ? $viewModel['date_version'] : ''; ?>"/>
     </div>
     <input class="btn btn-primary" name="submit" type="submit" value="Submit" />
-    <a class="btn btn-danger" href="<?= ROOT_MNGT; ?>version">Cancel</a>
+    <a class="btn btn-warning" href="<?= ROOT_MNGT; ?>version">Cancel</a>
     <?php if (isset($viewModel['id']))
     {
         ?>

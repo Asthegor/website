@@ -3,9 +3,9 @@
 <table style="width: 100%;">
     <tr>
         <th style="width: 30%;"></th>
-        <th style="width: 15%;">Nbre Enreg.</th>
-        <th style="width: 15%;">Affichés</th>
-        <th style="width: 15%;">Masqués</th>
+        <th style="width: 15%;text-align: center;">Nbre Enreg.</th>
+        <th style="width: 15%;text-align: center;">Affichés</th>
+        <th style="width: 15%;text-align: center;">Masqués</th>
     </tr>
 </table>
 <?php

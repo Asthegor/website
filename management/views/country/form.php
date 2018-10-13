@@ -19,7 +19,7 @@
         <input type="text" name="name_en" value="<?= isset($viewModel['name_en']) ? $viewModel['name_en'] : ''; ?>" required />
     </div>
     <input class="btn btn-primary" name="submit" type="submit" value="Submit" />
-    <a class="btn btn-danger" href="<?= ROOT_MNGT; ?>country">Cancel</a>
+    <a class="btn btn-warning" href="<?= ROOT_MNGT; ?>country">Cancel</a>
     <?php if (isset($viewModel['id']))
     {
         ?>
