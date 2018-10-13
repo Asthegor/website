@@ -73,7 +73,8 @@ class Profiling {
 
     public static function DisplayResults($commented = false)
     {
-        if ($commented) { $msg .= "/*"; }
+        $msg = '';
+        if ($commented) { $msg .= "<!-- "; }
 
         $msg .= "<h5>Start profiling</h5><ul>";
         $instance = self::getSingleton();
@@ -84,7 +85,7 @@ class Profiling {
         $msg .= "</ul>";
         $msg .= "Total elapsed time : ". $instance->mainChrono->getElapsedTime();
 
-        if ($commented) { $msg .= "*/"; }
+        if ($commented) { $msg .= " -->"; }
         echo $msg;
     }
 }
