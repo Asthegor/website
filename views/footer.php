@@ -1,3 +1,11 @@
+  <?php
+
+  // Année de début du copyright
+  define("COPY_YEAR","2018");
+  // Définition du fuseau horaire
+  date_default_timezone_set("Europe/Paris");
+  
+  ?>
   <footer>
     <h5 id="copyright">Copyright &copy; 
       <?php 

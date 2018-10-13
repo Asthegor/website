@@ -1,8 +1,7 @@
-<div class="panel panel-default">
-  <div class="panel-heading">
-    <h3 class="panel-title">User Login</h3>
-  </div>
-  <div class="panel-body">
+<?php
+include_once('../views/header.php');
+?>
+<div class="panel-body">
     <form method="post" action="<?php $_SERVER['PHP_SELF']; ?>">
         <div class="form-group">
             <label>Login</label>
@@ -14,5 +13,7 @@
         </div>
         <input class="btn btn-primary" name="submit" type="submit" value="Submit" />
     </form>
-  </div>
 </div>
+<?php
+include_once('../views/footer.php');
+?>

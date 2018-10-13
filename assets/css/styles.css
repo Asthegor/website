@@ -230,9 +230,6 @@ div.project-inline > .project-inline-label {
   padding: 0;
   overflow: hidden;
 }
-.prev-next-item:hover {
-  /* background-color:  */
-}
 .prev-item {
   float: left;
 }
@@ -284,7 +281,7 @@ div.project-inline > .project-inline-label {
 /***************************
  * Partie FORMULAIRE
  ***************************/
- input, textarea, select {
+input, textarea, select {
   color:rgb(88, 6, 88);
   width: 60%;
   border-radius: 5px;
@@ -307,5 +304,27 @@ div.form-group label {
   width: auto !important;
 }
 
+/***************************
+ * Partie LOGIN
+ ***************************/
+.panel-body {
+  margin: 0 auto;
+  width: 25%;
+  text-align: center;
+}
+div.panel-body div.form-group {
+    width: 100%;
+}
 
-
+div.panel-body div.form-group * {
+  float: left;
+  margin : 10px auto;
+  text-align: left;
+  vertical-align: middle;
+}
+div.panel-body div.form-group label {
+    width:40%;
+}
+div.panel-body div.form-group input {
+    width:60%;
+}

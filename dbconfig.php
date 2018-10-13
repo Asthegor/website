@@ -1,11 +1,5 @@
 ﻿<?php
 
-// Année de début du copyright
-define("COPY_YEAR","2018");
-// Définition du fuseau horaire
-date_default_timezone_set("Europe/Paris");
-
-
 //Define DB Params
 define("DB_PORT", "");
 // define("DB_PORT", ":3399");
