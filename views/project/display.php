@@ -15,16 +15,11 @@ include_once(__DIR__.'/projnavbar.php')
       <h4 class="project-inline-label">Framework / Engin :</h4>
       <h4><?= urldecode($viewModel['framework']); ?></h4>
     </div>
-    <?php //$version = get_LastProjectVersion($prj_bdd, $projectid); ?>
-    <div class="project-inline">
-      <p >Version actuelle :</p>
-      <p><?php // echo $viewModel['version']; ?></p>
-    </div>
     <div class="project-inline">
       <h4 class="project-inline-label">Projet initié le :</h4>
       <h4><?= !is_null($viewModel['first_date_project']) ? $viewModel['first_date_project'] : 'Indéterminé'; ?></h4>
     </div>
     <h4 class="project-inline-label">Description :</h4>
-    <p><?= urldecode($_SESSION['language'] == 'EN' ? $viewModel['description_en'] : $viewModel['description_fr']); ?></p>
+    <p><?= urldecode($viewModel['description']); ?></p>
   </div>
 </div>

@@ -1,7 +1,3 @@
-<?php
-if (!isset($_SESSION['language'])) $_SESSION['language'] = 'FR';
-$language = strtolower($_SESSION['language']);
-?>
 <div id="accordion">
 <?php
 foreach ($viewModel as $experience)
@@ -23,12 +19,12 @@ foreach ($viewModel as $experience)
 
     $title = $datestart->format('m-Y').' - ';
     $title .= (!$bCurrent ? 'XX-XXXX' : $dateend->format('m-Y'));
-    $title .= ' ('.$duree.') : '.$experience['title_'.strtolower($_SESSION['language'])];
+    $title .= ' ('.$duree.') : '.$experience['title'];
     ?>
     <h2><?= urldecode($title); ?></h2>
-    <div><h4><?= urldecode($experience['company'].' - '.$experience['city_'.$language]); ?></h4>
-    <p><?= urldecode($experience['content_'.$language]); ?></p>
-    <hr>
+    <div>
+        <h4><?= urldecode($experience['company'].' - '.$experience['city']); ?></h4>
+        <p><?= urldecode($experience['content']); ?></p>
     </div>
     <?php
 }

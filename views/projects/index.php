@@ -9,7 +9,7 @@ foreach ($viewModel as $project)
             <div class="project-list-overlay-back"></div>
             <div class="project-list-desc">
                 <h4><?= urldecode($project['title']); ?></h4>
-                <p><?= urldecode($project['desc_'.strtolower($_SESSION['language'])]); ?></p>
+                <p><?= urldecode($project['short_desc']); ?></p>
             </div>
         </div>
     </a>

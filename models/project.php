@@ -9,13 +9,12 @@ class ProjectModel extends Model
         $get = filter_input_array(INPUT_GET, FILTER_SANITIZE_STRING);
         $this->changeDatabase(self::curDB);
         $this->query("SELECT p.title, p.first_date_project, prev.id previous_id, next.id next_id,
-                             ptrfr.description description_fr, ptren.description description_en,
-                             CONCAT( fe.name, ' (', l.name, ')' ) framework, pri.img_blob
+                             ptr.description, CONCAT( fe.name, ' (', pl.name, ')' ) framework, pri.img_blob
                       FROM project AS p
                         INNER JOIN frameworkengine AS fe ON p.id_FrameworkEngine = fe.id
-                        INNER JOIN proglanguage AS l ON fe.id_ProgLanguage = l.id
-                        INNER JOIN project_tr AS ptrfr ON p.id = ptrfr.id AND ptrfr.id_Language = 1
-                        INNER JOIN project_tr AS ptren ON p.id = ptren.id AND ptren.id_Language = 2
+                        INNER JOIN proglanguage AS pl ON fe.id_ProgLanguage = pl.id
+                        INNER JOIN project_tr AS ptr ON p.id = ptr.id 
+                        INNER JOIN language AS l AND ptr.id_Language = l.id AND l.code = :codelanguage 
                         LEFT JOIN projectimage AS pri ON pri.id_Project = p.id
                         LEFT JOIN project AS prev ON prev.id = 
                             (SELECT pp.id FROM project AS pp 
@@ -27,6 +26,7 @@ class ProjectModel extends Model
                              ORDER BY pn.first_date_project LIMIT 1)
                       WHERE p.id = :id");
         $this->bind(':id', $get['id']);
+        $this->bind(':codelanguage', $_SESSION['language']);
         $rows = $this->single();
         $this->close();
         return $rows;

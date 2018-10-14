@@ -8,16 +8,16 @@ class ProjectsModel extends Model
     {
         $this->changeDatabase(self::curDB);
         $this->query("SELECT  p.id, p.title, p.first_date_project, 
-                              ptrfr.short_desc desc_fr, ptren.short_desc desc_en, 
-                              CONCAT(fe.name, ' (', l.name, ')') framework, pri.img_blob
+                              ptr.short_desc, CONCAT(fe.name, ' (', pl.name, ')') framework, pri.img_blob
                       FROM project AS p 
                         INNER JOIN frameworkengine AS fe ON p.id_FrameworkEngine = fe.id 
-                        INNER JOIN proglanguage AS l ON fe.id_ProgLanguage = l.id 
-                        INNER JOIN project_tr as ptrfr ON p.id = ptrfr.id AND ptrfr.id_Language = 1
-                        INNER JOIN project_tr as ptren ON p.id = ptren.id AND ptren.id_Language = 2  
+                        INNER JOIN proglanguage AS pl ON fe.id_ProgLanguage = pl.id 
+                        INNER JOIN project_tr as ptr ON p.id = ptr.id 
+                        INNER JOIN language as l ON ptr.id_Language = l.id AND l.code = :codelanguage 
                         LEFT JOIN projectimage AS pri ON pri.id_Project = p.id 
                       WHERE p.bVisible = 1
-                      ORDER BY fe.sortOrder, fe.name, p.first_date_project DESC, p.title");
+                      ORDER BY p.first_date_project DESC");
+        $this->bind(":codelanguage", $_SESSION['language']);
         $rows = $this->resultSet();
         $this->close();
         return $rows;

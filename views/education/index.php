@@ -1,8 +1,3 @@
-
-<?php
-if (!isset($_SESSION['language'])) $_SESSION['language'] = 'FR';
-$language = strtolower($_SESSION['language']);
-?>
 <div id="accordion">
 <?php
 foreach ($viewModel as $education)
@@ -19,23 +14,21 @@ foreach ($viewModel as $education)
     }
     $title = $datestart->format('m-Y').' - ';
     $title .= ($bCurrent ? 'XX-XXXX' : $dateend->format('m-Y'));
-    $title .= ' : '.$education['title_'.$language];
+    $title .= ' : '.$education['title'];
     ?>
     <h2><?= urldecode($title); ?></h2>
     <div>
-    <h4><?= urldecode($education['institution_'.$language]); ?></h4>
-    <p><?= urldecode($education['description_'.$language]); ?></p>
-    <a href="<?= urldecode($education['link_diploma']); ?>" target="_blank">
-        <img height="100" width="150" src="<?= urldecode($education['link_diploma']); ?>" alt="<?= urldecode($title); ?>"/>
-    </a>
-    <hr>
-</div >
+        <h4><?= urldecode($education['institution']); ?></h4>
+        <p><?= urldecode($education['description']); ?></p>
+        <a href="<?= urldecode($education['link_diploma']); ?>" target="_blank">
+            <img height="100" width="150" src="<?= urldecode($education['link_diploma']); ?>" alt="<?= urldecode($title); ?>"/>
+        </a>
+    </div >
     <?php
 }
-
 ?>
 </div>
 <script>
-$( "#accordion" ).accordion({collapsible: true});
-$( "#accordion div" ).css("height","auto");
+    $( "#accordion" ).accordion({collapsible: true});
+    $( "#accordion div" ).css("height","auto");
 </script>

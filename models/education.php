@@ -8,14 +8,13 @@ class EducationModel extends Model
     {
         $this->changeDatabase(self::curDB);
         $this->query("SELECT e.id, e.date_start, e.date_end, e.bVisible, e.link_diploma,
-                             efr.title title_fr, efr.description description_fr,
-                             een.title title_en, een.description description_en,
-                             efr.institution institution_fr, een.institution institution_en
+                             etr.title, etr.institution
                       FROM education AS e
-                        INNER JOIN education_tr AS efr ON e.id = efr.id AND efr.id_Language = 1
-                        INNER JOIN education_tr AS een ON e.id = een.id AND een.id_Language = 2
+                        INNER JOIN education_tr AS etr ON e.id = etr.id 
+                        INNER JOIN language AS l on efr.id_Language = l.id AND l.code = :codelanguage
                       WHERE e.bVisible = 1
                       ORDER BY e.bVisible DESC, e.date_start DESC");
+        $this->bind(':codelanguage', $_SESSION['language']);
         $rows = $this->resultSet();
         $this->close();
         return $rows;
