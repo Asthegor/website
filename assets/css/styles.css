@@ -134,8 +134,7 @@ div.back{
   font-size: 12pt;
 }
 .content:hover, .content:active {
-  background:none;
-  color:none;
+  background-color: transparent;
 }
 
 /***************************

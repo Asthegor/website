@@ -16,7 +16,7 @@ foreach ($viewModel as $item)
     <a class="content" href="<?= ROOT_URL.$item['destination']; ?>">
         <div class="flip">  
             <div class="summary front">
-                <h1><?= $item['title_'.strtolower($_SESSION['language'])]; ?></h1>
+                <h1><?= urldecode($item['title_'.strtolower($_SESSION['language'])]); ?></h1>
             </div>
             <div class="summary back">
                 <p><?= urldecode($item['desc_'.strtolower($_SESSION['language'])]); ?></p>

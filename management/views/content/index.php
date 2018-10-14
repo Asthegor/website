@@ -20,8 +20,8 @@
             <table style="width:95%;">
                 <tr>
                     <td style="width:5%;"><?= $item['id']; ?></td>
-                    <td style="width:15%;"><?= $item['title_fr']; ?></td>
-                    <td style="width:15%;"><?= $item['title_en']; ?></td>
+                    <td style="width:15%;"><?= urldecode($item['title_fr']); ?></td>
+                    <td style="width:15%;"><?= urldecode($item['title_en']); ?></td>
                     <td style="width:15%;"><?= $item['destination']; ?></td>
                     <td style="width:15%;"><?= $item['sortOrder']; ?></td>
                     <td style="width:15%;"><?= $item['bVisible'] ? 'Oui' : 'Non'; ?></td>

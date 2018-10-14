@@ -12,11 +12,11 @@
     ?>
     <div class="form-group">
         <label>Titre français</label>
-        <input type="text" name="title_fr" value="<?= isset($viewModel['title_fr']) ? $viewModel['title_fr'] : ''; ?>" required />
+        <input type="text" name="title_fr" value="<?= isset($viewModel['title_fr']) ? urldecode($viewModel['title_fr']) : ''; ?>" required />
     </div>
     <div class="form-group">
         <label>Titre anglais</label>
-        <input type="text" name="title_en" value="<?= isset($viewModel['title_en']) ? $viewModel['title_en'] : ''; ?>" required />
+        <input type="text" name="title_en" value="<?= isset($viewModel['title_en']) ? urldecode($viewModel['title_en']) : ''; ?>" required />
     </div>
     <div class="form-group">
         <label>Résumé français</label>
