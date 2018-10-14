@@ -8,13 +8,16 @@ class ProjectModel extends Model
     {
         $get = filter_input_array(INPUT_GET, FILTER_SANITIZE_STRING);
         $this->changeDatabase(self::curDB);
-        $this->query("SELECT p.title, p.first_date_project, prev.id previous_id, next.id next_id,
-                             ptr.description, CONCAT( fe.name, ' (', pl.name, ')' ) framework, pri.img_blob
+        $this->query("SELECT p.title, p.first_date_project, prev.id previous_id, next.id next_id,  
+                             ptr.description, CONCAT( fe.name, ' (', pl.name, ')' ) framework, 
+                             pri.img_blob, CONCAT(v.num_version, ' (', v.date_version, ')' ) version
                       FROM project AS p
                         INNER JOIN frameworkengine AS fe ON p.id_FrameworkEngine = fe.id
                         INNER JOIN proglanguage AS pl ON fe.id_ProgLanguage = pl.id
                         INNER JOIN project_tr AS ptr ON p.id = ptr.id 
                         INNER JOIN language AS l ON ptr.id_Language = l.id AND l.code = :codelanguage 
+                        LEFT JOIN version AS v ON p.id = v.id_Project AND
+                            v.id = (SELECT max(vs.id) FROM version AS vs WHERE vs.id_Project = p.id) 
                         LEFT JOIN projectimage AS pri ON pri.id_Project = p.id
                         LEFT JOIN project AS prev ON prev.id = 
                             (SELECT pp.id FROM project AS pp 

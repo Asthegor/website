@@ -16,6 +16,10 @@ include_once(__DIR__.'/projnavbar.php')
       <h4><?= urldecode($viewModel['framework']); ?></h4>
     </div>
     <div class="project-inline">
+      <p class="project-inline-label">Version actuelle :</p>
+      <p><?= $viewModel['version']; ?></p>
+    </div>
+    <div class="project-inline">
       <h4 class="project-inline-label">Projet initié le :</h4>
       <h4><?= !is_null($viewModel['first_date_project']) ? $viewModel['first_date_project'] : 'Indéterminé'; ?></h4>
     </div>

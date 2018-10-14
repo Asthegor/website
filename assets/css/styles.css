@@ -207,13 +207,13 @@ div.project-inline * {
   color: white;
 }
 
-div.project-inline-label {
+.project-inline-label {
   /* text-decoration: underline; */
-  color: rgb(144, 102, 211);
+  color: rgb(186, 143, 255);
 }
 div.project-inline > .project-inline-label {
   /* text-decoration: underline; */
-  color:  rgb(144, 102, 211);
+  color:  rgb(186, 143, 255);
 }
 
 #projet-desc h1{

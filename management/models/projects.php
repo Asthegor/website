@@ -13,8 +13,11 @@ class ProjectsModel extends Model
                       FROM project AS p 
                         INNER JOIN frameworkengine AS fe ON p.id_FrameworkEngine = fe.id 
                         INNER JOIN proglanguage AS l ON fe.id_ProgLanguage = l.id 
-                        LEFT JOIN version AS v ON v.id = 
-                            (SELECT vv.id FROM version AS vv WHERE vv.id_Project = p.id ORDER BY vv.date_version DESC LIMIT 1)
+                        LEFT JOIN version AS v 
+                            ON v.id = (SELECT max(vv.id) 
+                                       FROM version AS vv 
+                                       WHERE vv.id_Project = p.id 
+                                       ORDER BY vv.date_version DESC)
                       ORDER BY p.bVisible DESC, v.date_version DESC, p.first_date_project DESC");
         $rows = $this->resultSet();
         $this->close();
