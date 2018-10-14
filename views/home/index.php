@@ -1,6 +1,6 @@
 <div id="background1">
 <img src="<?= ROOT_URL; ?>assets/images/backgrounds/background2.jpg"/>
-<h1 id="maintitle"><?= ConfigModel::getConfig('MAIN_TITLE_'.$language); ?></h1>
+<h1 id="maintitle"><?= ConfigModel::getConfig('MAIN_TITLE_'.$_SESSION['language']); ?></h1>
 </div>
 <script>
 $(function(){
