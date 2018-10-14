@@ -133,7 +133,10 @@ div.back{
   color:rgb(85, 7, 85);
   font-size: 12pt;
 }
-
+.content:hover, .content:active {
+  background:none;
+  color:none;
+}
 
 /***************************
  * Partie LISTE DES PROJETS

@@ -20,12 +20,13 @@
     </div>
     <div class="form-group">
         <label>Résumé français</label>
-        <input type="text" name="short_desc_fr" value="<?= isset($viewModel['short_desc_fr']) ? $viewModel['short_desc_fr'] : ''; ?>" required />
+        <input type="text" name="short_desc_fr" value="<?= isset($viewModel['short_desc_fr']) ? urldecode($viewModel['short_desc_fr']) : ''; ?>" required />
     </div>
     <div class="form-group">
         <label>Résumé anglais</label>
-        <input type="text" name="short_desc_en" value="<?= isset($viewModel['short_desc_en']) ? $viewModel['short_desc_en'] : ''; ?>" required />
+        <input type="text" name="short_desc_en" value="<?= isset($viewModel['short_desc_en']) ? urldecode($viewModel['short_desc_en']) : ''; ?>" required />
     </div>
+
     <div class="form-group">
         <label>Page de destination</label>
         <input type="text" name="destination" value="<?= isset($viewModel['destination']) ? $viewModel['destination'] : ''; ?>" required />

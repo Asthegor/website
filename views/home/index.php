@@ -9,19 +9,18 @@ $(function(){
     });
 });
 </script>
-
 <?php
 foreach ($viewModel as $item)
 {
     ?>
-    <a href="<?= ROOT_URL.$item['destination']; ?>">
+    <a class="content" href="<?= ROOT_URL.$item['destination']; ?>">
         <div class="flip">  
-            <div class="summary front ">
+            <div class="summary front">
                 <h1><?= $item['title_'.strtolower($_SESSION['language'])]; ?></h1>
             </div>
-            <div class=" summary back ">
-                <p><?= $item['desc_'.strtolower($_SESSION['language'])]; ?></p>
-            </div> 
+            <div class="summary back">
+                <p><?= urldecode($item['desc_'.strtolower($_SESSION['language'])]); ?></p>
+            </div>
         </div>
     </a>
     <?php

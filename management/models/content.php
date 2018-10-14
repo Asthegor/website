@@ -21,7 +21,7 @@ class ContentModel extends Model
 
     public function Add()
     {
-        $post = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+        $post = filter_input_array(INPUT_POST, FILTER_SANITIZE_ENCODED);
         if ($post['submit'])
         {
             if ($post['title_fr'] == '' || $post['title_en'] == '' || $post['destination'] == '')
@@ -74,7 +74,7 @@ class ContentModel extends Model
     public function Update()
     {
         $this->changeDatabase(self::curDB);
-        $post = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+        $post = filter_input_array(INPUT_POST, FILTER_SANITIZE_ENCODED);
         if (isset($post['submit']))
         {
             // Contrôle des données
