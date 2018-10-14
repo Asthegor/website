@@ -14,7 +14,7 @@ class ProjectModel extends Model
                         INNER JOIN frameworkengine AS fe ON p.id_FrameworkEngine = fe.id
                         INNER JOIN proglanguage AS pl ON fe.id_ProgLanguage = pl.id
                         INNER JOIN project_tr AS ptr ON p.id = ptr.id 
-                        INNER JOIN language AS l AND ptr.id_Language = l.id AND l.code = :codelanguage 
+                        INNER JOIN language AS l ON ptr.id_Language = l.id AND l.code = :codelanguage 
                         LEFT JOIN projectimage AS pri ON pri.id_Project = p.id
                         LEFT JOIN project AS prev ON prev.id = 
                             (SELECT pp.id FROM project AS pp 

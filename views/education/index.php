@@ -14,11 +14,11 @@ foreach ($viewModel as $education)
     }
     $title = $datestart->format('m-Y').' - ';
     $title .= ($bCurrent ? 'XX-XXXX' : $dateend->format('m-Y'));
-    $title .= ' : '.$education['title'];
+    $title .= ' : '.$education['institution'];
     ?>
     <h2><?= urldecode($title); ?></h2>
     <div>
-        <h4><?= urldecode($education['institution']); ?></h4>
+        <h4><?= urldecode($education['title']); ?></h4>
         <p><?= urldecode($education['description']); ?></p>
         <a href="<?= urldecode($education['link_diploma']); ?>" target="_blank">
             <img height="100" width="150" src="<?= urldecode($education['link_diploma']); ?>" alt="<?= urldecode($title); ?>"/>
