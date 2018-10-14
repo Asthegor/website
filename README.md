@@ -25,7 +25,6 @@ Il a été conçu grâce à :
 <li> et une dernière pour le cursus scolaire</li>
 </ul>
 <h4 class="project-inline-label">Design des pages</h4>
-<h4>Design des pages</h4>
 <p>Le design des formulaires a été réalisé par Fen LIU-LACOMBE, développeuse Web.</p>
 <p>Elle s'est inspirée de mon logo pour le choix des couleurs du thème.</p>
 <p>Un grand merci pour sa contribution !</p>
