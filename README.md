@@ -16,15 +16,29 @@ Il a été conçu grâce à :
   <li>GitKraken pour la gestion du versionning</li>
 </ul>
 
-<h2>Design de l'application</h2>
-
-<h4>Design des bases de données</h4>
-Plusieurs bases de données ont été utilisées pour compartimenter les informations :
-<ul>
-  <li>une pour les éléments dans la barre de navigation ainsi que la page d'accueil (<a href="https://www.lacombedominique.com/assets/images/schemas/schema_web.png" target="_blank">diagramme ici</a>)</li>
-  <li>une pour les informations des projets  (<a href="https://www.lacombedominique.com/assets/images/schemas/schema_projects.png" target="_blank">diagramme ici</a>)</li>
+<h3 class="project-inline-label">Design de l'application</h3>
+<h4 class="project-inline-label">Design des bases de données</h4>
+<p>Plusieurs bases de données ont été utilisées pour compartimenter les informations :</p>
+<ul><li>une pour les éléments dans la barre de navigation ainsi que la page d'accueil (<a href="https://www.lacombedominique.com/assets/images/schemas/schema_web.png" target="_blank">diagramme ici</a>)</li>
+<li>une pour les informations des projets (<a href="http://www.lacombedominique.com/assets/images/schemas/schema_projects.png" target="_blank">diagramme ici</a>)</li>
+<li>une pour les expériences professionnelles (<a href="https://www.lacombedominique.com/assets/images/schemas/schema_experiences.png" target="_blank">diagramme ici</a>)</li>
+<li> et une dernière pour le cursus scolaire</li>
 </ul>
-
+<h4 class="project-inline-label">Design des pages</h4>
 <h4>Design des pages</h4>
-Le design des formulaires a été réalisé par Fen LIU-LACOMBE, développeuse Web.
-Un grand merci pour sa contribution !
+<p>Le design des formulaires a été réalisé par Fen LIU-LACOMBE, développeuse Web.</p>
+<p>Elle s'est inspirée de mon logo pour le choix des couleurs du thème.</p>
+<p>Un grand merci pour sa contribution !</p>
+<h3 class="project-inline-label">Présentation de la partie de gestion intégrée</h3>
+<p>La partie de gestion intégrée a été intégrée directement dans le site afin de pouvoir effectuer des modifications sans devoir altérer le code source.</p>
+<p>Cette partie n'est accessible qu'à partir d'une URL précise et est sécurisée.</p>
+<p>Il est possible de réaliser plusieurs actions au travers de cet interface/outil :</p>
+<ul><li>ajouter/modifier/supprimer du contenu :</li>
+<ul><li>expériences professionnelles</li>
+<li>projets</li>
+<li>parcours scolaire</li>
+</ul>
+<li>afficher ou masquer du contenu</li>
+<li>organiser le contenu (ordre d'affichage)</li>
+</ul>
+<p>Une vidéo sera postée ultérieurement pour montrer les possibilité de cette partie</p>
