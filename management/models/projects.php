@@ -89,7 +89,7 @@ class ProjectsModel extends Model
                 $respfr = $this->execute();
                 //Insertion du titre anglais
                 $this->query('INSERT INTO project_tr (id, id_Language, description, short_desc)
-                            VALUES(:id, 2, :description, short_desc)');
+                            VALUES(:id, 2, :description, :short_desc)');
                 $this->bind(':id', $id);
                 $this->bind(':description', $post['description_en']);
                 $this->bind(':short_desc', $post['desc_en']);
