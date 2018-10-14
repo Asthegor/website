@@ -42,16 +42,18 @@ class ContentModel extends Model
                 $this->execute();
                 $id = $this->lastIndexId();
                 //Insertion du titre français
-                $this->query('INSERT INTO indexitems_tr (id, id_Language, title)
-                            VALUES(:id, 1, :title)');
+                $this->query('INSERT INTO indexitems_tr (id, id_Language, title, short_desc)
+                            VALUES(:id, 1, :title, :short_desc)');
                 $this->bind(':id', $id);
                 $this->bind(':title', $post['title_fr']);
+                $this->bind(':short_desc', $post['short_desc_fr']);
                 $this->execute();
                 //Insertion du titre anglais
-                $this->query('INSERT INTO indexitems_tr (id, id_Language, title)
-                            VALUES(:id, 2, :title)');
+                $this->query('INSERT INTO indexitems_tr (id, id_Language, title, short_desc)
+                            VALUES(:id, 2, :title, :short_desc)');
                 $this->bind(':id', $id);
                 $this->bind(':title', $post['title_en']);
+                $this->bind(':short_desc', $post['short_desc_en']);
                 $this->execute();
 
                 //Verify
@@ -86,17 +88,19 @@ class ContentModel extends Model
                 $this->startTransaction();
                 // Mise à jour du titre FR
                 $this->query('UPDATE indexitems_tr 
-                              SET title = :title 
+                              SET title = :title, short_desc = :short_desc 
                               WHERE id = :id AND id_Language = 1');
                 $this->bind(':title', $post['title_fr']);
+                $this->bind(':short_desc', $post['short_desc_fr']);
                 $this->bind(':id', $post['id']);
                 $resfr = $this->execute();
 
                 // Mise à jour du titre EN
                 $this->query('UPDATE indexitems_tr 
-                              SET title = :title 
+                              SET title = :title, short_desc = :short_desc 
                               WHERE id = :id AND id_Language = 2');
                 $this->bind(':title', $post['title_en']);
+                $this->bind(':short_desc', $post['short_desc_en']);
                 $this->bind(':id', $post['id']);
                 $resen = $this->execute();
 
@@ -123,7 +127,8 @@ class ContentModel extends Model
         }
         $get = filter_input_array(INPUT_GET, FILTER_SANITIZE_STRING);
         $this->query('SELECT i.id, i.bVisible, i.destination, i.sortOrder, 
-                             itrfr.title title_fr, itren.title title_en
+                             itrfr.title title_fr, itren.title title_en,
+                             itrfr.short_desc short_desc_fr, itren.short_desc short_desc_en
                       FROM indexitems AS i
                         INNER JOIN indexitems_tr AS itrfr ON i.id = itrfr.id AND itrfr.id_Language = 1
                         INNER JOIN indexitems_tr AS itren ON i.id = itren.id AND itren.id_Language = 2
