@@ -2,11 +2,10 @@
 
 class CountryModel extends Model
 {
-    const curDB = "lacombed_experiences";
-
+    private $returnPage = 'country';
+    
     public function Index()
     {
-        $this->changeDatabase(self::curDB);
         $this->query('SELECT c.id, cfr.name name_fr, cen.name name_en
                       FROM country AS c
                         INNER JOIN country_tr AS cfr ON c.id = cfr.id AND cfr.id_Language = 1
@@ -29,7 +28,6 @@ class CountryModel extends Model
             else
             {
                 // Insert into MySQL
-                $this->changeDatabase(self::curDB);
                 $this->startTransaction();
                 $this->query("INSERT INTO country (id) VALUES (NULL)");
                 $this->execute();
@@ -49,7 +47,7 @@ class CountryModel extends Model
                 {
                     $this->commit();
                     $this->close();
-                    $this->returnToPage('country');
+                    $this->returnToPage($this->returnPage);
                     return;
                 }
                 $this->rollBack();
@@ -62,7 +60,6 @@ class CountryModel extends Model
 
     public function Update()
     {
-        $this->changeDatabase(self::curDB);
         $post = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
         if (isset($post['submit']))
         {
@@ -87,7 +84,7 @@ class CountryModel extends Model
                 {
                     $this->commit();
                     $this->close();
-                    $this->returnToPage('country');
+                    $this->returnToPage($this->returnPage);
                     return;
                 }
                 $this->rollBack();
@@ -106,14 +103,13 @@ class CountryModel extends Model
         $this->close();
         if (!$rows)
         {
-            $this->returnToPage('country');
+            $this->returnToPage($this->returnPage);
         }
         return $rows;
     }
 
     public function Delete()
     {
-        $this->changeDatabase(self::curDB);
         $post = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
         if (isset($post['todelete']))
         {
@@ -125,7 +121,7 @@ class CountryModel extends Model
                 Messages::setMsg('Record used by a city.', 'error');
             }
             $this->close();
-            $this->returnToPage('country');
+            $this->returnToPage($this->returnPage);
         }
         $get = filter_input_array(INPUT_GET, FILTER_SANITIZE_STRING);
         $this->query('SELECT c.id, cfr.name name_fr, cen.name name_en
@@ -138,14 +134,13 @@ class CountryModel extends Model
         $this->close();
         if (!$rows)
         {
-            $this->returnToPage('country');
+            $this->returnToPage($this->returnPage);
         }
         return $rows;
     }
 
     public function getList()
     {
-        $this->changeDatabase(self::curDB);
         $this->query("SELECT c.id, CONCAT(cfr.name, ' (', cen.name, ')') name
                       FROM country AS c
                         INNER JOIN country_tr AS cfr ON c.id = cfr.id AND cfr.id_Language = 1
@@ -155,6 +150,5 @@ class CountryModel extends Model
         $this->close();
         return $rows;
     }
-
 }
 ?>

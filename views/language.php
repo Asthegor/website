@@ -14,5 +14,8 @@ else
     $_SESSION['language'] = 'FR';
 }
 
-header("location: ".$_SERVER['HTTP_REFERER']);
+$returnPage = isset($_SERVER['HTTP_REFERER']) && $_SERVER['HTTP_REFERER'] != ""
+            ? $_SERVER['HTTP_REFERER']
+            : "https://www.lacombedominique.com";
+header("location: ".$returnPage);
 ?>

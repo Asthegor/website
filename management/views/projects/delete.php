@@ -2,7 +2,7 @@
 require_once('views/projectnavbar/projectnavbar.php');
 
 $title = 'Projets';
-$recordTitle = $viewModel['title'];
+$recordTitle = $viewModel['title_fr'].' ('.$viewModel['title_en'].')';
 $returnPage = 'projects';
 
 require('views/deleteform.php');

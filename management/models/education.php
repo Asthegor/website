@@ -2,11 +2,10 @@
 
 class EducationModel extends Model
 {
-    const curDB = 'lacombed_experiences';
-
+    private $returnPage = 'education';
+    
     public function Index()
     {
-        $this->changeDatabase(self::curDB);
         $this->query("SELECT ed.id, edfr.title title_fr, eden.title title_en, 
                              ed.date_start, ed.date_end, ed.bVisible
                       FROM education AS ed
@@ -37,13 +36,12 @@ class EducationModel extends Model
             {
                 // Insert into MySQL
                 date_default_timezone_set('Europe/Paris');
-                $this->changeDatabase(self::curDB);
                 $this->startTransaction();
                 //Insertion des données générales
                 $this->query("INSERT INTO education (date_start, date_end, link_diploma, bVisible)
                             VALUES (:date_start, :date_end, :link_diploma, :bVisible)");
                 $this->bind(':date_start', $post['date_start']);
-                $this->bind(':date_end', $post['date_end'] > 0 ? $post['date_end'] : NULL);
+                $this->bind(':date_end', isset($post['date_end']) && $post['date_end'] > 0 ? $post['date_end'] : NULL);
                 $this->bind(':link_diploma', $post['link_diploma']);
                 $this->bind(':bVisible', isset($post['bVisible']) ? $post['bVisible'] : 0);
                 $resp = $this->execute();
@@ -69,7 +67,7 @@ class EducationModel extends Model
                 {
                     $this->commit();
                     $this->close();
-                    $this->returnToPage('education');
+                    $this->returnToPage($this->returnPage);
                 }
                 $this->rollback();
                 $this->close();
@@ -98,7 +96,6 @@ class EducationModel extends Model
             {
                 // Insert into MySQL
                 date_default_timezone_set('Europe/Paris');
-                $this->changeDatabase(self::curDB);
                 $this->startTransaction();
                 //Insertion des données générales
                 $this->query("UPDATE education 
@@ -134,15 +131,14 @@ class EducationModel extends Model
                 {
                     $this->commit();
                     $this->close();
-                    $this->returnToPage('education');
+                    $this->returnToPage($this->returnPage);
                 }
                 $this->rollback();
                 $this->close();
-                Messages::setMsg('Error(s) during insert : [resp='.$resp.', respen='.$respen.', respfr='.$respfr.']', 'error');
+                Messages::setMsg('Error(s) during update : [resp='.$resp.', respen='.$respen.', respfr='.$respfr.']', 'error');
             }
         }
         $get = filter_input_array(INPUT_GET, FILTER_SANITIZE_STRING);
-        $this->changeDatabase(self::curDB);
         $this->query("SELECT ed.id, ed.date_start, ed.date_end, ed.bVisible, ed.link_diploma,
                              edfr.title title_fr, edfr.description description_fr,
                              eden.title title_en, eden.description description_en,
@@ -159,7 +155,6 @@ class EducationModel extends Model
 
     public function Delete()
     {
-        $this->changeDatabase(self::curDB);
         $post = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
         if (isset($post['todelete']))
         {
@@ -179,7 +174,7 @@ class EducationModel extends Model
                 $this->rollBack();
             }
             $this->close();
-            $this->returnToPage('education');
+            $this->returnToPage($this->returnPage);
         }
         $get = filter_input_array(INPUT_GET, FILTER_SANITIZE_STRING);
         $this->query('SELECT ed.id, edfr.title title_fr, eden.title title_en
@@ -193,7 +188,7 @@ class EducationModel extends Model
         if (!$rows)
         {
             Messages::setMsg('Record "'.$get['id'].'" not found', 'error');
-            $this->returnToPage('education');
+            $this->returnToPage($this->returnPage);
         }
         return $rows;
     }

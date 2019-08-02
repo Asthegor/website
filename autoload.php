@@ -11,7 +11,7 @@ function LoadClasses($class)
 }
 function LoadControllers($class)
 {
-    $fullname = 'controllers/' . $class . '.php';
+    $fullname = 'controllers/' . strtolower($class) . '.php';
     if (!file_exists($fullname))
     {
         return false;
@@ -21,7 +21,7 @@ function LoadControllers($class)
 }
 function LoadModels($class)
 {
-    $fullname = 'models/' . str_replace("Model", "", $class) . '.php';
+    $fullname = 'models/' . strtolower(str_replace("Model", "", $class)) . '.php';
     if (!file_exists($fullname))
     {
         return false;

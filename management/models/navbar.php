@@ -2,11 +2,10 @@
 
 class NavBarModel extends Model
 {
-    const curDB = "lacombed_web";
-
+    private $returnPage = 'navbar';
+    
     public function Index()
     {
-        $this->changeDatabase(self::curDB);
         $this->query('SELECT i.id, i.bPage, i.bVisible, i.destination, i.sortOrder, 
                              itrfr.title title_fr, itren.title title_en
                       FROM indexitems AS i
@@ -31,27 +30,26 @@ class NavBarModel extends Model
             else
             {
                 // Insert into MySQL
-                $this->changeDatabase(self::curDB);
                 $this->startTransaction();
                 //Insertion des données générales
                 $this->query('INSERT INTO indexitems (id_Category, destination, bPage, bVisible, sortOrder)
-                            VALUES (1, :destination, :bVisible, :sortOrder)');
+                            VALUES (1, :destination, :bPage, :bVisible, :sortOrder)');
                 $this->bind(':destination', $post['destination']);
-                $this->bind(':bPage', isset($post['bPage']) ? $post['bPage'] : 0);
-                $this->bind(':bVisible', isset($post['bVisible']) ? $post['bVisible'] : 0);
-                $this->bind(':sortOrder', $post['sortorder']);
+                $this->bind(':bPage', (isset($post['bPage']) ? $post['bPage'] : 0), PDO::PARAM_INT);
+                $this->bind(':bVisible', (isset($post['bVisible']) ? $post['bVisible'] : 0), PDO::PARAM_INT);
+                $this->bind(':sortOrder', $post['sortorder'], PDO::PARAM_INT);
                 $this->execute();
                 $id = $this->lastIndexId();
                 //Insertion du titre français
                 $this->query('INSERT INTO indexitems_tr (id, id_Language, title)
                             VALUES(:id, 1, :title)');
-                $this->bind(':id', $id);
+                $this->bind(':id', $id, PDO::PARAM_INT);
                 $this->bind(':title', $post['title_fr']);
                 $respfr = $this->execute();
                 //Insertion du titre anglais
                 $this->query('INSERT INTO indexitems_tr (id, id_Language, title)
                             VALUES(:id, 2, :title)');
-                $this->bind(':id', $id);
+                $this->bind(':id', $id, PDO::PARAM_INT);
                 $this->bind(':title', $post['title_en']);
                 $respen = $this->execute();
 
@@ -60,7 +58,7 @@ class NavBarModel extends Model
                 {
                     $this->commit();
                     $this->close();
-                    $this->returnToPage('navbar');
+                    $this->returnToPage($this->returnPage);
                 }
                 $this->rollback();
                 $this->close();
@@ -72,7 +70,6 @@ class NavBarModel extends Model
 
     public function Update()
     {
-        $this->changeDatabase(self::curDB);
         $post = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
         if (isset($post['submit']))
         {
@@ -90,7 +87,7 @@ class NavBarModel extends Model
                               SET title = :title 
                               WHERE id = :id AND id_Language = 1');
                 $this->bind(':title', $post['title_fr']);
-                $this->bind(':id', $post['id']);
+                $this->bind(':id', $post['id'], PDO::PARAM_INT);
                 $resfr = $this->execute();
 
                 // Mise à jour du titre EN
@@ -98,7 +95,7 @@ class NavBarModel extends Model
                               SET title = :title 
                               WHERE id = :id AND id_Language = 2');
                 $this->bind(':title', $post['title_en']);
-                $this->bind(':id', $post['id']);
+                $this->bind(':id', $post['id'], PDO::PARAM_INT);
                 $resen = $this->execute();
 
                 // Mise à jour de la table indexitems
@@ -106,17 +103,17 @@ class NavBarModel extends Model
                               SET destination=:destination, bPage=:bPage, bVisible=:bVisible, sortOrder=:sortOrder 
                               WHERE id=:id');
                 $this->bind(':destination', $post['destination']);
-                $this->bind(':bPage', $post['bPage']);
-                $this->bind(':bVisible', $post['bVisible']);
-                $this->bind(':sortOrder', $post['sortorder']);
-                $this->bind(':id', $post['id']);
+                $this->bind(':bPage', $post['bPage'], PDO::PARAM_INT);
+                $this->bind(':bVisible', $post['bVisible'], PDO::PARAM_INT);
+                $this->bind(':sortOrder', $post['sortorder'], PDO::PARAM_INT);
+                $this->bind(':id', $post['id'], PDO::PARAM_INT);
                 $resii = $this->execute();
 
                 if($resfr && $resen && $resii)
                 {
                     $this->commit();
                     $this->close();
-                    $this->returnToPage('navbar');
+                    $this->returnToPage($this->returnPage);
                 }
                 $this->rollBack();
                 $this->close();
@@ -130,30 +127,29 @@ class NavBarModel extends Model
                         INNER JOIN indexitems_tr AS itrfr ON i.id = itrfr.id AND itrfr.id_Language = 1
                         INNER JOIN indexitems_tr AS itren ON i.id = itren.id AND itren.id_Language = 2
                       WHERE i.id_Category = 1 AND i.id = :id');
-        $this->bind(':id', $get['id']);
+        $this->bind(':id', $get['id'], PDO::PARAM_INT);
         $rows = $this->single();
         $this->close();
         if (!$rows)
         {
             Messages::setMsg('Record "'.$get['id'].'" not found', 'error');
-            $this->returnToPage('navbar');
+            $this->returnToPage($this->returnPage);
         }
         return $rows;
     }
 
     public function Delete()
     {
-        $this->changeDatabase(self::curDB);
         $post = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
         if (isset($post['todelete']))
         {
             //Mise à jour de la base
             $this->startTransaction();
             $this->query('DELETE FROM indexitems WHERE id = :id');
-            $this->bind(':id', $post['id']);
+            $this->bind(':id', $post['id'], PDO::PARAM_INT);
             $resii = $this->execute();
             $this->query('DELETE FROM indexitems_tr WHERE id = :id');
-            $this->bind(':id', $post['id']);
+            $this->bind(':id', $post['id'], PDO::PARAM_INT);
             $resitr = $this->execute();
 
             if($resii && $resitr)
@@ -165,7 +161,7 @@ class NavBarModel extends Model
                 $this->rollBack();
             }
             $this->close();
-            $this->returnToPage('navbar');
+            $this->returnToPage($this->returnPage);
         }
         $get = filter_input_array(INPUT_GET, FILTER_SANITIZE_STRING);
         $this->query("SELECT i.id, itrfr.title title_fr, itren.title title_en
@@ -173,16 +169,15 @@ class NavBarModel extends Model
                         INNER JOIN indexitems_tr AS itrfr ON i.id = itrfr.id AND itrfr.id_Language = 1
                         INNER JOIN indexitems_tr AS itren ON i.id = itren.id AND itren.id_Language = 2
                       WHERE i.id_Category = 1 AND i.id = :id");
-        $this->bind(':id', $get['id']);
+        $this->bind(':id', $get['id'], PDO::PARAM_INT);
         $rows = $this->single();
         $this->close();
         if (!$rows)
         {
             Messages::setMsg('Record "'.$get['id'].'" not found', 'error');
-            $this->returnToPage('frameworks');
+            $this->returnToPage($this->returnPage);
         }
         return $rows;
     }
 }
-
 ?>

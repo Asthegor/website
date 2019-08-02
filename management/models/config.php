@@ -2,11 +2,10 @@
 
 class ConfigModel extends Model
 {
-    const curDB = "lacombed_config";
-
+    private $returnPage = 'configs';
+    
     public function Index()
     {
-        $this->changeDatabase(self::curDB);
         $this->query('SELECT id, data, value FROM config ORDER BY data');
         $rows = $this->resultSet();
         $this->close();
@@ -24,26 +23,22 @@ class ConfigModel extends Model
             }
             else
             {
-                // Insert into MySQL
-                $this->changeDatabase(self::curDB);
-                $this->startTransaction();
                 //Insertion des données générales
-                $this->query('INSERT INTO config (data, value)
-                            VALUES (:data, :value)');
+                $this->query('INSERT INTO config (data, value) VALUES (:data, :value)');
                 $this->bind(':data', strtoupper($post['data']));
                 $this->bind(':value',$post['value']);
                 $this->execute();
-                $id = $this->lastIndexId();
                 //Verify
+                $id = $this->lastIndexId();
+                $this->close();
                 if($id)
                 {
-                    $this->commit();
-                    $this->close();
-                    $this->returnToPage('configs');
+                    $this->returnToPage($this->returnPage);
                 }
-                $this->rollback();
-                $this->close();
-                Messages::setMsg('Error(s) during insert [$id='.$id.']', 'error');
+                else
+                {
+                    Messages::setMsg('Error(s) during insert [$id='.$id.']', 'error');
+                }
             }
         }
         return;
@@ -51,7 +46,6 @@ class ConfigModel extends Model
 
     public function Update()
     {
-        $this->changeDatabase(self::curDB);
         $post = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
         if ($post['submit'])
         {
@@ -74,7 +68,8 @@ class ConfigModel extends Model
                 {
                     $this->commit();
                     $this->close();
-                    $this->returnToPage('configs');
+                    $this->returnToPage($this->returnPage);
+                    return;
                 }
                 $this->rollback();
                 $this->close();
@@ -91,7 +86,6 @@ class ConfigModel extends Model
 
     public function Delete()
     {
-        $this->changeDatabase(self::curDB);
         $post = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
         if (isset($post['todelete']))
         {
@@ -108,7 +102,8 @@ class ConfigModel extends Model
                 $this->rollBack();
             }
             $this->close();
-            $this->returnToPage('configs');
+            $this->returnToPage($this->returnPage);
+            return;
         }
         $get = filter_input_array(INPUT_GET, FILTER_SANITIZE_STRING);
         $this->query('SELECT id, data, value FROM config WHERE id = :id');
@@ -118,7 +113,7 @@ class ConfigModel extends Model
         if (!$rows)
         {
             Messages::setMsg('Record "'.$get['id'].'" not found', 'error');
-            $this->returnToPage('configs');
+            $this->returnToPage($this->returnPage);
         }
         return $rows;
     }
@@ -126,7 +121,6 @@ class ConfigModel extends Model
     public static function getConfig($data)
     {
         $model = new ConfigModel();
-        $model->changeDatabase(self::curDB);
         $model->query("SELECT value FROM config WHERE data = :data");
         $model->bind(':data', $data);
         $rows = $model->single();

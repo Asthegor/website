@@ -2,11 +2,10 @@
 
 class CityModel extends Model
 {
-    const curDB = 'lacombed_experiences';
-
+    private $returnPage = 'city';
+    
     public function Index()
     {
-        $this->changeDatabase(self::curDB);
         $this->query("SELECT c.id, cfr.name title_fr, cen.name title_en, c.id_Country,
                              CONCAT(ctfr.name, ' (', cten.name, ')') country
                       FROM city AS c
@@ -33,7 +32,6 @@ class CityModel extends Model
             else
             {
                 // Insert into MySQL
-                $this->changeDatabase(self::curDB);
                 $this->startTransaction();
                 //Insertion des données générales
                 $this->query("INSERT INTO city (id_Country)
@@ -57,7 +55,7 @@ class CityModel extends Model
                 {
                     $this->commit();
                     $this->close();
-                    $this->returnToPage('city');
+                    $this->returnToPage($this->returnPage);
                 }
                 $this->rollback();
                 $this->close();
@@ -80,7 +78,6 @@ class CityModel extends Model
             else
             {
                 // Insert into MySQL
-                $this->changeDatabase(self::curDB);
                 $this->startTransaction();
                 //Insertion des données générales
                 $this->query('UPDATE city SET id_Country = :id_Country WHERE id = :id');
@@ -102,15 +99,17 @@ class CityModel extends Model
                 {
                     $this->commit();
                     $this->close();
-                    $this->returnToPage('city');
                 }
-                $this->rollback();
-                $this->close();
-                Messages::setMsg('Error(s) during insert : [resp='.$resp.', respfr='.$respfr.', respen='.$respen.']', 'error');
+                else
+                {
+                    $this->rollback();
+                    $this->close();
+                    Messages::setMsg('Error(s) during insert : [resp='.$resp.', respfr='.$respfr.', respen='.$respen.']', 'error');
+                }
             }
+            $this->returnToPage($this->returnPage);
         }
         $get = filter_input_array(INPUT_GET, FILTER_SANITIZE_STRING);
-        $this->changeDatabase(self::curDB);
         $this->query("SELECT c.id, cfr.name name_fr, cen.name name_en, c.id_Country
                       FROM city AS c
                         INNER JOIN city_tr AS cfr ON c.id = cfr.id AND cfr.id_Language = 1
@@ -122,14 +121,13 @@ class CityModel extends Model
         if (!$rows)
         {
             Messages::setMsg('Record "'.$get['id'].'" not found', 'error');
-            $this->returnToPage('city');
+            $this->returnToPage($this->returnPage);
         }
         return $rows;
     }
 
     public function Delete()
     {
-        $this->changeDatabase(self::curDB);
         $post = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
         if (isset($post['todelete']))
         {
@@ -138,10 +136,10 @@ class CityModel extends Model
             $res = $this->execute();
             if (!$res)
             {
-                Messages::setMsg('Record used by an experience.', 'error');
+                Messages::setMsg('Record used by another record.', 'error');
             }
             $this->close();
-            $this->returnToPage('city');
+            $this->returnToPage($this->returnPage);
         }
         $get = filter_input_array(INPUT_GET, FILTER_SANITIZE_STRING);
         $this->query("SELECT c.id, cfr.name name_fr, cen.name name_en,
@@ -158,14 +156,13 @@ class CityModel extends Model
         if (!$rows)
         {
             Messages::setMsg('Record "'.$get['id'].'" not found', 'error');
-            $this->returnToPage('frameworks');
+            $this->returnToPage($this->returnPage);
         }
         return $rows;
     }
 
     public function getList()
     {
-        $this->changeDatabase(self::curDB);
         $this->query("SELECT c.id, CONCAT(cfr.name, ' (', ctfr.name, ')') name
                       FROM city AS c
                         INNER JOIN city_tr AS cfr on c.id = cfr.id AND cfr.id_Language = 1

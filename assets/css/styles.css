@@ -1,18 +1,17 @@
 /***************************
  * Partie globale
  ***************************/
-body {
+ body {
   background-color: #20122c;
   color: white;
 }
-a img {
+a > img {
   border:none;
   outline:none;
 }
-a:visited, a {
-  color: rgb(248, 236, 202);
+a {
+    color: orange;
 }
-
 a:hover, a:active {
   color:rgb(73, 13, 73);
   background-color: orange;
@@ -31,7 +30,7 @@ header {
  
 }
 
-header img {
+header > * > img {
   max-height: 75px;
   width: auto;
   display: block;
@@ -83,11 +82,11 @@ li.nav-item a, .prev-next-item {
   border:none;
   outline:none;
 }
-li.nav-item a.active {
+li.nav-item > a.active {
   color: black;
   background-color: orange;
 }
-li.nav-item a:hover, .prev-item:hover, .next-item:hover {
+li.nav-item > a:hover, .prev-item:hover, .next-item:hover {
   color: black;
   background-color: orange;
 }
@@ -104,6 +103,12 @@ li.nav-item a:hover, .prev-item:hover, .next-item:hover {
 /***************************
  * Partie PAGE ACCUEIL
  ***************************/
+#background1 > img {
+  width: 98%;
+  height: auto;
+  /* margin: auto; */
+}
+
 div.flip {
 
   display: inline-block;
@@ -123,11 +128,11 @@ div.summary {
   vertical-align: middle;
 }
 
-div.front * {
+div.front > * {
  vertical-align: middle;
 }
 
-div.back{
+div.back {
   background-color:  rgb(248, 236, 202);
   padding:5%;
   color:rgb(85, 7, 85);
@@ -174,10 +179,10 @@ div.back{
 .project-list-overlay-back {
   position: absolute;
   background-color: black;
-  opacity: 0.8;
+  opacity: 0.9;
 }
 
-.project-list:hover .project-list-overlay {
+.project-list:hover > .project-list-overlay {
   opacity: 1;
 }
 
@@ -185,7 +190,7 @@ div.back{
   position: absolute;
   z-index: 2;
 }
-.project-list-desc * {
+.project-list-desc > * {
   clear: both;
   color: white;
   display: flex;
@@ -202,7 +207,7 @@ div.back{
   float: left;
   margin:0 20px 10px 0 ;
 }
-div.project-inline * {
+div.project-inline > * {
   display: inline-block; 
   color: white;
 }
@@ -216,7 +221,7 @@ div.project-inline > .project-inline-label {
   color:  rgb(186, 143, 255);
 }
 
-#projet-desc h1{
+#projet-desc > h1{
   color:orange;
 
 }
@@ -260,16 +265,16 @@ div.project-inline > .project-inline-label {
  /* #accordion .ui-state-default{
    background-color: violet !important;
  } */
- #accordion div{
+ #accordion > div{
    background-color: rgb(231, 221, 230);
    /* height: auto !important; */
    border:1px solid red;
  }
- #accordion .ui-state-active{
+ #accordion > .ui-state-active{
   background-color: rgb(103, 27, 126) !important;
 }
 
-#accordion .ui-state-default{
+#accordion > .ui-state-default{
   background-color: rgb(187, 163, 197);
 }
 /***************************
@@ -289,17 +294,12 @@ input, textarea, select {
   border-radius: 5px;
 }
 
-.form-group * {
+.form-group > * {
     vertical-align: middle;
 }
 
-div.form-group label {
+div.form-group > label {
   width: 10%;
-}
-
-#background1 img {
-  width: 98%;
-  height:auto;
 }
 
 .btn-primary{
@@ -314,19 +314,34 @@ div.form-group label {
   width: 25%;
   text-align: center;
 }
-div.panel-body div.form-group {
+div.panel-body > div.form-group {
     width: 100%;
 }
 
-div.panel-body div.form-group * {
+div.panel-body > div.form-group * {
   float: left;
   margin : 10px auto;
   text-align: left;
   vertical-align: middle;
 }
-div.panel-body div.form-group label {
+div.panel-body > div.form-group > label {
     width:40%;
 }
-div.panel-body div.form-group input {
+div.panel-body > div.form-group > input {
     width:60%;
+}
+
+/***************************
+ * Partie OTHERS
+ ***************************/
+div.others {
+  float: left;
+  margin: 10px;
+  width: 20%;
+  max-width: 20%;
+  height: auto;
+}
+
+.border {
+  border: 1px solid white;
 }

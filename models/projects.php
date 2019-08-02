@@ -2,15 +2,12 @@
 
 class ProjectsModel extends Model
 {
-    const curDB = 'lacombed_projects';
-
     public function Index()
     {
-        $this->changeDatabase(self::curDB);
-        $this->query("SELECT  p.id, p.title, p.first_date_project, 
+        $this->query("SELECT  p.id, ptr.title, p.first_date_project, 
                               ptr.short_desc, CONCAT(fe.name, ' (', pl.name, ')') framework, pri.img_blob
                       FROM project AS p 
-                        INNER JOIN frameworkengine AS fe ON p.id_FrameworkEngine = fe.id 
+                        INNER JOIN framework AS fe ON p.id_Framework = fe.id 
                         INNER JOIN proglanguage AS pl ON fe.id_ProgLanguage = pl.id 
                         INNER JOIN project_tr as ptr ON p.id = ptr.id 
                         INNER JOIN language as l ON ptr.id_Language = l.id AND l.code = :codelanguage 

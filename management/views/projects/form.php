@@ -20,15 +20,15 @@
             foreach ($fmlist as $item)
             {
                 ?>
-                <option value="<?= $item['id']; ?>" <?= $viewModel['id_FrameworkEngine'] == $item['id'] ? 'selected' : ''; ?>><?= $item['name']; ?></option>
+                <option value="<?= $item['id']; ?>" <?= $viewModel['id_Framework'] == $item['id'] ? 'selected' : ''; ?>><?= $item['name']; ?></option>
                 <?php
             }
             ?>
         </select>
     </div>
     <div class="form-group">
-        <label>Titre</label>
-        <input type="text" name="title" value="<?= isset($viewModel['title']) ? urldecode($viewModel['title']) : ''; ?>" required />
+        <label>Titre français</label>
+        <input type="text" name="title_fr" value="<?= isset($viewModel['title_fr']) ? urldecode($viewModel['title_fr']) : ''; ?>" required />
     </div>
     <div class="form-group">
         <label>Description courte française</label>
@@ -37,6 +37,10 @@
     <div class="form-group">
         <label>Description française</label>
         <textarea rows="6" cols="150" name="description_fr"  required><?= isset($viewModel['description_fr']) ? urldecode($viewModel['description_fr']) : ''; ?></textarea>
+    </div>
+    <div class="form-group">
+        <label>Titre anglais</label>
+        <input type="text" name="title_en" value="<?= isset($viewModel['title_en']) ? urldecode($viewModel['title_en']) : ''; ?>" required />
     </div>
     <div class="form-group">
         <label>Description courte anglaise</label>

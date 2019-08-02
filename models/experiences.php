@@ -2,11 +2,8 @@
 
 class ExperiencesModel extends Model
 {
-    const curDB = 'lacombed_experiences';
-
     public function Index()
     {
-        $this->changeDatabase(self::curDB);
         $this->query("SELECT e.id, e.date_start, e.date_end, e.bVisible, etr.title, etr.content, 
                              CONCAT(ctr.name, ' (', cttr.name, ')') city, cpy.name company
                       FROM experience AS e

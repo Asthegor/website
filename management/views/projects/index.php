@@ -1,53 +1,51 @@
 <?php
 require_once('views/projectnavbar/projectnavbar.php');
+$prjm = new ProjectsModel();
 ?>
 <h1>Projets</h1>
-<p>Nombre de projets :
-<?php
-$prjm = new ProjectsModel();
-echo $prjm->getNbProjects();
-?>
+<p>Nombre de projets : <?= $prjm->getNbProjects(); ?><br>
+Nombre de projets affichés : <?= $prjm->getNbActiveProjects(); ?>
 </p>
-<p>Nombre de projets affichés :
-<?php 
-echo $prjm->getNbActiveProjects();
-?>
-</p>
-<h2><a href="<?= ROOT_MNGT.'projects/add'; ?>">Nouveau projet</a></h2>
+<h3><a href="<?= ROOT_MNGT.'projects/add'; ?>">Nouveau projet</a></h3>
 <div class="navbar-index">
-    <table style="width:100%; text-align: center;">
-        <tr>
-            <th style="width:5%;">Id</th>
-            <th style="width:20%;">Titre</th>
-            <th style="width:20%;">Framework/Engin</th>
-            <th style="width:15%;">Date de création</th>
-            <th style="width:15%;">Version</th>
-            <th style="width:10%;">Visible</th>
-            <th style="width:20%;"></th>
-        </tr>
-    </table>
-    <?php
-    foreach ($viewModel as $item)
-    {
-    ?>
-        <div style="display: inline-block; width:100%">
-            <a href="<?= ROOT_MNGT.'projects/update/'.$item['id']; ?>">
-                <table style="width:100%;">
-                    <tr>
-                        <td style="width:5%;"><?= $item['id']; ?></td>
-                        <td style="width:20%;"><?= urldecode($item['title']); ?></td>
-                        <td style="width:20%;"><?= $item['framework']; ?></td>
-                        <td style="width:15%;"><?= $item['first_date_project']; ?></td>
-                        <td style="width:15%;"><?= $item['version']; ?></td>
-                        <td style="width:10%;"><?= $item['bVisible'] ? 'Oui' : 'Non'; ?></td>
-                        <td style="width:15%;"><a style="width:20%;" href="<?= ROOT_MNGT.'devlog/add/'.$item['id']; ?>">Nouveau DevLog</a>
-                        </td>
-                    </tr>
-                </table>
-            </a>
-           
-        </div>
-    <?php
-    }
-    ?>
+  <table class="border" style="width:100%; text-align: center; border-collapse: collapse;">
+    <tr class="border">
+      <th class="border" style="width:4%;">Id</th>
+      <th class="border" style="width:23%;">Titre français</th>
+      <th class="border" style="width:23%;">Titre anglais</th>
+      <th class="border" style="width:16%;">Framework</th>
+      <th class="border" style="width:12%;">Date de création</th>
+      <th class="border" style="width:12%;">Version</th>
+      <th class="border" style="width:5%;">Visible</th>
+      <th class="border" style="width:5%;"></th>
+    </tr>
+  </table>
+  <?php
+  foreach ($viewModel as $item)
+  {
+  ?>
+    <div style="display: inline-block; width:100%">
+      <a href="<?= ROOT_MNGT.'projects/update/'.$item['id']; ?>">
+        <table class="border" style="width:100%; border-collapse: collapse;">
+          <tr class="border">
+            <td class="border" style="width:4%;"><?= $item['id']; ?></td>
+            <td class="border" style="width:23%;"><?= urldecode($item['title_fr']); ?></td>
+            <td class="border" style="width:23%;"><?= urldecode($item['title_en']); ?></td>
+            <td class="border" style="width:16%;"><?= $item['framework']; ?></td>
+            <td class="border" style="width:12%;"><?= $item['first_date_project']; ?></td>
+            <td class="border" style="width:12%;"><?= $item['version']; ?></td>
+            <td class="border" style="width:5%;"><?= $item['bVisible'] ? 'Oui' : 'Non'; ?></td>
+            <td class="border" style="width:5%;">
+              <a href="<?= ROOT_MNGT.'devlog/add/'.$item['id']; ?>">
+                <img src="<?= ROOT_URL.'assets/images/Log file.png' ?>" alt="Nouveau DevLog" width="24">
+              </a>
+            </td>
+          </tr>
+        </table>
+      </a>
+    </div>
+  <?php
+  }
+  ?>
 </div>
+<br>

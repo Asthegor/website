@@ -6,7 +6,7 @@
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
     <link rel="stylesheet" href="<?= ROOT_URL; ?>assets/css/bootstrap.css" />
-    <link rel="stylesheet" href="<?= ROOT_URL; ?>assets/css/styles.css"></link>
+    <link rel="stylesheet" href="<?= ROOT_URL; ?>assets/css/styles.css" />
     <link rel="shortcut icon" href="<?= ROOT_URL; ?>assets/images/logo/logo_48x48.png" type="image/x-icon"/>
 </head>
 <body>
@@ -18,6 +18,7 @@
       <li class="nav-item"><a href="<?= ROOT_MNGT; ?>projects">Projets</a></li>
       <li class="nav-item"><a href="<?= ROOT_MNGT; ?>resume">Expériences</a></li>
       <li class="nav-item"><a href="<?= ROOT_MNGT; ?>education">Scolarité</a></li>
+      <li class="nav-item"><a href="<?= ROOT_MNGT; ?>poeme">Poèmes</a></li>
       <li class="nav-item"><a href="<?= ROOT_MNGT; ?>configs">Configuration</a></li>
       <li class="nav-item"><a id="nav-item-site" href="<?= ROOT_URL; ?>" target="_blank">Voir sur le site</a></li>
       <li id="nav-item-last-child" class="nav-item"><a href="<?= ROOT_MNGT; ?>users/logout">Logout</a></li>

@@ -2,11 +2,8 @@
 
 class EducationModel extends Model
 {
-    const curDB = 'lacombed_experiences';
-
     public function Index()
     {
-        $this->changeDatabase(self::curDB);
         $this->query("SELECT e.id, e.date_start, e.date_end, e.bVisible, e.link_diploma,
                              etr.title, etr.institution, etr.description
                       FROM education AS e

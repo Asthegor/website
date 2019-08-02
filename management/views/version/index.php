@@ -35,9 +35,16 @@ require_once('views/projectnavbar/projectnavbar.php');
         </tr>
     </table>
     <?php
+    $currentProject = '';
     foreach ($viewModel as $item)
     {
-    ?>
+        if ($currentProject != $item['id_Project'])
+        {
+            if ($currentProject != '')
+                echo '<hr>';
+            $currentProject = $item['id_Project'];
+        }
+        ?>
         <a href="<?= ROOT_MNGT.'version/update/'.$item['id']; ?>">
             <table style="width:100%;">
                 <tr>

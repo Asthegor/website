@@ -4,48 +4,12 @@ abstract class Model
 {
     protected $dbh;
     protected $stmt;
-    protected $dbname;
-    protected $dbuser;
 
     public function __construct()
     {
-        $this->dbname = DB_NAME;
-        $this->dbuser = DB_USER;
-
-        $this->dbh = Singleton::getInstance(DB_NAME, DB_USER, DB_PWD);
+        $this->dbh = Singleton::getInstance();
         $this->dbh->query('SET NAMES UTF8');
     }
-
-    public function changeDatabase($dbname, $dbuser=null, $dbpass=null)
-    {
-        $user = is_null($dbuser) ? DB_USER : $dbuser;
-        $pass = is_null($dbuser) ? DB_PWD : $dbpass;
-        if ($dbname == $this->dbname && $user == $this->dbuser)
-        {
-            // même base et même user => on change rien
-            return;
-        }
-        $this->dbname = $dbname;
-        $this->dbuser = $user;
-        if(!is_null($this->stmt))
-        {
-            $this->close();
-        }
-        $this->dbh = null;
-        try
-        {
-            $this->dbh = new PDO("mysql:host=".DB_HOST.";dbname=".$dbname, $user, $pass);
-            // $this->dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-            // $this->dbh->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
-        }
-        catch (PDOException $e)
-        {
-            print $e->getMessage()."<br/>";
-            die();
-        }
-        $this->dbh->query('SET NAMES UTF8');
-    }
-
     public function query($query)
     {
         $this->stmt = $this->dbh->prepare($query);
@@ -95,27 +59,18 @@ abstract class Model
         return $this->stmt->fetch(PDO::FETCH_ASSOC);
     }
 
-    public function startTransaction()
-    {
-        $this->dbh->beginTransaction();
-    }
-    public function rollBack()
-    {
-        $this->dbh->rollBack();
-    }
-    public function commit()
-    {
-        $this->dbh->commit();
-    }
     public function close()
     {
         $this->stmt->closeCursor();
-        $this->dbh = null;
     }
 
     protected function returnToPage($path)
     {
         header('Location: '.ROOT_MNGT.$path);
+    }
+    
+    public function saveVisitors()
+    {
     }
 }
 ?>

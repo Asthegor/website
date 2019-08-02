@@ -11,7 +11,7 @@ function LoadManagementClasses($class)
 }
 function LoadManagementControllers($class)
 {
-    $fullname = __DIR__ .'/controllers/' . $class . '.php';
+    $fullname = __DIR__ .'/controllers/' . strtolower($class) . '.php';
     if (!file_exists($fullname))
     {
         return false;
@@ -21,7 +21,7 @@ function LoadManagementControllers($class)
 }
 function LoadManagementModels($class)
 {
-    $fullname = __DIR__ .'/models/' . str_replace("Model", "", $class) . '.php';
+    $fullname = __DIR__ .'/models/' . strtolower(str_replace("Model", "", $class)) . '.php';
     if (!file_exists($fullname))
     {
         return false;

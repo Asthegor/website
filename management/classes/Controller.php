@@ -32,7 +32,7 @@ abstract class Controller
     {
         if (!isset($_SESSION['is_logged_in']))
         {
-            $usr = new Users();
+            $usr = new Users('','');
             $usr->logout(false);
             header('Location: '.ROOT_MNGT);
         }

@@ -2,11 +2,10 @@
 
 class DevLogModel extends Model
 {
-    const curDB = 'lacombed_projects';
-
+    private $returnPage = 'devlog';
+    
     public function Index()
     {
-        $this->changeDatabase(self::curDB);
         $this->query("SELECT  dl.id, dlfr.title title_fr, dlen.title title_en, dl.date_creation,
                               dl.bVisible, p.title project
                       FROM devlog AS dl 
@@ -38,7 +37,6 @@ class DevLogModel extends Model
             {
                 // Insert into MySQL
                 date_default_timezone_set('Europe/Paris');
-                $this->changeDatabase(self::curDB);
                 $this->startTransaction();
                 //Insertion des données générales
                 $this->query("INSERT INTO devlog (id_Project, date_creation, bVisible)
@@ -67,7 +65,7 @@ class DevLogModel extends Model
                 {
                     $this->commit();
                     $this->close();
-                    $this->returnToPage('devlog');
+                    $this->returnToPage($this->returnPage);
                 }
                 $this->rollback();
                 $this->close();
@@ -77,7 +75,6 @@ class DevLogModel extends Model
         $get = filter_input_array(INPUT_GET, FILTER_SANITIZE_STRING);
         if ($get['action'] == 'add' && isset($get['id']))
         {
-            $this->changeDatabase(self::curDB);
             $this->query("SELECT id id_Project, title project FROM project WHERE id = :id");
             $this->bind(':id', $get['id']);
             $rows = $this->single();
@@ -106,7 +103,6 @@ class DevLogModel extends Model
             {
                 // Insert into MySQL
                 date_default_timezone_set('Europe/Paris');
-                $this->changeDatabase(self::curDB);
                 $this->startTransaction();
                 //Insertion des données générales
                 $this->query("UPDATE devlog 
@@ -137,7 +133,7 @@ class DevLogModel extends Model
                 {
                     $this->commit();
                     $this->close();
-                    $this->returnToPage('devlog');
+                    $this->returnToPage($this->returnPage);
                 }
                 $this->rollback();
                 $this->close();
@@ -145,7 +141,6 @@ class DevLogModel extends Model
             }
         }
         $get = filter_input_array(INPUT_GET, FILTER_SANITIZE_STRING);
-        $this->changeDatabase(self::curDB);
         $this->query("SELECT dl.id, dl.id_Project, dl.date_creation, dl.date_creation, dl.bVisible,
                              dlfr.title title_fr, dlfr.description description_fr,
                              dlen.title title_en, dlen.description description_en,  p.title project
@@ -162,7 +157,6 @@ class DevLogModel extends Model
 
     public function Delete()
     {
-        $this->changeDatabase(self::curDB);
         $post = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
         if (isset($post['todelete']))
         {
@@ -183,7 +177,7 @@ class DevLogModel extends Model
                 $this->rollBack();
             }
             $this->close();
-            $this->returnToPage('devlog');
+            $this->returnToPage($this->returnPage);
         }
         $get = filter_input_array(INPUT_GET, FILTER_SANITIZE_STRING);
         $this->query('SELECT d.id, dlfr.title title_fr, dlen.title title_en
@@ -197,7 +191,7 @@ class DevLogModel extends Model
         if (!$rows)
         {
             Messages::setMsg('Record "'.$get['id'].'" not found', 'error');
-            $this->returnToPage('devlog');
+            $this->returnToPage($this->returnPage);
         }
         return $rows;
     }

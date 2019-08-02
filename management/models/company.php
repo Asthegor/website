@@ -2,8 +2,8 @@
 
 class CompanyModel extends Model
 {
-    const curDB = "lacombed_experiences";
-
+    private $returnPage = 'company';
+    
     public function Index()
     {
         return $this->getList();
@@ -20,8 +20,6 @@ class CompanyModel extends Model
             }
             else
             {
-                // Insert into MySQL
-                $this->changeDatabase(self::curDB);
                 //Insertion des données générales
                 $this->query('INSERT INTO company (name) VALUES (:name)');
                 $this->bind(':name', $post['name']);
@@ -31,17 +29,18 @@ class CompanyModel extends Model
                 $this->close();
                 if($id)
                 {
-                    $this->returnToPage('company');
+                    $this->returnToPage($this->returnPage);
                 }
-                Messages::setMsg('Error(s) during insert', 'error');
+                else
+                {
+                    Messages::setMsg('Error(s) during insert', 'error');
+                }
             }
         }
-        return;
     }
 
     public function Update()
     {
-        $this->changeDatabase(self::curDB);
         $post = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
         if (isset($post['submit']))
         {
@@ -64,7 +63,7 @@ class CompanyModel extends Model
                 }
                 else
                 {
-                    $this->returnToPage('company');
+                    $this->returnToPage($this->returnPage);
                 }
             }
         }
@@ -75,14 +74,13 @@ class CompanyModel extends Model
         $this->close();
         if (!$rows)
         {
-            $this->returnToPage('company');
+            $this->returnToPage($this->returnPage);
         }
         return $rows;
     }
 
     public function Delete()
     {
-        $this->changeDatabase(self::curDB);
         $post = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
         if (isset($post['todelete']))
         {
@@ -94,7 +92,8 @@ class CompanyModel extends Model
                 Messages::setMsg('Record used by an experience.', 'error');
             }
             $this->close();
-            $this->returnToPage('company');
+            $this->returnToPage($this->returnPage);
+            return;
         }
         $get = filter_input_array(INPUT_GET, FILTER_SANITIZE_STRING);
         $this->query('SELECT id, name FROM company WHERE id = :id');
@@ -103,14 +102,13 @@ class CompanyModel extends Model
         $this->close();
         if (!$rows)
         {
-            $this->returnToPage('company');
+            $this->returnToPage($this->returnPage);
         }
         return $rows;
     }
 
     public function getList()
     {
-        $this->changeDatabase(self::curDB);
         $this->query('SELECT id, name
                       FROM company
                       ORDER BY name');

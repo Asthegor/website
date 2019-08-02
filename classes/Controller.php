@@ -17,6 +17,8 @@ abstract class Controller
 
     protected function returnView($viewModel)
     {
+        if (is_array($viewModel))
+            extract($viewModel);
         $view = 'views/'.strtolower(get_class($this)).'/'.$this->action.'.php';
         require('views/main.php');
     }

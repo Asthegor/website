@@ -6,30 +6,27 @@ class Singleton
     private $dbuser;
     private $dbpdo;
 
-    private function __construct($dbname, $dbuser, $dbpwd)
+    private function __construct()
     {
-        $this->dbname = $dbname;
-        $this->dbuser = $dbuser;
         try
         {
-            $this->dbpdo = new PDO("mysql:host=".DB_HOST.";dbname=".$dbname, $dbuser, $dbpwd);
+            $this->dbpdo = new PDO("mysql:host=".DB_HOST.";dbname=".DB_NAME, DB_USER, DB_PWD);
+            $this->dbname = DB_NAME;
+            $this->dbuser = DB_USER;
         }
         catch (PDOException $e)
         {
+            print "Unable to connect to the database ".DB_NAME."<br/>";
             print $e->getMessage()."<br/>";
             die();
         }
     }
-    private function CompareOptions($dbname, $dbuser)
-    {
-        return ($this->dbname === $dbname && $this->dbuser === $dbuser);
-    }
 
-    public static function getInstance($dbname, $dbuser, $dbpwd)
+    public static function getInstance()
     {
-        if(is_null(self::$instance) || !self::$instance->CompareOptions($dbname, $dbuser))
+        if(is_null(self::$instance))
         {
-            self::$instance = new Singleton($dbname, $dbuser, $dbpwd);
+            self::$instance = new Singleton();
         }
         return self::$instance->dbpdo;
     }

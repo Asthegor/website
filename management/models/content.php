@@ -2,11 +2,10 @@
 
 class ContentModel extends Model
 {
-    const curDB = "lacombed_web";
-
+    private $returnPage = 'content';
+    
     public function Index()
     {
-        $this->changeDatabase(self::curDB);
         $this->query('SELECT i.id, i.bVisible, i.destination, i.sortOrder, 
                              itrfr.title title_fr, itren.title title_en
                       FROM indexitems AS i
@@ -31,7 +30,6 @@ class ContentModel extends Model
             else
             {
                 // Insert into MySQL
-                $this->changeDatabase(self::curDB);
                 $this->startTransaction();
                 //Insertion des données générales
                 $this->query('INSERT INTO indexitems (id_Category, destination, bVisible, sortOrder)
@@ -61,7 +59,7 @@ class ContentModel extends Model
                 {
                     $this->commit();
                     $this->close();
-                    $this->returnToPage('content');
+                    $this->returnToPage($this->returnPage);
                 }
                 $this->rollback();
                 $this->close();
@@ -73,7 +71,6 @@ class ContentModel extends Model
 
     public function Update()
     {
-        $this->changeDatabase(self::curDB);
         $post = filter_input_array(INPUT_POST, FILTER_SANITIZE_ENCODED);
         if (isset($post['submit']))
         {
@@ -118,7 +115,7 @@ class ContentModel extends Model
                 {
                     $this->commit();
                     $this->close();
-                    $this->returnToPage('content');
+                    $this->returnToPage($this->returnPage);
                 }
                 $this->rollBack();
                 $this->close();
@@ -139,14 +136,13 @@ class ContentModel extends Model
         if (!$rows)
         {
             Messages::setMsg('Record "'.$get['id'].'" not found', 'error');
-            $this->returnToPage('content');
+            $this->returnToPage($this->returnPage);
         }
         return $rows;
     }
 
     public function Delete()
     {
-        $this->changeDatabase(self::curDB);
         $post = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
         if (isset($post['todelete']))
         {
@@ -169,7 +165,7 @@ class ContentModel extends Model
                 $this->rollBack();
             }
             $this->close();
-            $this->returnToPage('content');
+            $this->returnToPage($this->returnPage);
         }
         $get = filter_input_array(INPUT_GET, FILTER_SANITIZE_STRING);
         $this->query('SELECT i.id, itrfr.title title_fr, itren.title title_en
@@ -183,12 +179,9 @@ class ContentModel extends Model
         if (!$rows)
         {
             Messages::setMsg('Record "'.$get['id'].'" not found', 'error');
-            $this->returnToPage('content');
+            $this->returnToPage($this->returnPage);
         }
         return $rows;
     }
-
-
 }
-
 ?>
