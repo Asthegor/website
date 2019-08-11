@@ -6,7 +6,10 @@ class Configs extends Controller
     {
         $this->checkLogin();
         $viewmodel = new ConfigModel();
-        $this->returnView($viewmodel->Index());
+        $configs = $viewmodel->Index();
+        $viewlabelmodel = new LabelModel();
+        $labels = $viewlabelmodel->Index();
+        $this->returnView(array("viewModelConfigs"=>$configs,"viewModelLabels"=>$labels));
     }
 
     protected function add()

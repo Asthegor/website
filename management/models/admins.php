@@ -12,7 +12,6 @@ class AdminsModel extends Model
             $this->bind(':login', $post['login']);
             $password = md5($post['password']);
             $this->bind(':password', $password);
-
             $row = $this->single();
             $this->close();
 
@@ -26,11 +25,8 @@ class AdminsModel extends Model
                 header('Location: '.ROOT_MNGT.'home');
             }
             else
-            {
                 Messages::setMsg('Incorrect Login', 'error');
-            }
         }
-        return;
     }
 }
 ?>

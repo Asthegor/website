@@ -117,11 +117,6 @@ div.flip {
   margin:1% 0.5%;
 }
 div.summary {
-  /* display: inline-block; */
-  /* height: 100px; */
-  /* width: 28% !important; */
-  /* padding: 1%; */
-  /* margin:1% 0.5%; */
   background-color: rgba(119, 100, 129, 0.867);
   text-align: center;
   border-radius: 10px;
@@ -148,6 +143,13 @@ div.back {
 .framework-summary {
   clear: both;
   display: block;
+}
+#frameworkselect {
+  color: black;
+  width: 250px;
+  min-width: 250px;
+  font-size: 15pt;
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif
 }
 
 .project-list {
@@ -198,6 +200,10 @@ div.back {
   margin: 0;
   padding-top: 20px;
   padding-left: 15px;
+}
+.project-views {
+  position: absolute; 
+  bottom: 0;
 }
 
 /***************************
@@ -288,7 +294,7 @@ div.project-inline > .project-inline-label {
 /***************************
  * Partie FORMULAIRE
  ***************************/
-input, textarea, select {
+input, textarea {
   color:rgb(88, 6, 88);
   width: 60%;
   border-radius: 5px;

@@ -4,10 +4,12 @@ class ProjectModel extends Model
 {
     public function Display()
     {
+        $this->saveProjectViews();
         $get = filter_input_array(INPUT_GET, FILTER_SANITIZE_STRING);
-        $this->query("SELECT ptr.title, p.first_date_project, prev.id previous_id, next.id next_id,  
-                             ptr.description, CONCAT( fe.name, ' (', pl.name, ')' ) framework, 
-                             pri.img_blob, CONCAT(v.num_version, ' (', v.date_version, ')' ) version
+        $this->query("SELECT ptr.title, p.first_date_project, prev.id previous_id, next.id next_id, 
+                             ptr.description, CONCAT(fe.name, ' (', pl.name, ')') framework, p.nbViews, 
+                             pri.img_blob, CONCAT(v.num_version, ' (', v.date_version, ')') version,
+                             (SELECT count(pv.id) FROM project_views AS pv WHERE pv.id_Project = p.id) unique_views
                       FROM project AS p
                         INNER JOIN framework AS fe ON p.id_Framework = fe.id
                         INNER JOIN proglanguage AS pl ON fe.id_ProgLanguage = pl.id
@@ -31,6 +33,36 @@ class ProjectModel extends Model
         $this->close();
         return $rows;
     }
+    private function saveProjectViews()
+    {
+        $server = filter_input_array(INPUT_SERVER, FILTER_SANITIZE_STRING);
+        $get = filter_input_array(INPUT_GET, FILTER_SANITIZE_STRING);
+        $id = $get['id'];
+        // Retrieve nbViews for the project
+        $this->query("SELECT nbViews FROM project WHERE id = :id");
+        $this->bind(":id", $id);
+        $nbViews = intval($this->single()['nbViews']);
+        // Save the visitor ip to determine the number of unique views for the project
+        $this->query("INSERT INTO project_views (ip, id_Project, last_time)
+                      VALUES (:ip, :id_Project, now())
+                      ON DUPLICATE KEY UPDATE
+                        ip = :ip, 
+                        id_Project = :id_Project, 
+                        last_time = now()");
+        $this->bind(":ip", $server["REMOTE_ADDR"]);
+        $this->bind(":id_Project", $id);
+        $this->execute();
+        $this->close();
+        // Update nbViews on the project
+        $this->query("UPDATE project 
+                      SET NbViews = :nb_views
+                      WHERE id = :id");
+        $this->bind(":nb_views", $nbViews + 1);
+        $this->bind(":id", $id);
+        $this->execute();
+        $this->close();
+    }
+
 }
 
 ?>

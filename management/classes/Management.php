@@ -11,7 +11,7 @@ class Management
         $this->request = $request;
         if ($this->request['controller'] == "")
         {
-            $this->controller = 'users';
+            $this->controller = 'admins';
         }
         else
         {

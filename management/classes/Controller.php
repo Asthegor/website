@@ -15,17 +15,12 @@ abstract class Controller
         return $this->{$this->action}();
     }
 
-    protected function returnView($viewModel, $fullView = true)
+    protected function returnView($viewModel)
     {
+        if (is_array($viewModel))
+            extract($viewModel);
         $view = 'views/'.strtolower(get_class($this)).'/'.$this->action.'.php';
-        if($fullView)
-        {
-            require('views/main.php');
-        }
-        else
-        {
-            require($view);
-        }
+        require('views/main.php');
     }
 
     protected function checkLogin()

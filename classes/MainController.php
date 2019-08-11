@@ -39,26 +39,27 @@ class MainController
                 {
                     return new $this->controller($this->action, $this->request);
                 }
-                else
-                {
-                    // Method does not exist
-                    echo "<h1>Method '".$this->action."' does not exist</h1>";
-                    return;
-                }
+                // else
+                // {
+                //     // Method does not exist
+                //     echo "<h1>Method '".$this->action."' does not exist</h1>";
+                //     return;
+                // }
             }
-            else
-            {
-                // Base controller does not exist
-                echo "<h1>Base controller not found</h1>";
-                return;
-            }
+            // else
+            // {
+            //     // Base controller does not exist
+            //     echo "<h1>Base controller not found</h1>";
+            //     return;
+            // }
         }
-        else
-        {
-            // Method does not exist
-            echo "<h1>Controller Class '".$this->controller."' does not exist</h1>";
-            return;
-        }
+        // else
+        // {
+        //     // Method does not exist
+        //     echo "<h1>Controller Class '".$this->controller."' does not exist</h1>";
+        //     return;
+        // }
+        header('Location: '.ROOT_URL);
     }
 }
 ?>

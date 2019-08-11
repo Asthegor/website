@@ -68,9 +68,5 @@ abstract class Model
     {
         header('Location: '.ROOT_MNGT.$path);
     }
-    
-    public function saveVisitors()
-    {
-    }
 }
 ?>
