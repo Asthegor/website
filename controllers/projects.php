@@ -11,8 +11,10 @@ class Projects extends Controller
                        "projectviews"       => $labelmodel->getLabelByRef('projectviews'),
                        "projectuniqueviews" => $labelmodel->getLabelByRef('projectuniqueviews'),
                        "frameworks"         => $frameworks->getAllFrameworks(),
-                       "frameworklbl"       => $labelmodel->getLabelByRef('framework')
-                    );
+                       "frameworklbl"       => $labelmodel->getLabelByRef('framework'),
+                       "nbprojectslbl"      => $labelmodel->getLabelByRef('nbprojects'),
+                       "alllbl"             => $labelmodel->getLabelByRef('all')
+                      );
         $this->returnView($datas);
     }
 }

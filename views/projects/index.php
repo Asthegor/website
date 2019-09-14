@@ -1,11 +1,13 @@
 <br>
 <label for="frameworkselect"><?= urldecode($frameworklbl) ?> :</label>
 <select id="frameworkselect" onchange="hideElements()">
-    <option value="f0">Tous</option>
+    <option value="f0"><?= urldecode($alllbl) ?></option>
     <?php foreach($frameworks as $framework) { ?>
         <option value="f<?= $framework['id']; ?>"><?= $framework['name']; ?></option>
     <?php } ?>
 </select>
+<br>
+<h4><?= urldecode($nbprojectslbl) ?> : <span id="nbprojects"><?= count($viewModel); ?></span></h4>
 <hr>
 <?php
 foreach ($viewModel as $project) { ?>
@@ -27,12 +29,17 @@ function hideElements()
 {
     var fclass = document.getElementById("frameworkselect").value;
     var list = document.getElementsByClassName("project-list");
+    var nbvisibleprojects = 0
     for(var i = 0; i < list.length; i++)
     {
         if (fclass == "f0" || list.item(i).classList.contains(fclass))
+        {
             list.item(i).style.display = "inline-block";
+            nbvisibleprojects++;
+        }
         else
             list.item(i).style.display = "none";
     }
+    document.getElementById("nbprojects").innerHTML = nbvisibleprojects;
 }
 </script>
