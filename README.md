@@ -41,4 +41,4 @@ Il a été conçu grâce à :
 <li>organiser le contenu (ordre d'affichage)</li>
 </ul>
 <p>La courte vidéo ci-contre vous présente l'ajout d'une expérience professionnel et l'affichage ou non dans mon CV en ligne.</p>
-<iframe width="960" height="489" src="https://www.youtube.com/embed/rulu7GeEsOs" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+https://youtu.be/rulu7GeEsOs
