@@ -3,7 +3,7 @@ Ce site a été conçu par LACOMBE Dominique, propriétaire du site.<br>
 Il a pour objectif principal de présenter les travaux réalisés par LACOMBE Dominique.
 
 <h2>Environnement technique</h2>
-Le site <a href="https://php.lacombedominique.com" target="_blank">https://php.lacombedominique.com</a> a été développé exclusivement en PHP à l'aide de l'architecture MVC.<br>
+Le site https://www.lacombedominique.com a été développé exclusivement en PHP à l'aide de l'architecture MVC.<br>
 Aucune librairie ou framework n'a été utilisé pour concevoir ce site.
 
 Une formation Udemy a servi de base pour la conception du site (<a href="https://www.udemy.com/learn-object-oriented-php-by-building-a-complete-website/learn/v4/overview" target="_blank">https://www.udemy.com/learn-object-oriented-php-by-building-a-complete-website/learn/v4/overview</a>).
@@ -40,4 +40,5 @@ Il a été conçu grâce à :
 <li>afficher ou masquer du contenu</li>
 <li>organiser le contenu (ordre d'affichage)</li>
 </ul>
-<p>Une vidéo sera postée ultérieurement pour montrer les possibilité de cette partie</p>
+<p>La courte vidéo ci-contre vous présente l'ajout d'une expérience professionnel et l'affichage ou non dans mon CV en ligne.</p>
+<iframe width="960" height="489" src="https://www.youtube.com/embed/rulu7GeEsOs" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
