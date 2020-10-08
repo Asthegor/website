@@ -1,3 +1,3 @@
 <?php
-require('views/poeme/form.php');
+require(__DIR__.'/form.php');
 ?>

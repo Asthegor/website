@@ -1,3 +1,3 @@
 <?php
-require('views/navbar/form.php');
+require(__DIR__.'/form.php');
 ?>

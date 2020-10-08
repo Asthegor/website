@@ -1,3 +1,3 @@
 <?php
-require('views/configs/form.php');
+require(__DIR__.'/form.php');
 ?>

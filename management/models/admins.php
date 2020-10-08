@@ -23,9 +23,11 @@ class AdminsModel extends Model
                     "name"  => $row['login'],
                 );
                 header('Location: '.ROOT_MNGT.'home');
+                exit();
             }
-            else
-                Messages::setMsg('Incorrect Login', 'error');
+            Messages::setMsg('Incorrect Login', 'error');
+            header('Location: '.ROOT_MNGT);
+            exit();
         }
     }
 }

@@ -7,7 +7,7 @@ class ProjectModel extends Model
         $this->saveProjectViews();
         $get = filter_input_array(INPUT_GET, FILTER_SANITIZE_STRING);
         $this->query("SELECT ptr.title, p.first_date_project, prev.id previous_id, next.id next_id, 
-                             ptr.description, CONCAT(fe.name, ' (', pl.name, ')') framework, p.nbViews, 
+                             ptr.description, CONCAT(fe.name, ' (', pl.name, ')') framework, p.nbViews, p.website, 
                              pri.img_blob, CONCAT(v.num_version, ' (', v.date_version, ')') version,
                              (SELECT count(pv.id) FROM project_views AS pv WHERE pv.id_Project = p.id) unique_views
                       FROM project AS p

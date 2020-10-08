@@ -10,7 +10,7 @@ require_once('views/projectnavbar/projectnavbar.php');
         $projectid = $_POST['projectid'];
     }
     ?>
-    <select name="projectid" style="width:auto;">
+    <select class="form-select" name="projectid" style="width:auto;">
         <option value="">Tous les projets</option>
         <?php
         $vm = new VersionModel();

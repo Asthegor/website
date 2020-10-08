@@ -9,7 +9,7 @@ class OthersModel extends Model
                         INNER JOIN indexitems_tr AS itr ON i.id = itr.id
                         INNER JOIN language AS l ON itr.id_Language = l.id AND l.code = :codelanguage
                       WHERE i.id_Category = 1 AND i.bVisible = 1
-                      AND i.bPage = 0 AND i.destination NOT LIKE 'mailto:%'
+                      AND i.bPage = 0 AND i.bInNavBar = 0
                       ORDER BY i.sortOrder");
         $this->bind(":codelanguage", $_SESSION['language']);
         $rows = $this->resultSet();

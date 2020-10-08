@@ -155,7 +155,9 @@ abstract class Model
             echo '<br>';
             var_dump($temp);
             echo '<hr>';
-            die();
+
+            /*
+            */
             
             
             
@@ -164,12 +166,20 @@ abstract class Model
             // data binding
             foreach($filteredArray as $key => $value)
             {
-                $bindKey = ':'.substr($key, strlen($codeLanguage) * -1);
+            var_dump($key);
+            var_dump($codeLanguage);
+                $bindKey = ':'.substr($key, 0, (strlen($codeLanguage) + 1) * -1);
                 $bindValue = $values[$key];
-                $this->bind($bindKey, $bindValue);
+            var_dump($bindKey);
+            echo '=';
+            var_dump($bindValue);
+            echo '<br>';
+            $this->bind($bindKey, $bindValue);
             }
+            echo '<hr>';
+            //die();
             $resp = $this->execute();
-            $res[$codelanguage]= (int)$resp;
+            $res[$codeLanguage]= (int)$resp;
         }
         return $res;
     }

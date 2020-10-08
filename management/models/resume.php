@@ -44,8 +44,7 @@ class ResumeModel extends Model
         }
         
         // WHERE
-        $query .= " WHERE e.bVisible = 1
-                      ORDER BY e.bVisible DESC, e.date_start DESC, e.date_end DESC";
+        $query .= " ORDER BY e.bVisible DESC, e.date_start DESC, e.date_end DESC";
 
         $this->query($query);
         $rows = $this->resultSet();

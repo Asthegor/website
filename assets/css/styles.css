@@ -1,7 +1,8 @@
 /***************************
  * Partie globale
  ***************************/
- body {
+
+body {
   background-color: #20122c;
   color: white;
 }
@@ -15,6 +16,13 @@ a {
 a:hover, a:active {
   color:rgb(73, 13, 73);
   background-color: orange;
+  text-decoration: none;
+}
+
+tr:hover > td {
+  color:rgb(73, 13, 73);
+  background-color: orange;
+  text-decoration: none;
 }
 
 /***************************
@@ -27,7 +35,6 @@ a:hover, a:active {
 header {
   text-align: center;
   border-style: none;
- 
 }
 
 header > * > img {
@@ -43,11 +50,45 @@ header > * > img {
   top:40%;
   left:55%;
   width:35%;
-  font-family: 'Courgette', cursive;
   border:4px solid white;
   border-radius: 10px;
   padding:3%;
 }
+
+/***************************
+ * Partie PAGE ACCUEIL
+ ***************************/
+#background1 > img {
+  width: 98%;
+}
+
+div.flip {
+
+  display: inline-block;
+  width: 31.66%;
+  margin:1% 0.5%;
+}
+div.summary {
+  background-color: rgba(119, 100, 129, 0.867);
+  text-align: center;
+  border-radius: 10px;
+  vertical-align: middle;
+}
+
+div.front > * {
+ line-height:2.25;
+}
+
+div.back {
+  background-color:  rgb(248, 236, 202);
+  padding:5%;
+  color:rgb(85, 7, 85);
+  font-size: 12pt;
+}
+.content:hover, .content:active {
+  background-color: transparent;
+}
+
 /***************************
  * Partie NAVIGATION BAR
  ***************************/
@@ -92,49 +133,12 @@ li.nav-item > a:hover, .prev-item:hover, .next-item:hover {
 }
 #nav-item-last-child {
   float: right;
-  margin: 0px 0px -2px 0px;
+  margin: 0px 0 -2px 0;
 }
 #nav-item-site {
   background-color: gold;
   color: black;
-  margin: 0px 0px -2px 0px;
-}
-
-/***************************
- * Partie PAGE ACCUEIL
- ***************************/
-#background1 > img {
-  width: 98%;
-  height: auto;
-  /* margin: auto; */
-}
-
-div.flip {
-
-  display: inline-block;
-  width: 31.66%;
-  /* padding: 1%; */
-  margin:1% 0.5%;
-}
-div.summary {
-  background-color: rgba(119, 100, 129, 0.867);
-  text-align: center;
-  border-radius: 10px;
-  vertical-align: middle;
-}
-
-div.front > * {
- vertical-align: middle;
-}
-
-div.back {
-  background-color:  rgb(248, 236, 202);
-  padding:5%;
-  color:rgb(85, 7, 85);
-  font-size: 12pt;
-}
-.content:hover, .content:active {
-  background-color: transparent;
+  margin: 0 0 -2px 0;
 }
 
 /***************************
@@ -219,15 +223,13 @@ div.project-inline > * {
 }
 
 .project-inline-label {
-  /* text-decoration: underline; */
   color: rgb(186, 143, 255);
 }
 div.project-inline > .project-inline-label {
-  /* text-decoration: underline; */
   color:  rgb(186, 143, 255);
 }
 
-#projet-desc > h1{
+#projet-desc > h1 {
   color:orange;
 
 }
@@ -262,27 +264,25 @@ div.project-inline > .project-inline-label {
   text-align: center;
 }
 
-.framework-summary h4{
+.framework-summary h4 {
   color:#293831;
 }
 /***************************
  * Partie EDUCATION
  ***************************/
- /* #accordion .ui-state-default{
-   background-color: violet !important;
- } */
- #accordion > div{
-   background-color: rgb(231, 221, 230);
-   /* height: auto !important; */
-   border:1px solid red;
- }
- #accordion > .ui-state-active{
-  background-color: rgb(103, 27, 126) !important;
+.ui-button.ui-state-active:hover {
+    background-color: rgb(103, 27, 126);
+    border: none;
+}
+.ui-state-default {
+    background-color: rgb(187, 163, 197);
+    border: none;
+}
+.ui-state-active {
+    background-color: rgb(103, 27, 126);
+    border: none;
 }
 
-#accordion > .ui-state-default{
-  background-color: rgb(187, 163, 197);
-}
 /***************************
  * Partie FOOTER
  ***************************/
@@ -294,9 +294,9 @@ div.project-inline > .project-inline-label {
 /***************************
  * Partie FORMULAIRE
  ***************************/
-input, textarea {
+input, textarea, select {
   color:rgb(88, 6, 88);
-  width: 60%;
+  width: calc(100% - 140px);
   border-radius: 5px;
 }
 
@@ -305,11 +305,15 @@ input, textarea {
 }
 
 div.form-group > label {
-  width: 10%;
+  width: 135px;
 }
 
-.btn-primary{
+.btn-primary {
   width: auto !important;
+}
+.form-select {
+    color: black;
+    width: 100%;
 }
 
 /***************************
@@ -350,4 +354,10 @@ div.others {
 
 .border {
   border: 1px solid white;
+}
+
+.aothers:hover {
+  color:black;
+  background-color: orange;
+  text-decoration: none;
 }

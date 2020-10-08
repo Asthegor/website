@@ -4,7 +4,7 @@ class ProjectsModel extends Model
 {
     public function Index()
     {
-        $this->query("SELECT p.id, ptr.title, p.first_date_project, p.nbViews, p.id_Framework, 
+        $this->query("SELECT p.id, ptr.title, p.first_date_project, p.nbViews, p.id_Framework,
                              ptr.short_desc, CONCAT(fe.name, ' (', pl.name, ')') framework, pri.img_blob,
                              (SELECT count(pv.id) FROM project_views AS pv WHERE pv.id_Project = p.id) unique_views
                       FROM project AS p 

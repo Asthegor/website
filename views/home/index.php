@@ -20,7 +20,7 @@ $(function(){
 foreach ($viewModel as $item)
 {
     ?>
-    <a class="content" href="<?= ROOT_URL.$item['destination']; ?>">
+    <a class="content" href="<?= urldecode($item['destination']); ?>">
         <div class="flip">  
             <div class="summary front">
                 <h1><?= urldecode($item['title']); ?></h1>

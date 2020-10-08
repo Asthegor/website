@@ -29,7 +29,7 @@
 
     <div class="form-group">
         <label>Page de destination</label>
-        <input type="text" name="destination" value="<?= isset($viewModel['destination']) ? $viewModel['destination'] : ''; ?>" required />
+        <input type="text" name="destination" value="<?= isset($viewModel['destination']) ? urldecode($viewModel['destination']) : ''; ?>" required />
     </div>
     <div class="form-group">
         <label>Ordre d'affichage</label>

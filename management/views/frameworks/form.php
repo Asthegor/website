@@ -1,3 +1,6 @@
+<?php
+require_once('views/projectnavbar/projectnavbar.php');
+?>
 <h1>Framework / Engin</h1>
 <form method="post" action="<?php $_SERVER['PHP_SELF']; ?>">
     <?php if (isset($viewModel['id']))
@@ -16,7 +19,7 @@
     </div>
     <div class="form-group">
         <label>Langage de programmation</label>
-        <select name="proglanguage" required>
+        <select class="form-select" name="proglanguage" style="width: 60%;" required>
             <option value=""></option>
             <?php
             $plm = new ProgLanguageModel();

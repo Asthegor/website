@@ -17,7 +17,7 @@ class VersionModel extends Model
                     INNER JOIN project AS p ON v.id_Project = p.id ".$condition." 
                     INNER JOIN project_tr as ptr ON p.id = ptr.id
                       INNER JOIN language AS l ON ptr.id_Language = l.id AND l.code = :codelanguage
-                  ORDER BY ptr.title, v.date_version DESC";
+                  ORDER BY ptr.title ASC, v.date_version DESC, v.num_version DESC";
         $this->query($query);
         if (isset($post['projectid']) && is_numeric($post['projectid']))
         {
@@ -88,25 +88,22 @@ class VersionModel extends Model
 
     public function Delete()
     {
-        $get = filter_input_array(INPUT_GET, FILTER_SANITIZE_STRING);
+        $post = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
         if (isset($post['todelete']))
         {
             $this->startTransaction();
             $this->query('DELETE FROM version WHERE id = :id');
-            $this->bind(':id', $get['id'], PDO::PARAM_INT);
+            $this->bind(':id', $post['id'], PDO::PARAM_INT);
             $res = $this->execute();
 
             if ($res)
-            {
                 $this->commit();
-            }
             else
-            {
                 $this->rollBack();
-            }
             $this->close();
             $this->returnToPage($this->returnPage);
         }
+        $get = filter_input_array(INPUT_GET, FILTER_SANITIZE_STRING);
         $this->query('SELECT id, num_version, date_version FROM version WHERE id = :id');
         $this->bind(':id', $get['id'], PDO::PARAM_INT);
         $rows = $this->single();

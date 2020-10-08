@@ -5,11 +5,11 @@
     <table style="width:95%; text-align: left;">
         <tr>
             <th style="width:5%;">Id</th>
-            <th style="width:15%;">Titre français</th>
-            <th style="width:15%;">Titre anglais</th>
-            <th style="width:15%;">Destination</th>
-            <th style="width:15%;">Ordre d'affichage</th>
-            <th style="width:15%;">Visible</th>
+            <th style="width:10%;">Titre français</th>
+            <th style="width:10%;">Titre anglais</th>
+            <th style="width:30%;">Destination</th>
+            <th style="width:10%;">Ordre d'affichage</th>
+            <th style="width:5%;">Visible</th>
         </tr>
     </table>
     <?php
@@ -20,11 +20,11 @@
             <table style="width:95%;">
                 <tr>
                     <td style="width:5%;"><?= $item['id']; ?></td>
-                    <td style="width:15%;"><?= urldecode($item['title_fr']); ?></td>
-                    <td style="width:15%;"><?= urldecode($item['title_en']); ?></td>
-                    <td style="width:15%;"><?= $item['destination']; ?></td>
-                    <td style="width:15%;"><?= $item['sortOrder']; ?></td>
-                    <td style="width:15%;"><?= $item['bVisible'] ? 'Oui' : 'Non'; ?></td>
+                    <td style="width:10%;"><?= urldecode($item['title_fr']); ?></td>
+                    <td style="width:10%;"><?= urldecode($item['title_en']); ?></td>
+                    <td style="width:30%;"><?= urldecode($item['destination']); ?></td>
+                    <td style="width:10%;"><?= $item['sortOrder']; ?></td>
+                    <td style="width:5%;"><?= $item['bVisible'] ? 'Oui' : 'Non'; ?></td>
                 </tr>
             </table>
         </a>

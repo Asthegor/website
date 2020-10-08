@@ -7,7 +7,8 @@
             <th style="width:15%;">Titre français</th>
             <th style="width:15%;">Titre anglais</th>
             <th style="width:30%;">Destination</th>
-            <th style="width:10%;">Page</th>
+            <th style="width:8%;">Page</th>
+            <th style="width:8%;">Menu</th>
             <th style="width:10%;">Ordre</th>
             <th style="width:10%;">Visible</th>
         </tr>
@@ -23,7 +24,8 @@
                     <td style="width:15%;"><?= $item['title_fr']; ?></td>
                     <td style="width:15%;"><?= $item['title_en']; ?></td>
                     <td style="width:30%;"><?= $item['destination']; ?></td>
-                    <td style="width:10%;"><?= $item['bPage'] ? 'Oui' : 'Non'; ?></td>
+                    <td style="width:8%;"><?= $item['bPage'] ? 'Oui' : 'Non'; ?></td>
+                    <td style="width:8%;"><?= $item['bInNavBar'] ? 'Oui' : 'Non'; ?></td>
                     <td style="width:10%;"><?= $item['sortOrder']; ?></td>
                     <td style="width:10%;"><?= $item['bVisible'] ? 'Oui' : 'Non'; ?></td>
                 </tr>

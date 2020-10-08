@@ -126,6 +126,7 @@ class EducationModel extends Model
                 $this->bind(':description', $post['description_en']);
                 $this->bind(':institution', $post['institution_en']);
                 $respen = $this->execute();
+                
                 //Verify
                 if($resp && $respen && $respfr)
                 {
@@ -133,9 +134,12 @@ class EducationModel extends Model
                     $this->close();
                     $this->returnToPage($this->returnPage);
                 }
+                else
+                {
                 $this->rollback();
                 $this->close();
                 Messages::setMsg('Error(s) during update : [resp='.$resp.', respen='.$respen.', respfr='.$respfr.']', 'error');
+                }
             }
         }
         $get = filter_input_array(INPUT_GET, FILTER_SANITIZE_STRING);

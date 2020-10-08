@@ -1,3 +1,6 @@
+<?php
+require_once('views/projectnavbar/projectnavbar.php');
+?>
 <h1>Langage de programmation</h1>
 <form method="post" action="<?php $_SERVER['PHP_SELF']; ?>">
     <?php if (isset($viewModel['id']))

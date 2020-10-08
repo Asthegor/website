@@ -20,6 +20,9 @@ $fileName = basename($_SERVER['REQUEST_URI']);
         <?php
     }
     ?>
+    <li class="nav-item">
+        <a href="mailto:lacombe.dominique@outlook.fr">Me contacter</a>
+    </li>
     <li id="nav-item-last-child" class="nav-item">
         <a href="<?= ROOT_URL.'views/language.php'; ?>">
             <?php

@@ -1,8 +1,4 @@
-<?php
-include_once('../views/header.php');
-?>
 <div class="panel-body">
-    <?php Messages::display(); ?>
     <form method="post" action="<?php $_SERVER['PHP_SELF']; ?>">
         <div class="form-group">
             <label>Login</label>
@@ -15,6 +11,3 @@ include_once('../views/header.php');
         <input class="btn btn-primary" name="submit" type="submit" value="Submit" />
     </form>
 </div>
-<?php
-include_once('../views/footer.php');
-?>

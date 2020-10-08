@@ -14,7 +14,14 @@ foreach ($viewModelExperience as $experience)
         $dateend = new DateTime($experience['date_end']);
         $bCurrent = false;
     }
+    $dateendsup = $dateend;
     $interval = date_diff($datestart, $dateend);
+    if ($interval->d > 15) $interval->m = $interval->m + 1;
+    if ($interval->m > 11)
+    {
+        $interval->y = $interval->y + 1;
+        $interval->m = $interval->m - 12;
+    }
     $duree = '';
     if ($interval->y) $duree .= $interval->y.($_SESSION['language'] == 'EN' ? ' years ' : ' ans ');
     if ($interval->m) $duree .= $interval->m.($_SESSION['language'] == 'EN' ? ' months' : ' mois');

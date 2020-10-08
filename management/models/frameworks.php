@@ -82,7 +82,7 @@ class FrameworksModel extends Model
         }
         $get = filter_input_array(INPUT_GET, FILTER_SANITIZE_STRING);
         $this->query("SELECT id, name, sortOrder, bVisible, id_ProgLanguage
-                      FROM frameworkengine
+                      FROM framework
                       WHERE id = :id");
         $this->bind(':id', $get['id']);
         $rows = $this->single();

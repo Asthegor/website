@@ -7,7 +7,7 @@ class ProjectsModel extends Model
     public function Index()
     {
         $this->query("SELECT p.id, pfr.title title_fr, pen.title title_en, p.first_date_project, p.bVisible, 
-                             CONCAT(fe.name, ' (', l.name, ')') framework,
+                             fe.name framework, p.nbViews,
                              CONCAT(v.num_version, ' (', v.date_version, ')') version
                       FROM project AS p 
                         INNER JOIN project_tr AS pfr ON p.id = pfr.id AND pfr.id_Language = 1
@@ -74,10 +74,11 @@ class ProjectsModel extends Model
                 $dateproject = isset($post['dateproject']) && strtotime($post['dateproject']) ? $post['dateproject'] : date("Y-m-d");
                 $this->startTransaction();
                 //Insertion des données générales
-                $this->query("INSERT INTO project (id_Framework, first_date_project, bVisible)
-                            VALUES (:idframework, :dateproject, :bVisible)");
+                $this->query("INSERT INTO project (id_Framework, first_date_project, bVisible, website)
+                            VALUES (:idframework, :dateproject, :bVisible, :website)");
                 $this->bind(':idframework', $post['framework'], PDO::PARAM_INT);
                 $this->bind(':dateproject', $dateproject);
+                $this->bind(':website', $post['website']);
                 //$this->bind(':image', isset($post['image']) ? $post['image'] : 'null');
                 $this->bind(':bVisible', (isset($post['bVisible']) ? $post['bVisible'] : 0), PDO::PARAM_INT);
                 $resp = $this->execute();
@@ -174,11 +175,12 @@ class ProjectsModel extends Model
             $this->startTransaction();
             $this->query('UPDATE project 
                           SET id_Framework = :id_Framework, first_date_project = :first_date_project,
-                              bVisible = :bVisible
+                              bVisible = :bVisible, website=:website
                           WHERE id = :id');
             $this->bind(':id_Framework', $post['framework'], PDO::PARAM_INT);
             $this->bind(':first_date_project', isset($post['dateproject']) && strtotime($post['dateproject']) ? $post['dateproject'] : 'null');
             $this->bind(':bVisible', (isset($post['bVisible']) ? $post['bVisible'] : 0), PDO::PARAM_INT);
+            $this->bind(':website', $post['website']);
             $this->bind(':id', $post['id'], PDO::PARAM_INT);
             $resp = $this->execute();
             // Mise à jour du titre FR
@@ -248,7 +250,7 @@ class ProjectsModel extends Model
         }
         $get = filter_input_array(INPUT_GET, FILTER_SANITIZE_STRING);
         $this->query("SELECT p.id, p.first_date_project, p.id_Framework, p.bVisible,
-                             pfr.title title_fr, pen.title title_en, 
+                             pfr.title title_fr, pen.title title_en, p.website,
                              pfr.description description_fr, pen.description description_en,
                              pfr.short_desc desc_fr, pen.short_desc desc_en,
                              pi.name, pi.img_size, pi.img_type, pi.img_blob,
@@ -258,7 +260,10 @@ class ProjectsModel extends Model
                         INNER JOIN project_tr AS pen ON p.id = pen.id AND pen.id_Language = 2
                         LEFT JOIN projectimage AS pi ON p.id = pi.id_Project
                         LEFT JOIN version AS v ON v.id = 
-                            (SELECT vv.id FROM version AS vv WHERE vv.id_Project = p.id ORDER BY vv.date_version DESC LIMIT 1)
+                            (SELECT max(vv.id) 
+                             FROM version AS vv 
+                             WHERE vv.id_Project = p.id 
+                             ORDER BY vv.date_version DESC)
                       WHERE p.id = :id");
         $this->bind(':id', $get['id'], PDO::PARAM_INT);
         $rows = $this->single();

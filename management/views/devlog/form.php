@@ -1,3 +1,6 @@
+<?php
+require_once('views/projectnavbar/projectnavbar.php');
+?>
 <h1>DevLog</h1>
 <form method="post" action="<?php $_SERVER['PHP_SELF']; ?>">
     <?php

@@ -1,5 +1,8 @@
+<?php
+require_once('views/projectnavbar/projectnavbar.php');
+?>
 <h1>Projets</h1>
-<form enctype="multipart/form-data" method="POST" action="<?php $_SERVER['PHP_SELF']; ?>">
+<form class="form-horizontal" enctype="multipart/form-data" method="POST" action="<?php $_SERVER['PHP_SELF']; ?>">
     <?php if (isset($viewModel['id']))
     {
         ?>
@@ -49,6 +52,10 @@
     <div class="form-group">
         <label>Description anglaise</label>
         <textarea rows="6" cols="150" name="description_en"  required><?= isset($viewModel['description_en']) ? urldecode($viewModel['description_en']) : ''; ?></textarea>
+    </div>
+    <div class="form-group">
+        <label>Site web</label>
+        <input type="text" name="website" value="<?= isset($viewModel['website']) ? urldecode($viewModel['website']) : ''; ?>" />
     </div>
     <div class="form-group">
         <label>Date de début</label>

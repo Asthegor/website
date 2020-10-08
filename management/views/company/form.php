@@ -1,4 +1,10 @@
+<?php
+require_once('views/resumenavbar/resumenavbar.php');
+?>
 <h1>Société</h1>
+<?php
+//require('views/countryselect.php');
+?>
 <form method="post" action="<?php $_SERVER['PHP_SELF']; ?>">
     <?php if (isset($viewModel['id']))
     {

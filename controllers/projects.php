@@ -14,7 +14,7 @@ class Projects extends Controller
                        "frameworklbl"       => $labelmodel->getLabelByRef('framework'),
                        "nbprojectslbl"      => $labelmodel->getLabelByRef('nbprojects'),
                        "alllbl"             => $labelmodel->getLabelByRef('all')
-                      );
+                    );
         $this->returnView($datas);
     }
 }

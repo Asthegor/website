@@ -2,7 +2,7 @@
 
 class Admins extends Controller
 {
-    protected function login()
+    public function login()
     {
         if (isset($_SESSION['is_logged_in']))
         {
@@ -12,7 +12,7 @@ class Admins extends Controller
         $this->returnView($viewmodel->Login(), false);
     }
 
-    protected function logout($redirect=true)
+    public function logout($redirect=true)
     {
         unset($_SESSION['is_logged_in']);
         unset($_SESSION['user_data']);
