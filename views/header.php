@@ -15,7 +15,7 @@ $language = $_SESSION['language'];
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Comfortaa|Courgette">
   <link href="https://fonts.googleapis.com/css?family=Courgette&display=swap" rel="stylesheet">
 
-  <script src="<?= ROOT_URL; ?>assets/jquery/jquery-2.1.4.min.js"></script>
+  <script src="<?= ROOT_URL; ?>assets/jquery/jquery.min.js"></script>
   <script src="<?= ROOT_URL; ?>assets/jquery/jquery.flip.min.js"></script>
   <script src="<?= ROOT_URL; ?>assets/jquery/jquery-ui.min.js"></script>
 
