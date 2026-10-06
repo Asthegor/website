@@ -1,31 +1,42 @@
-<div id="prev-next-bar">
-  <?php
-  if ($viewModel['previous_id'])
-  {
-  ?>
-    <a class="prev-next-item prev-item" href="<?= ROOT_URL.'project/display/'.$viewModel['previous_id']; ?>">Précédent</a>
-    <?php
-  }
-  else
-  {
-    ?>
-    <span class="prev-next-item prev-item-disable">Précédent</span>
-    <?php
-  }
-  ?>
-  <a class="prev-next-item proj-item-inline" href="<?= ROOT_URL.'projects'; ?>">Projets</a>
-  <?php
-  if ($viewModel['next_id'])
-  {
-    ?>
-    <a class="prev-next-item next-item" href="<?= ROOT_URL.'project/display/'.$viewModel['next_id']; ?>">Suivant</a>
-    <?php
-  }
-  else
-  {
-    ?>
-    <span class="prev-next-item next-item-disable">Suivant</span>
-    <?php
-  }
-  ?>
-</div>
+<?php
+$get = filter_input_array(INPUT_GET, FILTER_SANITIZE_STRING);
+
+$lm = new LabelsModel();
+$prevlbl = $lm->getLabelByRef('previous');
+$nextlbl = $lm->getLabelByRef('next');
+$prjlbl = $lm->getLabelByRef('projects');
+$pm = new ProjectModel();
+$previous_slug = $pm->GetPrevSlug($get['action']);
+$next_slug = $pm->GetNextSlug($get['action']);
+?>
+<div id="prev-next-bar" style="text-align: center;">
+  <?php
+  if ($previous_slug <> '')
+  {
+  ?>
+    <a class="prev-next-item prev-item" href="<?= ROOT_URL.'project/'.$previous_slug; ?>"><?= $prevlbl ?></a>
+    <?php
+  }
+  else
+  {
+    ?>
+    <span class="prev-next-item prev-item-disable"><?= $prevlbl ?></span>
+    <?php
+  }
+  ?>
+  <a class="prev-next-item proj-item-inline" href="<?= ROOT_URL.'projects'; ?>"><?= $prjlbl ?></a>
+  <?php
+  if ($next_slug <> '')
+  {
+    ?>
+    <a class="prev-next-item next-item" href="<?= ROOT_URL.'project/'.$next_slug; ?>"><?= $nextlbl ?></a>
+    <?php
+  }
+  else
+  {
+    ?>
+    <span class="prev-next-item next-item-disable"><?= $nextlbl ?></span>
+    <?php
+  }
+  ?>
+</div>

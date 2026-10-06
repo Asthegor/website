@@ -68,5 +68,29 @@ abstract class Model
     {
         header('Location: '.ROOT_MNGT.$path);
     }
+    
+    protected function createSlug($text)
+    {
+        $text = strtolower(urldecode($text));
+        $unwanted_array = [
+            'à' => 'a', 'á' => 'a', 'â' => 'a', 'ã' => 'a', 'ä' => 'a', 'ç' => 'c', 
+            'è' => 'e', 'é' => 'e', 'ê' => 'e', 'ë' => 'e', 
+            'ì' => 'i', 'í' => 'i', 'î' => 'i', 'ï' => 'i', 
+            'ñ' => 'n', 
+            'ò' => 'o', 'ó' => 'o', 'ô' => 'o', 'õ' => 'o', 'ö' => 'o', 
+            'ù' => 'u', 'ú' => 'u', 'û' => 'u', 'ü' => 'u', 
+            'ý' => 'y', 'ÿ' => 'y'
+        ];
+        $text = strtr($text, $unwanted_array);
+        $text = str_replace(['-', ' ', '.', '(', ')'], '_', $text);
+        $text = preg_replace('/[^a-z0-9_]/', '', $text);
+        $text = preg_replace('/_+/', '_', $text);
+        return trim($text, '_');
+    }
+    public function column($columnIndex = 0)
+    {
+        $this->execute();
+        return $this->stmt->fetchAll(PDO::FETCH_COLUMN, $columnIndex);
+    }
 }
 ?>

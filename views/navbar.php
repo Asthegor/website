@@ -1,5 +1,6 @@
 <?php
 $fileName = basename($_SERVER['REQUEST_URI']);
+$labelmodel = new LabelsModel();
 ?>
 <ul class="nav-bar">
     <?php
@@ -13,7 +14,7 @@ $fileName = basename($_SERVER['REQUEST_URI']);
                     ? ' class="active" '
                     : ''; ?>
                 href="<?= ($item['bPage'] == 1 ? ROOT_URL : '').$item['destination']; ?>"
-                <?= $item['bPage'] != 1 ? 'target="_blanck"' : ''; ?>
+                <?= $item['bPage'] != 1 ? 'target="_blank"' : ''; ?>
                 ><?= $item['title']; ?>
             </a>
         </li>
@@ -21,16 +22,16 @@ $fileName = basename($_SERVER['REQUEST_URI']);
     }
     ?>
     <li class="nav-item">
-        <a href="mailto:lacombe.dominique@outlook.fr">Me contacter</a>
+        <a href="mailto:lacombe.dominique@outlook.fr"><?= $labelmodel->getLabelByRef('contact'); ?></a>
     </li>
     <li id="nav-item-last-child" class="nav-item">
-        <a href="<?= ROOT_URL.'views/language.php'; ?>">
-            <?php
-            $lm = new LanguageModel();
-            $lmres = $lm->getImage($_SESSION['language']);
-            $imgsrc = 'data:image/jpeg;base64,'.base64_encode($lmres['image']);
+        <a href="<?= ROOT_URL.'views/language.php'; ?>" class="language-toggle">
+            <?php 
+            // Affiche la langue alternative en texte clair
+            $lang_text = ($_SESSION['language'] == 'FR') ? 'English' : 'Français';
+            $lang_code = ($_SESSION['language'] == 'FR') ? 'EN' : 'FR';
+            echo '<span class="lang-code">['.$lang_code.']</span> ' . $lang_text;
             ?>
-            <img src="<?= $imgsrc; ?>" alt="<?= $_SESSION['language']; ?>" width="24" height="16"/>
         </a>
     </li>
 </ul>

@@ -4,7 +4,7 @@ class HomeModel extends Model
 {
     public function Index()
     {
-        $this->query('SELECT i.destination, itr.title, itr.short_desc 
+        $this->query('SELECT i.destination, itr.title, itr.short_desc, i.bPage 
                       FROM indexitems AS i
                         INNER JOIN indexitems_tr AS itr ON i.id = itr.id
                         INNER JOIN language AS l ON itr.id_Language = l.id AND l.code = :codelanguage

@@ -2,7 +2,7 @@
 
 class TutorialModel extends Model
 {
-    public function Display()
+    public function Index()
     {
         $get = filter_input_array(INPUT_GET, FILTER_SANITIZE_STRING);
         $this->query("SELECT t.title, t.content, t.date_creation, t.date_update, t.id_Previous, t.id_Next

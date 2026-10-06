@@ -1,0 +1,227 @@
+.portfolio-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 40px 20px;
+}
+
+.zone-title {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: white;
+    margin-bottom: 40px;
+    padding-left: 15px;
+    border-left: 5px solid orange;
+}
+
+.badge-framework, .badge-tag {
+    background-color: rgb(186, 143, 255); 
+    color: #20122c;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    white-space: nowrap;
+}
+
+.btn-detail, .btn-detail-featured {
+    color: orange;
+    text-decoration: none;
+    font-weight: 600;
+    transition: color 0.2s;
+    white-space: nowrap;
+}
+
+.btn-detail:hover, .btn-detail-featured:hover {
+    color: rgb(73, 13, 73); 
+    background-color: orange;
+    padding: 2px 4px;
+}
+
+a {
+    color: white;
+}
+
+/*  --------------------------------------
+    STYLES ZONE 1
+    -------------------------------------- */
+.featured-card {
+    background: rgba(119, 100, 129, 0.867);
+    border: 1px solid rgb(186, 143, 255);
+    border-radius: 12px;
+    padding: 0px;
+    margin-bottom: 40px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.4);
+    overflow: hidden;
+}
+.featured-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.6);
+    border: 2px solid orange;
+}
+
+.card-visual-featured {
+    width: 100%;
+    height: 100px;
+    overflow: hidden;
+    border-bottom: 3px solid orange;
+    text-align: center;
+}
+
+.card-visual-featured img {
+    height: 100%;
+    object-fit: cover;
+    object-position: center top;
+}
+.card-content-featured {
+    padding: 10px 30px;
+    display: block;
+    max-height:300px;
+}
+
+.card-title-featured {
+    color: orange;
+    font-size: 2rem;
+}
+
+.card-date-featured {
+    color: orange;
+}
+
+.card-description-featured {
+    color: white; 
+}
+
+.card-footer-featured {
+    border-top: 1px solid rgb(186, 143, 255);
+}
+
+/*  --------------------------------------
+    STYLES ZONE 2
+    -------------------------------------- */
+.project-card {
+    background: rgba(119, 100, 129, 0.867);
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.4);
+    overflow: hidden;
+    border: 1px solid transparent; 
+    display: flex; 
+    flex-direction: row;
+    min-height: 200px;
+}
+
+.card-details {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 15px 15px 10px 15px;
+    flex-grow: 1;
+}
+
+.project-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.6);
+    border: 2px solid orange;
+}
+
+.card-visual {
+    flex-shrink: 0;
+    width: 250px;
+    overflow: hidden;
+    border-left: 1px solid rgb(73, 13, 73);
+    
+    display:flex;
+    justify-content: center;
+    align-items:center;
+}
+
+.card-content {
+    margin-left: 20px;
+    margin-right: 20px;
+}
+
+.card-visual img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain; 
+    object-position: center;
+}
+
+.card-title {
+    color: orange;
+}
+
+.card-description {
+    -webkit-line-clamp: 3;
+    color: white;
+}
+
+.card-footer {
+    padding: 10px 0 0 0;
+    border-top: 1px solid rgb(73, 13, 73);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;        
+}
+
+.card-date {
+    color: orange;
+    text-align:right;
+}
+
+/*  --------------------------------------
+    STYLES ZONE 3
+    -------------------------------------- */
+
+.list-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    /* padding: 15px 0; */
+    border-bottom: 1px solid rgba(119, 100, 129, 0.867);
+    transition: background-color 0.2s;
+}
+
+.list-item:hover {
+    background-color: rgba(119, 100, 129, 0.6);
+}
+
+.item-year {
+    color: orange;
+    font-weight: bold;
+}
+
+.item-title {
+    color: white;
+}
+
+.card-description strong, 
+.card-description-featured strong,
+.card-description-full strong {
+    color: orange;
+}
+
+/* -------------------------------------- */
+/* RESPONSIVE (Maintient la logique) */
+/* -------------------------------------- */
+
+@media (max-width: 768px) {
+    .project-card {
+        flex-direction: column;
+        min-height: auto;
+    }
+    .card-visual {
+        width: 100%;
+        height: 180px;
+        order: 0; 
+        border-left: none;
+        border-bottom: 1px solid rgb(73, 13, 73);
+    }
+    .card-details {
+        order: 1;
+        padding: 15px;
+    }
+    .card-footer {
+        padding-top: 10px;
+    }
+}

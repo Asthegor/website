@@ -30,5 +30,10 @@ abstract class Controller
             header('Location: '.ROOT_MNGT);
         }
     }
+    
+    protected function returnToPage($page)
+    {
+        header('Location: '.ROOT_URL.$page);
+    }
 }
 ?>

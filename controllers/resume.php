@@ -4,13 +4,20 @@ class Resume extends Controller
 {
     protected function index()
     {
-        $viewmodelexp = new ExperiencesModel();
-        $dataExp = $viewmodelexp->Index();
-        $viewmodeledu = new EducationModel();
-        $dataEdu = $viewmodeledu->Index();
-        $viewmodelresume = new ResumeModel();
-        $titles = $viewmodelresume->Index();
-        $this->returnView(array("viewModelTitles"=>$titles,"viewModelExperience"=>$dataExp,"viewModelEducation"=>$dataEdu));
+        $labelModel = new LabelsModel();
+        $this->returnView(
+            array(
+                "viewModelTitles"       =>  (new ResumeModel())->Index(),
+                "viewModelExperience"   =>  (new ExperiencesModel())->Index(),
+                "viewModelEducation"    =>  (new EducationModel())->Index(),
+                "profile"               =>  (new ProfileModel())->Index(),
+                "links"                 =>  (new LinksModel())->Index(),
+                "skills"                =>  (new SkillsModel())->Index(),
+                "lbl_links"             =>  $labelModel->getLabelByRef('resumelinks'),
+                "lbl_skills"            =>  $labelModel->getLabelByRef('resumeskills'),
+                "identity"              =>  (new IdentityModel())->Index(),
+            )
+        );
     }
 }
 

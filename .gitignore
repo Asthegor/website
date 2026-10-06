@@ -10,3 +10,6 @@ assets/images/logo/
 assets/images/schemas/
 
 config\.php
+.user.ini
+/assets/images
+/files

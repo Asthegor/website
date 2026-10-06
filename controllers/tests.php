@@ -1,12 +1,12 @@
 <?php
 
-class Others extends Controller
+class Tests extends Controller
 {
     protected function index()
     {
         $this->returnToPage("");
         return;
-        $viewmodel = new OthersModel();
+        $viewmodel = new TestsModel();
         $this->returnView($viewmodel->Index());
     }
 }
