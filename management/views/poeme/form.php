@@ -16,7 +16,7 @@
     </div>
     <div class="form-group">
         <label>Contenu</label>
-        <textarea rows="6" cols="150" name="content"  required><?= isset($viewModel['content']) ? urldecode($viewModel['content']) : ''; ?></textarea>
+        <textarea class="noiframe" rows="40" cols="150" name="content"  required><?= isset($viewModel['content']) ? urldecode($viewModel['content']) : ''; ?></textarea>
     </div>
     <div class="form-group">
         <label>Date de création</label>

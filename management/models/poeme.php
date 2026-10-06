@@ -16,7 +16,7 @@ class PoemeModel extends Model
     public function Add()
     {
         $post = filter_input_array(INPUT_POST, FILTER_SANITIZE_ENCODED);
-        if ($post['submit'])
+        if (isset($post['submit']))
         {
             if ($post['title'] == '' || $post['content'] == '')
             {
@@ -44,6 +44,7 @@ class PoemeModel extends Model
                     $this->commit();
                     $this->close();
                     $this->returnToPage($this->returnPage);
+                    return;
                 }
                 $this->rollback();
                 $this->close();
@@ -56,7 +57,7 @@ class PoemeModel extends Model
     public function Update()
     {
         $post = filter_input_array(INPUT_POST, FILTER_SANITIZE_ENCODED);
-        if ($post['submit'])
+        if (isset($post['submit']))
         {
             if ($post['title'] == '' || $post['content'] == '')
             {
@@ -87,6 +88,7 @@ class PoemeModel extends Model
                     $this->commit();
                     $this->close();
                     $this->returnToPage($this->returnPage);
+                    return;
                 }
                 $this->rollback();
                 $this->close();
@@ -118,6 +120,7 @@ class PoemeModel extends Model
                 $this->rollBack();
             $this->close();
             $this->returnToPage($this->returnPage);
+            return;
         }
         $get = filter_input_array(INPUT_GET, FILTER_SANITIZE_STRING);
         $this->query('SELECT id, title, content, date_creation

@@ -55,13 +55,10 @@ class ResumeModel extends Model
     public function Add()
     {
         $post = filter_input_array(INPUT_POST, FILTER_SANITIZE_ENCODED);
-        if ($post['submit'])
+        if (isset($post['submit']))
         {
             date_default_timezone_set('Europe/Paris');
-            if ($post['title_fr'] == '' || $post['title_en'] == '' 
-             || $post['content_fr'] == '' || $post['content_en'] == ''
-             || $post['date_start'] == '' || $post['id_Company'] == '' 
-             || $post['id_City'] == '')
+            if ($post['title_fr'] == '' || $post['date_start'] == '' || $post['id_Company'] == '' || $post['id_City'] == '')
             {
                 Messages::setMsg('Please fill in all mandatory fields', 'error');
             }
@@ -92,6 +89,7 @@ class ResumeModel extends Model
                     $this->commit();
                     $this->close();
                     $this->returnToPage($this->returnPage);
+                    return;
                 }
                 $this->rollback();
                 $this->close();
@@ -104,11 +102,10 @@ class ResumeModel extends Model
     public function Update()
     {
         $post = filter_input_array(INPUT_POST, FILTER_SANITIZE_ENCODED);
-        if ($post['submit'])
+        if (isset($post['submit']))
         {
             date_default_timezone_set('Europe/Paris');
             if ($post['title_fr'] == '' || $post['title_en'] == '' 
-             || $post['content_fr'] == '' || $post['content_en'] == ''
              || $post['date_start'] == '' || $post['id_Company'] == '' 
              || $post['id_City'] == '')
             {
@@ -121,7 +118,7 @@ class ResumeModel extends Model
             else
             {
                 // Insert into MySQL
-                $this->startTransaction();
+                //$this->startTransaction();
                 $id = $post['id'];
                 //Insertion des données générales
                 $this->query("UPDATE experience SET id_Company = :id_Company, id_City = :id_City,
@@ -135,30 +132,37 @@ class ResumeModel extends Model
                 $this->bind(':bVisible', (isset($post['bVisible']) ? $post['bVisible'] : 0), PDO::PARAM_INT);
                 $resp = $this->execute();
                 //Insertion du titre français
-                $this->query('UPDATE experience_tr
-                              SET title = :title, content = :content
-                              WHERE id = :id AND id_Language = 1');
+                $title = $post['title_fr'];
+                $content = $post['content_fr'];
+                $this->query("UPDATE experience_tr ".
+                             "SET title = :title, content = :content ".
+                             "WHERE id = :id AND id_Language = 1");
                 $this->bind(':id', $id, PDO::PARAM_INT);
-                $this->bind(':title', $post['title_fr']);
-                $this->bind(':content', $post['content_fr']);
+                $this->bind(':title', $title);
+                $this->bind(':content', $content);
                 $respfr = $this->execute();
                 //Insertion du titre anglais
-                $this->query('UPDATE experience_tr
-                              SET title = :title, content = :content
-                              WHERE id = :id AND id_Language = 2');
+                if ($post['title_en'] != "")
+                    $title = $post['title_en'];
+                if ($post['content_en'] != "")
+                    $content = $post['content_en'];
+                $this->query("UPDATE experience_tr ".
+                             "SET title = :title, content = :content ".
+                             "WHERE id = :id AND id_Language = 2");
                 $this->bind(':id', $id, PDO::PARAM_INT);
-                $this->bind(':title', $post['title_en']);
-                $this->bind(':content', $post['content_en']);
+                $this->bind(':title', $title);
+                $this->bind(':content', $content);
                 $respen = $this->execute();
 
                 //Verify
                 if($resp && $respen && $respfr)
                 {
-                    $this->commit();
+                    //$this->commit();
                     $this->close();
                     $this->returnToPage($this->returnPage);
+                    return;
                 }
-                $this->rollback();
+                //$this->rollback();
                 $this->close();
                 Messages::setMsg('Error(s) during insert : [resp='.$resp.', respen='.$respen.', respfr='.$respfr.']', 'error');
             }
@@ -174,6 +178,7 @@ class ResumeModel extends Model
                       WHERE e.id = :id");
         $this->bind(':id', $get['id'], PDO::PARAM_INT);
         $rows = $this->single();
+        
         $this->close();
         if (!$rows)
         {
@@ -207,6 +212,7 @@ class ResumeModel extends Model
             }
             $this->close();
             $this->returnToPage($this->returnPage);
+            return;
         }
         $get = filter_input_array(INPUT_GET, FILTER_SANITIZE_STRING);
         $this->query("SELECT e.id, efr.title title_fr, een.title title_en

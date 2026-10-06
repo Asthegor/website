@@ -15,12 +15,12 @@
         <input type="text" name="title_fr" value="<?= isset($viewModel['title_fr']) ? $viewModel['title_fr'] : ''; ?>" required />
     </div>
     <div class="form-group">
-        <label>Titre anglais</label>
-        <input type="text" name="title_en" value="<?= isset($viewModel['title_en']) ? $viewModel['title_en'] : ''; ?>" required />
-    </div>
-    <div class="form-group">
         <label>Résumé français</label>
         <input type="text" name="short_desc_fr" value="<?= isset($viewModel['short_desc_fr']) ? urldecode($viewModel['short_desc_fr']) : ''; ?>" />
+    </div>
+    <div class="form-group">
+        <label>Titre anglais</label>
+        <input type="text" name="title_en" value="<?= isset($viewModel['title_en']) ? $viewModel['title_en'] : ''; ?>" />
     </div>
     <div class="form-group">
         <label>Résumé anglais</label>

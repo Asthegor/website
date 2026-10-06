@@ -23,9 +23,9 @@ class CityModel extends Model
     public function Add()
     {
         $post = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
-        if ($post['submit'])
+        if (isset($post['submit']))
         {
-            if ($post['name_fr'] == '' || $post['name_en'] == '')
+            if ($post['name_fr'] == '')
             {
                 Messages::setMsg('Please fill in all mandatory fields', 'error');
             }
@@ -41,14 +41,18 @@ class CityModel extends Model
                 $id = $this->lastIndexId();
 
                 // Insertion du nom français
+                $name = $post['name_fr'];
                 $this->query("INSERT INTO city_tr (id, name, id_Language) VALUES (:id, :name, 1)");
                 $this->bind(':id', $id);
-                $this->bind(':name', $post['name_fr']);
+                $this->bind(':name', $name);
                 $respfr = $this->execute();
+                if ($post['name_en'] != "")
+                    $name = $post['name_en'];
+                
                 // insertion du nom anglais
                 $this->query("INSERT INTO city_tr (id, name, id_Language) VALUES (:id, :name, 2)");
                 $this->bind(':id', $id);
-                $this->bind(':name', $post['name_en']);
+                $this->bind(':name', $name);
                 $respen = $this->execute();
                 //Verify
                 if($resp && $respfr && $respen)
@@ -56,6 +60,7 @@ class CityModel extends Model
                     $this->commit();
                     $this->close();
                     $this->returnToPage($this->returnPage);
+                    return;
                 }
                 $this->rollback();
                 $this->close();
@@ -68,10 +73,10 @@ class CityModel extends Model
     public function Update()
     {
         $post = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
-        if ($post['submit'])
+        if (isset($post['submit']))
         {
             $id = $post['id'];
-            if ($post['name_fr'] == '' || $post['name_en'] == '')
+            if ($post['name_fr'] == '')
             {
                 Messages::setMsg('Please fill in all mandatory fields', 'error');
             }
@@ -90,9 +95,12 @@ class CityModel extends Model
                 $this->bind(':name', $post['name_fr']);
                 $respfr = $this->execute();
                 // insertion du nom anglais
+                $nameen = $post['name_en'];
+                if ($nameen == "")
+                    $nameen = $post['name_fr'];
                 $this->query("UPDATE city_tr SET name = :name WHERE id = :id AND id_Language = 2");
                 $this->bind(':id', $id);
-                $this->bind(':name', $post['name_en']);
+                $this->bind(':name', $nameen);
                 $respen = $this->execute();
                 //Verify
                 if($resp && $respfr && $respen)
@@ -108,6 +116,7 @@ class CityModel extends Model
                 }
             }
             $this->returnToPage($this->returnPage);
+            return;
         }
         $get = filter_input_array(INPUT_GET, FILTER_SANITIZE_STRING);
         $this->query("SELECT c.id, cfr.name name_fr, cen.name name_en, c.id_Country
@@ -140,6 +149,7 @@ class CityModel extends Model
             }
             $this->close();
             $this->returnToPage($this->returnPage);
+            return;
         }
         $get = filter_input_array(INPUT_GET, FILTER_SANITIZE_STRING);
         $this->query("SELECT c.id, cfr.name name_fr, cen.name name_en,

@@ -1,5 +1,5 @@
 <h1><?= $title; ?></h1>
-Êtes-vous sûr de vouloir détruire l'enregistrement "<?= $recordTitle; ?>" ?
+<p>&Ecirc;tes-vous s&ucirc;r de vouloir d&eacute;truire l'enregistrement "<?= $recordTitle; ?>" ?</p>
 <form method="post" action="<?php $_SERVER['PHP_SELF']; ?>">
     <input type="hidden" name="id" value="<?= $viewModel['id']; ?>" />
     <input class="btn btn-primary btn-danger" type="submit" name="todelete" value="Oui" style="width:50%;"/>

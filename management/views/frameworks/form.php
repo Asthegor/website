@@ -27,7 +27,7 @@ require_once('views/projectnavbar/projectnavbar.php');
             foreach ($plmlist as $item)
             {
                 ?>
-                <option value="<?= $item['id']; ?>" <?= $viewModel['id_ProgLanguage'] == $item['id'] ? 'selected' : ''; ?>><?= $item['name']; ?></option>
+                <option value="<?= $item['id']; ?>" <?= isset($viewModel['id_ProgLanguage']) ? ($viewModel['id_ProgLanguage'] == $item['id'] ? 'selected' : '') : '' ; ?>><?= $item['name']; ?></option>
                 <?php
             }
             ?>

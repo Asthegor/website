@@ -15,7 +15,7 @@ class ConfigModel extends Model
     public function Add()
     {
         $post = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
-        if ($post['submit'])
+        if (isset($post['submit']))
         {
             if ($post['data'] == '' || $post['value'] == '')
             {
@@ -47,7 +47,7 @@ class ConfigModel extends Model
     public function Update()
     {
         $post = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
-        if ($post['submit'])
+        if (isset($post['submit']))
         {
             if ($post['data'] == '' || $post['value'] == '')
             {

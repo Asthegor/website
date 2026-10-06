@@ -23,7 +23,7 @@ class VersionModel extends Model
         {
             $this->bind(':id', $post['projectid'], PDO::PARAM_INT);
         }
-        $this->bind(':codelanguage', $_SESSION['language']);
+        $this->bind(':codelanguage', isset($_SESSION['language']) ? $_SESSION['language'] : 'FR');
         $rows = $this->resultSet();
         $this->close();
         return $rows;
@@ -32,7 +32,7 @@ class VersionModel extends Model
     public function Update()
     {
         $post = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
-        if ($post['submit'])
+        if (isset($post['submit']))
         {
             date_default_timezone_set('Europe/Paris');
             $prjm = new ProjectsModel();
@@ -66,6 +66,7 @@ class VersionModel extends Model
                     $this->commit();
                     $this->close();
                     $this->returnToPage($this->returnPage);
+                    return;
                 }
                 $this->rollback();
                 $this->close();
@@ -77,9 +78,8 @@ class VersionModel extends Model
                       FROM version AS v
                         INNER JOIN project AS p ON v.id_Project = p.id
                         INNER JOIN project_tr as ptr ON p.id = ptr.id
-                          INNER JOIN language AS l ON ptr.id_Language = l.id AND l.code = :codelanguage
+                          INNER JOIN language AS l ON ptr.id_Language = 1
                       WHERE v.id = :id");
-        $this->bind(':codelanguage', $_SESSION['language']);
         $this->bind(':id', $get['id'], PDO::PARAM_INT);
         $rows = $this->single();
         $this->close();
@@ -102,6 +102,7 @@ class VersionModel extends Model
                 $this->rollBack();
             $this->close();
             $this->returnToPage($this->returnPage);
+            return;
         }
         $get = filter_input_array(INPUT_GET, FILTER_SANITIZE_STRING);
         $this->query('SELECT id, num_version, date_version FROM version WHERE id = :id');
@@ -137,7 +138,7 @@ class VersionModel extends Model
                             ON ptr.id_Language = l.id
                             AND l.code = :codelanguage 
                       ORDER BY ptr.title");
-        $this->bind(':codelanguage', $_SESSION['language']);
+        $this->bind(':codelanguage', isset($_SESSION['language']) ? $_SESSION['language'] : 'FR');
         $rows = $this->resultSet();
         $this->close();
         return $rows;

@@ -19,7 +19,7 @@ require_once('views/resumenavbar/resumenavbar.php');
     </div>
     <div class="form-group">
         <label>Nom anglais</label>
-        <input type="text" name="name_en" value="<?= isset($viewModel['name_en']) ? $viewModel['name_en'] : ''; ?>" required />
+        <input type="text" name="name_en" value="<?= isset($viewModel['name_en']) ? $viewModel['name_en'] : ''; ?>" />
     </div>
     <input class="btn btn-primary" name="submit" type="submit" value="Submit" />
     <a class="btn btn-warning" href="<?= ROOT_MNGT; ?>country">Cancel</a>

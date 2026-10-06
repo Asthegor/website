@@ -18,7 +18,7 @@ class FrameworksModel extends Model
     public function Add()
     {
         $post = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
-        if ($post['submit'])
+        if (isset($post['submit']))
         {
             if ($post['name'] == '')
             {
@@ -43,6 +43,7 @@ class FrameworksModel extends Model
                     $this->commit();
                     $this->close();
                     $this->returnToPage($this->returnPage);
+                    return;
                 }
                 $this->rollback();
                 $this->close();
@@ -55,7 +56,7 @@ class FrameworksModel extends Model
     public function Update()
     {
         $post = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
-        if ($post['submit'])
+        if (isset($post['submit']))
         {
             if ($post['name'] == '')
             {
@@ -76,6 +77,7 @@ class FrameworksModel extends Model
                 if($res)
                 {
                     $this->returnToPage($this->returnPage);
+                    return;
                 }
                 Messages::setMsg('Error(s) during update', 'error');
             }
@@ -109,6 +111,7 @@ class FrameworksModel extends Model
             }
             $this->close();
             $this->returnToPage($this->returnPage);
+            return;
         }
         $get = filter_input_array(INPUT_GET, FILTER_SANITIZE_STRING);
         $this->query("SELECT fe.id, fe.name, pl.name proglanguage 

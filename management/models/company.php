@@ -12,7 +12,7 @@ class CompanyModel extends Model
     public function Add()
     {
         $post = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
-        if ($post['submit'])
+        if (isset($post['submit']))
         {
             if ($post['name'] == '')
             {
@@ -65,6 +65,7 @@ class CompanyModel extends Model
                 {
                     $this->returnToPage($this->returnPage);
                 }
+                return;
             }
         }
         $get = filter_input_array(INPUT_GET, FILTER_SANITIZE_STRING);
