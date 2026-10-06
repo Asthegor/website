@@ -20,15 +20,13 @@ class EducationModel extends Model
     public function Add()
     {
         $post = filter_input_array(INPUT_POST, FILTER_SANITIZE_ENCODED);
-        if ($post['submit'])
+        if (isset($post['submit']))
         {
-            if ($post['title_fr'] == '' || $post['title_en'] == '' || $post['description_fr'] == '' || $post['description_en'] == '')
+            if ($post['title_fr'] == '' || $post['description_fr'] == '')
             {
                 $fields = '';
                 if ($post['title_fr'] == '') { $fields .= 'title_fr, '; }
-                if ($post['title_en'] == '') { $fields .= 'title_en, '; }
                 if ($post['description_fr'] == '') { $fields .= 'description_fr, '; }
-                if ($post['description_en'] == '') { $fields .= 'description_en, '; }
                 $fields = substr($fields, 1, -2);
                 Messages::setMsg('Please fill in all mandatory fields : '.$fields, 'error');
             }
@@ -47,20 +45,29 @@ class EducationModel extends Model
                 $resp = $this->execute();
                 $id = $this->lastIndexId();
                 //Insertion du titre français
+                $title = $post['title_fr'];
+                $description = $post['description_fr'];
+                $institution = $post['institution_fr'];
                 $this->query('INSERT INTO education_tr (id, id_Language, title, description, institution)
                             VALUES(:id, 1, :title, :description, :institution)');
                 $this->bind(':id', $id);
-                $this->bind(':title', $post['title_fr']);
-                $this->bind(':description', addslashes($post['description_fr']));
-                $this->bind(':institution', addslashes($post['institution_fr']));
+                $this->bind(':title', $title);
+                $this->bind(':description', addslashes($description));
+                $this->bind(':institution', addslashes($institution));
                 $respfr = $this->execute();
                 //Insertion du titre anglais
+                if ($post['title_en'] != "")
+                    $title = $post['title_en'];
+                if ($post['description_en'] != "")
+                    $description = $post['description_en'];
+                if ($post['institution_en'] != "")
+                    $institution = $post['institution_en'];
                 $this->query('INSERT INTO education_tr (id, id_Language, title, description, institution)
                             VALUES(:id, 2, :title, :description, :institution)');
                 $this->bind(':id', $id);
-                $this->bind(':title', $post['title_en']);
-                $this->bind(':description', addslashes($post['description_en']));
-                $this->bind(':institution', addslashes($post['institution_en']));
+                $this->bind(':title', $title);
+                $this->bind(':description', addslashes($description));
+                $this->bind(':institution', addslashes($institution));
                 $respen = $this->execute();
                 //Verify
                 if($resp && $respen && $respfr)
@@ -68,6 +75,7 @@ class EducationModel extends Model
                     $this->commit();
                     $this->close();
                     $this->returnToPage($this->returnPage);
+                    return;
                 }
                 $this->rollback();
                 $this->close();
@@ -80,7 +88,7 @@ class EducationModel extends Model
     public function Update()
     {
         $post = filter_input_array(INPUT_POST, FILTER_SANITIZE_ENCODED);
-        if ($post['submit'])
+        if (isset($post['submit']))
         {
             if ($post['title_fr'] == '' || $post['title_en'] == '' || $post['description_fr'] == '' || $post['description_en'] == '')
             {
@@ -109,22 +117,31 @@ class EducationModel extends Model
                 $this->bind(':id', $post['id']);
                 $resp = $this->execute();
                 //Insertion du titre français
+                $title = $post['title_fr'];
+                $description = $post['description_fr'];
+                $institution = $post['institution_fr'];
                 $this->query("UPDATE education_tr
                             SET title = :title, description = :description, institution = :institution
                             WHERE id = :id AND id_Language = 1");
                 $this->bind(':id', $post['id']);
-                $this->bind(':title', $post['title_fr']);
-                $this->bind(':description', $post['description_fr']);
-                $this->bind(':institution', $post['institution_fr']);
+                $this->bind(':title', $title);
+                $this->bind(':description', addslashes($description));
+                $this->bind(':institution', addslashes($institution));
                 $respfr = $this->execute();
                 //Insertion du titre anglais
+                if ($post['title_en'] != "")
+                    $title = $post['title_en'];
+                if ($post['description_en'] != "")
+                    $description = $post['description_en'];
+                if ($post['institution_en'] != "")
+                    $institution = $post['institution_en'];
                 $this->query("UPDATE education_tr
                             SET title = :title, description = :description, institution = :institution
                             WHERE id = :id AND id_Language = 2");
                 $this->bind(':id', $post['id']);
-                $this->bind(':title', $post['title_en']);
-                $this->bind(':description', $post['description_en']);
-                $this->bind(':institution', $post['institution_en']);
+                $this->bind(':title', $title);
+                $this->bind(':description', addslashes($description));
+                $this->bind(':institution', addslashes($institution));
                 $respen = $this->execute();
                 
                 //Verify
@@ -133,6 +150,7 @@ class EducationModel extends Model
                     $this->commit();
                     $this->close();
                     $this->returnToPage($this->returnPage);
+                    return;
                 }
                 else
                 {
@@ -179,6 +197,7 @@ class EducationModel extends Model
             }
             $this->close();
             $this->returnToPage($this->returnPage);
+            return;
         }
         $get = filter_input_array(INPUT_GET, FILTER_SANITIZE_STRING);
         $this->query('SELECT ed.id, edfr.title title_fr, eden.title title_en

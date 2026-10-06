@@ -17,7 +17,7 @@ class LanguageModel extends Model
     public function Add()
     {
         $post = filter_input_array(INPUT_POST, FILTER_SANITIZE_ENCODED);
-        if ($post['submit'])
+        if (isset($post['submit']))
         {
             if ($post['code'] == '' || $post['name'] == '' || $post['image'] == '')
             {
@@ -41,6 +41,7 @@ class LanguageModel extends Model
                     $this->commit();
                     $this->close();
                     $this->returnToPage($this-returnPage);
+                    return;
                 }
                 $this->rollback();
                 $this->close();
@@ -79,6 +80,7 @@ class LanguageModel extends Model
                     $this->commit();
                     $this->close();
                     $this->returnToPage($this->returnPage);
+                    return;
                 }
                 $this->rollBack();
                 $this->close();
@@ -117,6 +119,7 @@ class LanguageModel extends Model
                 $this->rollBack();
             $this->close();
             $this->returnToPage($this->returnPage);
+            return;
         }
         $get = filter_input_array(INPUT_GET, FILTER_SANITIZE_STRING);
         $this->query('SELECT id, code, name, image

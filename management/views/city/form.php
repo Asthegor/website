@@ -23,7 +23,7 @@ require_once('views/resumenavbar/resumenavbar.php');
             foreach ($clmlist as $item)
             {
                 ?>
-                <option value="<?= $item['id']; ?>" <?= $viewModel['id_Country'] == $item['id'] ? 'selected' : ''; ?>><?= $item['name']; ?></option>
+                <option value="<?= $item['id']; ?>" <?= isset($viewModel['id_Country']) && $viewModel['id_Country'] == $item['id'] ? 'selected' : ''; ?>><?= $item['name']; ?></option>
                 <?php
             }
             ?>
@@ -36,7 +36,7 @@ require_once('views/resumenavbar/resumenavbar.php');
     </div>
     <div class="form-group">
         <label>Nom anglais</label>
-        <input type="text" name="name_en" value="<?= isset($viewModel['name_en']) ? $viewModel['name_en'] : ''; ?>" required />
+        <input type="text" name="name_en" value="<?= isset($viewModel['name_en']) && $viewModel['name_en'] != $viewModel['name_fr'] ? $viewModel['name_en'] : ''; ?>" />
     </div>
     <input class="btn btn-primary" name="submit" type="submit" value="Submit" />
     <a class="btn btn-warning" href="<?= ROOT_MNGT; ?>city">Cancel</a>

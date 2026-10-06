@@ -6,7 +6,7 @@ class ContentModel extends Model
     
     public function Index()
     {
-        $this->query('SELECT i.id, i.bVisible, i.destination, i.sortOrder, 
+        $this->query('SELECT i.id, i.bVisible, i.destination, i.sortOrder, i.bPage,  
                              itrfr.title title_fr, itren.title title_en
                       FROM indexitems AS i
                         INNER JOIN indexitems_tr AS itrfr ON i.id = itrfr.id AND itrfr.id_Language = 1
@@ -21,9 +21,9 @@ class ContentModel extends Model
     public function Add()
     {
         $post = filter_input_array(INPUT_POST, FILTER_SANITIZE_ENCODED);
-        if ($post['submit'])
+        if (isset($post['submit']))
         {
-            if ($post['title_fr'] == '' || $post['title_en'] == '' || $post['destination'] == '')
+            if ($post['title_fr'] == '' || $post['destination'] == '')
             {
                 Messages::setMsg('Please fill in all mandatory fields', 'error');
             }
@@ -32,26 +32,33 @@ class ContentModel extends Model
                 // Insert into MySQL
                 $this->startTransaction();
                 //Insertion des données générales
-                $this->query('INSERT INTO indexitems (id_Category, destination, bVisible, sortOrder)
-                            VALUES (2, :destination, :bVisible, :sortOrder)');
+                $this->query('INSERT INTO indexitems (id_Category, destination, bVisible, sortOrder, bPage)
+                            VALUES (2, :destination, :bVisible, :sortOrder, :bPage)');
                 $this->bind(':destination', $post['destination']);
                 $this->bind(':bVisible', isset($post['bVisible']) ? $post['bVisible'] : 0);
+                $this->bind(':bPage', isset($post['bPage']) ? $post['bPage'] : 0);
                 $this->bind(':sortOrder', $post['sortorder']);
                 $this->execute();
                 $id = $this->lastIndexId();
                 //Insertion du titre français
+                $shortdesc = $post['short_desc_fr'];
+                $title = $post['title_fr'];
                 $this->query('INSERT INTO indexitems_tr (id, id_Language, title, short_desc)
                             VALUES(:id, 1, :title, :short_desc)');
                 $this->bind(':id', $id);
-                $this->bind(':title', $post['title_fr']);
-                $this->bind(':short_desc', $post['short_desc_fr']);
+                $this->bind(':title', $title);
+                $this->bind(':short_desc', $shortdesc);
                 $this->execute();
                 //Insertion du titre anglais
+                if ($post['title_en'] != "")
+                    $title = $post['title_en'];
+                if ($post['short_desc_en'] != "")
+                    $shortdesc = $post['short_desc_en'];
                 $this->query('INSERT INTO indexitems_tr (id, id_Language, title, short_desc)
                             VALUES(:id, 2, :title, :short_desc)');
                 $this->bind(':id', $id);
-                $this->bind(':title', $post['title_en']);
-                $this->bind(':short_desc', $post['short_desc_en']);
+                $this->bind(':title', $title);
+                $this->bind(':short_desc', $shortdesc);
                 $this->execute();
 
                 //Verify
@@ -60,6 +67,7 @@ class ContentModel extends Model
                     $this->commit();
                     $this->close();
                     $this->returnToPage($this->returnPage);
+                    return;
                 }
                 $this->rollback();
                 $this->close();
@@ -75,7 +83,7 @@ class ContentModel extends Model
         if (isset($post['submit']))
         {
             // Contrôle des données
-            if ($post['title_fr'] == '' || $post['title_en'] == '' || $post['destination'] == '')
+            if ($post['title_fr'] == '' || $post['destination'] == '')
             {
                 Messages::setMsg('Please fill in all mandatory fields', 'error');
             }
@@ -103,10 +111,11 @@ class ContentModel extends Model
 
                 // Mise à jour de la table indexitems
                 $this->query('UPDATE indexitems 
-                              SET destination=:destination, bVisible=:bVisible, sortOrder=:sortOrder 
+                              SET destination=:destination, bVisible=:bVisible, sortOrder=:sortOrder, bPage=:bPage 
                               WHERE id=:id');
                 $this->bind(':destination', $post['destination']);
-                $this->bind(':bVisible', $post['bVisible']);
+                $this->bind(':bVisible', isset($post['bVisible']) ? $post['bVisible'] : 0);
+                $this->bind(':bPage', isset($post['bPage']) ? $post['bPage'] : 0);
                 $this->bind(':sortOrder', $post['sortorder']);
                 $this->bind(':id', $post['id']);
                 $resii = $this->execute();
@@ -116,6 +125,7 @@ class ContentModel extends Model
                     $this->commit();
                     $this->close();
                     $this->returnToPage($this->returnPage);
+                    return;
                 }
                 $this->rollBack();
                 $this->close();
@@ -123,7 +133,7 @@ class ContentModel extends Model
             }
         }
         $get = filter_input_array(INPUT_GET, FILTER_SANITIZE_STRING);
-        $this->query('SELECT i.id, i.bVisible, i.destination, i.sortOrder, 
+        $this->query('SELECT i.id, i.bVisible, i.destination, i.sortOrder, i.bPage, 
                              itrfr.title title_fr, itren.title title_en,
                              itrfr.short_desc short_desc_fr, itren.short_desc short_desc_en
                       FROM indexitems AS i
@@ -166,6 +176,7 @@ class ContentModel extends Model
             }
             $this->close();
             $this->returnToPage($this->returnPage);
+            return;
         }
         $get = filter_input_array(INPUT_GET, FILTER_SANITIZE_STRING);
         $this->query('SELECT i.id, itrfr.title title_fr, itren.title title_en

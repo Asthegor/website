@@ -20,7 +20,7 @@ class NavBarModel extends Model
     public function Add()
     {
         $post = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
-        if ($post['submit'])
+        if (isset($post['submit']))
         {
             if ($post['title_fr'] == '' || $post['title_en'] == '' || $post['destination'] == '')
             {
@@ -69,11 +69,8 @@ class NavBarModel extends Model
                     $imgid = $this->lastIndexId();
                 }
                 //Insertion des données générales
-                $this->query('INSERT INTO indexitems (id_Category, destination, bPage, 
-                                                      bVisible, bInNavBar, sortOrder' .
-                                                      ($imdid > 0 ? ', id_Image' : '') .')
-                                VALUES (1, :destination, :bPage, :bVisible, :bInNavBar, :sortOrder' .
-                                        ($imgid > 0 ? ',' . $imgid : '') . ')');
+                $this->query('INSERT INTO indexitems (id_Category, destination, bPage, bVisible, bInNavBar, sortOrder' . ($imgid > 0 ? ', id_Image' : '') .') ' .
+                             'VALUES (1, :destination, :bPage, :bVisible, :bInNavBar, :sortOrder' . ($imgid > 0 ? ',' . $imgid : '') . ')');
                 $this->bind(':destination', $post['destination']);
                 $this->bind(':bPage', (isset($post['bPage']) ? $post['bPage'] : 0), PDO::PARAM_INT);
                 $this->bind(':bVisible', (isset($post['bVisible']) ? $post['bVisible'] : 0), PDO::PARAM_INT);
@@ -89,8 +86,8 @@ class NavBarModel extends Model
                 $this->bind(':short_desc', $post['short_desc_fr']);
                 $respfr = $this->execute();
                 //Insertion du titre anglais
-                $this->query('INSERT INTO indexitems_tr (id, id_Language, title)
-                            VALUES(:id, 2, :title)');
+                $this->query('INSERT INTO indexitems_tr (id, id_Language, title, short_desc)
+                            VALUES(:id, 2, :title, :short_desc)');
                 $this->bind(':id', $id, PDO::PARAM_INT);
                 $this->bind(':title', $post['title_en']);
                 $this->bind(':short_desc', $post['short_desc_en']);
@@ -102,10 +99,14 @@ class NavBarModel extends Model
                     $this->commit();
                     $this->close();
                     $this->returnToPage('navbar');
+                    return;
                 }
-                $this->rollback();
-                $this->close();
-                Messages::setMsg('Error(s) during insert [$id='.$id.', $respfr='.$respfr.', $respen='.$respen.']', 'error');
+                else
+                {
+                    $this->rollback();
+                    $this->close();
+                    Messages::setMsg('Error(s) during insert [$id='.$id.', $respfr='.$respfr.', $respen='.$respen.']', 'error');
+                }
             }
         }
         return;
@@ -209,20 +210,18 @@ class NavBarModel extends Model
                     $this->rollBack();
                     $this->close();
                     Messages::setMsg('Error(s) during update', 'error');
-                    return;
                 }
+                return;
             }
         }
         $get = filter_input_array(INPUT_GET, FILTER_SANITIZE_STRING);
         $this->query('SELECT i.id, i.bPage, i.bVisible, i.destination, 
                              i.sortOrder, i.bInNavBar, 
                              itrfr.title title_fr, itrfr.short_desc short_desc_fr, 
-                             itren.title title_en, itren.short_desc short_desc_en,
-                             pi.name, pi.img_size, pi.img_type, pi.img_blob
+                             itren.title title_en, itren.short_desc short_desc_en
                       FROM indexitems AS i
                         INNER JOIN indexitems_tr AS itrfr ON i.id = itrfr.id AND itrfr.id_Language = 1
                         INNER JOIN indexitems_tr AS itren ON i.id = itren.id AND itren.id_Language = 2
-                        LEFT JOIN images AS pi ON i.id_Image = pi.id
                       WHERE i.id_Category = 1 AND i.id = :id');
         $this->bind(':id', $get['id'], PDO::PARAM_INT);
         $rows = $this->single();
@@ -259,6 +258,7 @@ class NavBarModel extends Model
             }
             $this->close();
             $this->returnToPage('navbar');
+            return;
         }
         $get = filter_input_array(INPUT_GET, FILTER_SANITIZE_STRING);
         $this->query("SELECT i.id, itrfr.title title_fr, itren.title title_en

@@ -15,8 +15,8 @@ Nombre de projets affichés : <?= $prjm->getNbActiveProjects(); ?>
       <th style="width:23%;">Titre anglais</th>
       <th style="width:12%;">Framework</th>
       <th style="width:12%;">Date de création</th>
-      <th style="width:12%;">Version</th>
-      <th style="width:04%;">Nb vues</th>
+      <th style="width:05%;">Zone</th>
+      <th style="width:05%;">Nb vues</th>
       <th style="width:05%;">Visible</th>
       <th style="width:05%;"></th>
     </tr>
@@ -34,12 +34,12 @@ Nombre de projets affichés : <?= $prjm->getNbActiveProjects(); ?>
             <td style="width:23%;"><?= urldecode($item['title_en']); ?></td>
             <td style="width:12%;"><?= $item['framework']; ?></td>
             <td style="width:12%;"><?= $item['first_date_project']; ?></td>
-            <td style="width:12%;"><?= $item['version']; ?></td>
-            <td style="width:04%;"><?= $item['nbViews']; ?></td>
+            <td style="width:05%;"><?= $item['zone'] . ($item['zone'] > 1 ? ' ('.$item['zone_order'].')' : ''); ?></td>
+            <td style="width:05%;"><?= $item['nbViews']; ?></td>
             <td style="width:05%;"><?= $item['bVisible'] ? 'Oui' : 'Non'; ?></td>
             <td style="width:05%;">
               <a href="<?= ROOT_MNGT.'devlog/add/'.$item['id']; ?>">
-                <img src="<?= ROOT_URL.'assets/images/Log file.png' ?>" alt="Nouveau DevLog" width="24">
+                <img src="<?= ROOT_URL.'assets/images/Log_file.png' ?>" alt="Nouveau DevLog" width="24">
               </a>
             </td>
           </tr>

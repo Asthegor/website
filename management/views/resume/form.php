@@ -14,15 +14,15 @@ require_once('views/resumenavbar/resumenavbar.php');
     }
     ?>
     <div class="form-group">
-        <label>Titre français</label>
+        <label for="title_fr">Titre français</label>
         <input type="text" name="title_fr" value="<?= isset($viewModel['title_fr']) ? urldecode($viewModel['title_fr']) : ''; ?>" required />
     </div>
     <div class="form-group">
-        <label>Titre anglais</label>
-        <input type="text" name="title_en" value="<?= isset($viewModel['title_en']) ? urldecode($viewModel['title_en']) : ''; ?>" required />
+        <label for="title_en">Titre anglais</label>
+        <input type="text" name="title_en" value="<?= isset($viewModel['title_en']) ? urldecode($viewModel['title_en']) : ''; ?>" />
     </div>
     <div class="form-group">
-        <label>Société</label>
+        <label for="id_Company">Société</label>
         <select name="id_Company" required>
             <option value=""></option>
             <?php
@@ -31,14 +31,14 @@ require_once('views/resumenavbar/resumenavbar.php');
             foreach ($cpymlist as $item)
             {
                 ?>
-                <option value="<?= $item['id']; ?>" <?= $viewModel['id_Company'] == $item['id'] ? 'selected' : ''; ?>><?= $item['name']; ?></option>
+                <option value="<?= $item['id']; ?>" <?= isset($viewModel['id_Company']) && $viewModel['id_Company'] == $item['id'] ? 'selected' : ''; ?>><?= $item['name']; ?></option>
                 <?php
             }
             ?>
         </select>
     </div>
     <div class="form-group">
-        <label>Ville</label>
+        <label for="id_City">Ville</label>
         <select name="id_City" required>
             <option value=""></option>
             <?php
@@ -47,30 +47,30 @@ require_once('views/resumenavbar/resumenavbar.php');
             foreach ($citymlist as $item)
             {
                 ?>
-                <option value="<?= $item['id']; ?>" <?= $viewModel['id_City'] == $item['id'] ? 'selected' : ''; ?>><?= $item['name']; ?></option>
+                <option value="<?= $item['id']; ?>" <?= isset($viewModel['id_City']) && $viewModel['id_City'] == $item['id'] ? 'selected' : ''; ?>><?= $item['name']; ?></option>
                 <?php
             }
             ?>
         </select>
     </div>
     <div class="form-group">
-        <label>Date de début</label>
+        <label for="date_start">Date de début</label>
         <input type="date" name="date_start" value="<?= isset($viewModel['date_start']) ? $viewModel['date_start'] : ''; ?>" required />
     </div>
     <div class="form-group">
-        <label>Date de fin</label>
+        <label for="date_end">Date de fin</label>
         <input type="date" name="date_end" value="<?= isset($viewModel['date_end']) ? $viewModel['date_end'] : ''; ?>" />
     </div>
     <div class="form-group">
-        <label>Description française</label>
-        <textarea rows="6" cols="150" name="content_fr"><?= isset($viewModel['content_fr']) ? urldecode($viewModel['content_fr']) : ''; ?></textarea>
+        <label for="content_fr">Description française</label>
+        <textarea class="noiframe" rows="25" cols="150" name="content_fr"><?= isset($viewModel['content_fr']) ? urldecode($viewModel['content_fr']) : ''; ?></textarea>
     </div>
     <div class="form-group">
-        <label>Description anglaise</label>
-        <textarea rows="6" cols="150" name="content_en"><?= isset($viewModel['content_en']) ? urldecode($viewModel['content_en']) : ''; ?></textarea>
+        <label for="content_en">Description anglaise</label>
+        <textarea class="noiframe" rows="25" cols="150" name="content_en"><?= isset($viewModel['content_en']) ? urldecode($viewModel['content_en']) : ''; ?></textarea>
     </div>
     <div class="form-group">
-        <label>Visible</label>
+        <label for="bVisible">Visible</label>
         <input type="checkbox" name="bVisible" value="1" <?= isset($viewModel['bVisible']) && $viewModel['bVisible'] ? 'checked' : ''; ?> />
     </div>
     <input class="btn btn-primary" name="submit" type="submit" value="Submit" />

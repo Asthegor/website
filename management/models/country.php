@@ -19,9 +19,9 @@ class CountryModel extends Model
     public function Add()
     {
         $post = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
-        if ($post['submit'])
+        if (isset($post['submit']))
         {
-            if ($post['name_fr'] == '' || $post['name_en'] == '')
+            if ($post['name_fr'] == '')
             {
                 Messages::setMsg('Please fill in all mandatory fields', 'error');
             }
@@ -34,14 +34,17 @@ class CountryModel extends Model
                 $id = $this->lastIndexId();
 
                 //Insertion du nom français
+                $name = $post['name_fr'];
                 $this->query('INSERT INTO country_tr (id, name, id_Language) VALUES (:id, :name, 1)');
                 $this->bind(':id', $id);
                 $this->bind(':name', $post['name_fr']);
                 $resfr = $this->execute();
                 //Insertion du nom anglais
+                if ($post['name_en'] != "")
+                    $name = $post['name_en'];
                 $this->query('INSERT INTO country_tr (id, name, id_Language) VALUES (:id, :name, 2)');
                 $this->bind(':id', $id);
-                $this->bind(':name', $post['name_en']);
+                $this->bind(':name', $name);
                 $resen = $this->execute();
                 if($id && $resfr && $resen)
                 {
@@ -64,7 +67,7 @@ class CountryModel extends Model
         if (isset($post['submit']))
         {
             // Contrôle des données
-            if ($post['name_fr'] == '' || $post['name_en'] == '')
+            if ($post['name_fr'] == '')
             {
                 Messages::setMsg('Please fill in all mandatory fields', 'error');
             }
@@ -72,12 +75,15 @@ class CountryModel extends Model
             {
                 //Mise à jour de la base
                 $this->startTransaction();
+                $name = $post['name_fr'];
                 $this->query('UPDATE country_tr SET name = :name WHERE id = :id AND id_Language = 1');
-                $this->bind(':name', $post['name_fr']);
+                $this->bind(':name', $name);
                 $this->bind(':id', $post['id']);
                 $resfr = $this->execute();
+                if ($post['name_en'] != "")
+                    $name = $post['name_en'];
                 $this->query('UPDATE country_tr SET name = :name WHERE id = :id AND id_Language = 2');
-                $this->bind(':name', $post['name_en']);
+                $this->bind(':name', $name);
                 $this->bind(':id', $post['id']);
                 $resen = $this->execute();
                 if($resfr && $resen)
@@ -122,6 +128,7 @@ class CountryModel extends Model
             }
             $this->close();
             $this->returnToPage($this->returnPage);
+            return;
         }
         $get = filter_input_array(INPUT_GET, FILTER_SANITIZE_STRING);
         $this->query('SELECT c.id, cfr.name name_fr, cen.name name_en

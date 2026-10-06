@@ -71,6 +71,25 @@ abstract class Model
         $this->stmt = null;
         $this->dbh = null;
     }
+    
+    public function createSlug($text)
+    {
+        $text = strtolower(urldecode($text));
+        $unwanted_array = [
+            'à' => 'a', 'á' => 'a', 'â' => 'a', 'ã' => 'a', 'ä' => 'a', 'ç' => 'c', 
+            'è' => 'e', 'é' => 'e', 'ê' => 'e', 'ë' => 'e', 
+            'ì' => 'i', 'í' => 'i', 'î' => 'i', 'ï' => 'i', 
+            'ñ' => 'n', 
+            'ò' => 'o', 'ó' => 'o', 'ô' => 'o', 'õ' => 'o', 'ö' => 'o', 
+            'ù' => 'u', 'ú' => 'u', 'û' => 'u', 'ü' => 'u', 
+            'ý' => 'y', 'ÿ' => 'y'
+        ];
+        $text = strtr($text, $unwanted_array);
+        $text = str_replace(['-', ' ', '.', '(', ')'], '_', $text);
+        $text = preg_replace('/[^a-z0-9_]/', '', $text);
+        $text = preg_replace('/_+/', '_', $text);
+        return trim($text, '_');
+    }
 
     protected function returnToPage($path)
     {
@@ -112,13 +131,6 @@ abstract class Model
         $res = array();
         foreach ($languages as $language)
         {
-/*          $this->query('INSERT INTO experience_tr (id, id_Language, title, content)
-                            VALUES(:id, 1, :title, :content)');
-                $this->bind(':id', $id, PDO::PARAM_INT);
-                $this->bind(':title', $post['title_fr']);
-                $this->bind(':content', $post['content_fr']);
-                $respfr = $this->execute(); */
-            
             $codeLanguage = $language['code'];
             $filteredArray = array_filter($values,
                                           function($key) use ($codeLanguage)
@@ -151,33 +163,21 @@ abstract class Model
                 $temp = str_replace(':'.substr($key, 0, strlen('_'.$codeLanguage) * -1), "'".$values[$key]."'", $temp);
             }
             $temp = str_replace(':id', $values['id'], $temp);
-            var_dump($query);
             echo '<br>';
-            var_dump($temp);
             echo '<hr>';
 
-            /*
-            */
-            
-            
-            
             $this->query($query);
             $this->bind(':id', $values['id'], PDO::PARAM_INT);
             // data binding
             foreach($filteredArray as $key => $value)
             {
-            var_dump($key);
-            var_dump($codeLanguage);
                 $bindKey = ':'.substr($key, 0, (strlen($codeLanguage) + 1) * -1);
                 $bindValue = $values[$key];
-            var_dump($bindKey);
             echo '=';
-            var_dump($bindValue);
             echo '<br>';
             $this->bind($bindKey, $bindValue);
             }
             echo '<hr>';
-            //die();
             $resp = $this->execute();
             $res[$codeLanguage]= (int)$resp;
         }

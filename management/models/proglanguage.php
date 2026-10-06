@@ -16,7 +16,7 @@ class ProgLanguageModel extends Model
     public function Add()
     {
         $post = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
-        if ($post['submit'])
+        if (isset($post['submit']))
         {
             if ($post['name'] == '')
             {
@@ -35,6 +35,7 @@ class ProgLanguageModel extends Model
                 if($id)
                 {
                     $this->returnToPage($this->returnPage);
+                    return;
                 }
                 Messages::setMsg('Error(s) during insert', 'error');
             }
@@ -63,6 +64,7 @@ class ProgLanguageModel extends Model
                 if($res)
                 {
                     $this->returnToPage($this->returnPage);
+                    return;
                 }
                 Messages::setMsg('Error(s) during update', 'error');
             }
@@ -93,6 +95,7 @@ class ProgLanguageModel extends Model
             }
             $this->close();
             $this->returnToPage($this->returnPage);
+            return;
         }
         $get = filter_input_array(INPUT_GET, FILTER_SANITIZE_STRING);
         $this->query('SELECT id, name FROM proglanguage WHERE id = :id');
